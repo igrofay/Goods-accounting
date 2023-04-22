@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Goods accounting</string>
+    <string name="network_problems">Проблемы с сетью</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="sign_in">Войти в систему</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="email">Почта</string>
+    <string name="password">Пароль</string>
+    <string name="firstname">Имя</string>
+    <string name="lastname">Фамилия</string>
+    <string name="patronymic">Отчество</string>
+    <string name="phone">Телефон</string>
+    <string name="i_dont_have_account">У меня нет аккаунта</string>
+    <string name="i_have_account">У меня есть аккаунта</string>
+    <string name="sign_in_to_use_app_features">Войдите, чтобы пользоваться функциями приложения</string>
+    <string name="forgot_password">Забыл пароль</string>
+    <string name="account_already_registered">"Такой аккаунт уже зарегистрирован "</string>
+    <string name="account_not_found">Аккаунт не найден</string>
+    <string name="incorrect_password">Неверный пароль</string>
+    <string name="profile">Профиль</string>
+    <string name="home">Главная</string>
+    <string name="your_profile">Ваш профиль</string>
+    <string name="your_status">Ваш статус:</string>
+    <string name="under_consideration">На рассмотрении</string>
+    <string name="seller">Продавец</string>
+    <string name="manager">Менеджер</string>
+    <string name="administrator">Администратор</string>
+    <string name="save">Сохранить</string>
+    <string name="basic_functionality_not_available">Основной функционал недоступен</string>
+    <string name="users">Пользователи</string>
+    <string name="select_status">Выберите статус:</string>
+    <string name="close">Закрыть</string>
+    <string name="statics">Статика</string>
+</resources>
