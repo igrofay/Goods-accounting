@@ -17,7 +17,7 @@ internal fun NavGraphBuilder.managerUserNav(appNavController: NavController){
         val navHostController = rememberNavController()
         Scaffold(
             bottomBar = {
-                BottomNavBar(
+                BottomNavbar(
                     listItems = ManagerUserRouting.listBottomItemFeature,
                     navController = navHostController
                 )

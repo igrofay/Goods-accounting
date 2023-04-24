@@ -1,3 +1,3 @@
 package com.example.goodsaccounting.nav.model
 
-internal sealed class AppRouting(val route: String)
+internal abstract class AppRouting(val route: String)

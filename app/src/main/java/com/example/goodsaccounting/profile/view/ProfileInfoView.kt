@@ -20,7 +20,7 @@ import com.example.goodsaccounting.R
 @Composable
 internal fun <State> ProfileInfoView(
     state: State,
-    eventBase: EventBase<ProfileEvent>
+    eventBase: EventBase<ProfileEvent>,
 ) where State : ProfileState, State : UserModel {
     Column(
         modifier = Modifier
@@ -35,13 +35,13 @@ internal fun <State> ProfileInfoView(
         Spacer(modifier = Modifier.height(MaterialTheme.padding.medium2))
         ProfileInputFields(state, eventBase)
         Spacer(modifier = Modifier.height(MaterialTheme.padding.medium2))
-        if ((state as? ProfileState.EditingUserData)?.isUpdating == true){
+        if ((state as? ProfileState.EditingUserData)?.isUpdating == true) {
             CircularProgressIndicator(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(vertical = MaterialTheme.padding.medium2)
             )
-        }else{
+        } else {
             CustomButton(
                 label = stringResource(id = R.string.save),
                 enabled = state is ProfileState.EditingUserData
@@ -49,5 +49,6 @@ internal fun <State> ProfileInfoView(
                 eventBase.onEvent(ProfileEvent.Save)
             }
         }
+        Spacer(modifier = Modifier.height(MaterialTheme.padding.small2))
     }
 }

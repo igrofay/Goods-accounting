@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,7 +15,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.goodsaccounting.R
 import com.example.goodsaccounting.nav.model.NoneUserRouting
@@ -27,7 +25,7 @@ internal fun NavGraphBuilder.noneUserNav(appNavController: NavController) {
         val navHostController = rememberNavController()
         Scaffold(
             bottomBar = {
-                BottomNavBar(
+                BottomNavbar(
                     listItems = NoneUserRouting.listBottomItemFeature,
                     navController = navHostController
                 )

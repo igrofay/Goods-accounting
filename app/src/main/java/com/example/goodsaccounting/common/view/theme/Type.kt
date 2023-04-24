@@ -51,7 +51,7 @@ internal val TypographyMobile = Typography(
     ),
     caption = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 13.sp,
+        fontSize = 12.sp,
         letterSpacing = 0.sp
     ),
     button = TextStyle(

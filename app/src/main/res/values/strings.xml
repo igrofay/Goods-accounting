@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Goods accounting</string>
+    <string name="app_name">Учет продаж и товаров</string>
     <string name="network_problems">Проблемы с сетью</string>
     <string name="welcome">Добро пожаловать!</string>
     <string name="sign_in">Войти в систему</string>

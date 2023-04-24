@@ -1,5 +1,6 @@
 package com.example.core.domain.use_case.auth
 
+import com.example.core.BuildConfig
 import com.example.core.domain.model.auth.SignInModel
 import com.example.core.domain.model.user.RoleLevel
 import com.example.core.domain.repos.AppRepos
@@ -13,6 +14,7 @@ class SignInUseCase(
     private val userRepos: UserRepos,
 ) {
     suspend fun execute(signInModel: SignInModel) = runCatching {
+//        if(BuildConfig.DEBUG) return@runCatching RoleLevel.Manager
         val tokenModel = authRepos.signIn(signInModel)
         appRepos.setAccessToken(tokenModel.accessToken)
         appRepos.setRefreshToken(tokenModel.refreshToken)

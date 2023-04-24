@@ -1,5 +1,7 @@
 package com.example.goodsaccounting.common.view.visual_transformation
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
@@ -8,7 +10,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 internal class PhonedVisualTransformation(
     val mask: String,
-    val maskNumber: Char
+    val maskNumber: Char,
 ) : VisualTransformation {
 
     private val maxLength = mask.count { it == maskNumber }
@@ -46,10 +48,24 @@ internal class PhonedVisualTransformation(
     override fun hashCode(): Int {
         return mask.hashCode()
     }
-    companion object{
+
+    companion object {
         const val russianMask = "+7 (000) 000-00-00"
-        const val maskNumber = '0'
+        const val numberCharForRussianMask = '0'
+
+        @Composable
+        fun transformText(
+            text: String,
+            mask: String = russianMask,
+            numberCharForMask: Char = '0',
+        ) = remember {
+            PhonedVisualTransformation(
+                mask,
+                numberCharForMask,
+            ).filter(AnnotatedString(text)).text
+        }
     }
+
 }
 
 private class PhoneOffsetMapper(val mask: String, val numberChar: Char) : OffsetMapping {

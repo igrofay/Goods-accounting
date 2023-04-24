@@ -8,10 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.example.goodsaccounting.nav.model.AdministratorUserRouting
-import com.example.goodsaccounting.nav.model.AppRouting
-import com.example.goodsaccounting.nav.model.NoneUserRouting
 import com.example.goodsaccounting.profile.view.ProfileScreen
 import com.example.goodsaccounting.user_administration.view.UserAdministrationScreen
 
@@ -20,7 +17,7 @@ internal fun NavGraphBuilder.administratorUserNav(appNavController: NavControlle
         val navHostController = rememberNavController()
         Scaffold(
             bottomBar = {
-                BottomNavBar(
+                BottomNavbar(
                     listItems = AdministratorUserRouting.listBottomItemFeature,
                     navController = navHostController
                 )

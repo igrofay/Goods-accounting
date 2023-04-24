@@ -62,7 +62,7 @@ internal fun <State>  ProfileInputFields(
             ),
             visualTransformation = PhonedVisualTransformation(
                 PhonedVisualTransformation.russianMask,
-                PhonedVisualTransformation.maskNumber,
+                PhonedVisualTransformation.numberCharForRussianMask,
             ),
             isError = (state as? ProfileState.EditingUserData)?.isErrorPhone ?: false
         )

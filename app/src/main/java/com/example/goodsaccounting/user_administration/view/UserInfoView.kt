@@ -73,22 +73,13 @@ internal fun UserInfoView(
                     modifier = Modifier.weight(1f),
                     maxLines = 1
                 )
-                BasicTextField(
-                    value = userModel.phone,
-                    onValueChange = {},
-                    textStyle = MaterialTheme.typography
-                        .caption.copy(
-                            color = MaterialTheme.colors.onBackground,
-                            textAlign = TextAlign.End
-                        ),
-                    readOnly = true,
-                    enabled = false,
-                    visualTransformation = PhonedVisualTransformation(
-                        PhonedVisualTransformation.russianMask,
-                        PhonedVisualTransformation.maskNumber,
-                    ),
+                Text(
+                    text = PhonedVisualTransformation
+                        .transformText(text = userModel.phone),
+                    style = MaterialTheme.typography.caption,
                     modifier = Modifier.weight(1f),
                     maxLines = 1,
+                    textAlign = TextAlign.End,
                 )
             }
             Row(
@@ -156,7 +147,7 @@ internal fun UserInfoView(
                     modifier = Modifier
                         .alphaClick(alpha = 0.6f) {
                             eventBase.onEvent(UserAdministrationEvent.CloseChangeUserRole)
-                        }
+                        }.padding(vertical = MaterialTheme.padding.small2)
                 )
                 Text(
                     text = stringResource(id = R.string.save),
@@ -164,6 +155,7 @@ internal fun UserInfoView(
                     color = MaterialTheme.colors.secondary,
                     modifier = Modifier
                         .alphaClick { eventBase.onEvent(UserAdministrationEvent.SaveNewUserRole) }
+                        .padding(vertical = MaterialTheme.padding.small2)
                 )
             }
         }

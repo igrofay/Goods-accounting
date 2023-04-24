@@ -76,7 +76,7 @@ internal fun AuthInputFields(
                     ),
                     visualTransformation = PhonedVisualTransformation(
                         PhonedVisualTransformation.russianMask,
-                        PhonedVisualTransformation.maskNumber,
+                        PhonedVisualTransformation.numberCharForRussianMask,
                     ),
                     isError = state.isErrorPhone,
                 )
