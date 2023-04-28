@@ -16,7 +16,7 @@ internal class UserApi(
     }
     suspend fun updateImage(byteArray: ByteArray) = authorizedClient.put("/api/profileIcon"){
         setBody(byteArray)
-        contentType(ContentType.Image.PNG)
+        contentType(ContentType.Image.Any)
     }
 
 }

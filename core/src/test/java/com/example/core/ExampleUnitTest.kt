@@ -1,10 +1,11 @@
 package com.example.core
 
-import com.example.core.data.utils.toSha256
-import com.example.core.domain.model.user.RoleLevel
-import com.example.core.domain.utils.JWT
-import kotlinx.serialization.SerialName
+import com.example.core.domain.model.product.AmountOfMaterialModel
+import com.example.core.domain.model.product.Currency
+import com.example.core.domain.model.product.MaterialModel
+import com.example.core.domain.model.product.Measurements
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.Test
@@ -19,8 +20,23 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
+        println(
+            Json.decodeFromString<A>(
+                Json.encodeToString(
+                    AmountOfMaterialModel(
+                        10f,
+                        object : MaterialModel{
+                            override val id = ""
+                            override val name = ""
+                            override val measurements = Measurements.Piece
+                            override val imageUrl = null
 
+                        }
+                    )
+                )
+            )
+        )
     }
-
-
+    @Serializable
+    data class A(val c: Currency)
 }

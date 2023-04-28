@@ -3,20 +3,30 @@ package com.example.goodsaccounting.nav.model
 import com.example.goodsaccounting.R
 
 internal sealed class ManagerUserRouting(route:String) : AppRouting(route) {
-    object Dashboard :  ManagerUserRouting("${route}_dashboard"), BottomItemFeature{
-        override val label = R.string.home
-        override val icon = R.drawable.ic_home
+
+    sealed class ComponentsWitBottomBar(route: String): ManagerUserRouting(route), BottomItemFeature{
+        object Dashboard :  ComponentsWitBottomBar("${route}_dashboard"){
+            override val label = R.string.home
+            override val icon = R.drawable.ic_home
+        }
+        object Analytics : ComponentsWitBottomBar("${route}_analytics") {
+            override val label = R.string.statics
+            override val icon = R.drawable.ic_bar_chart
+        }
+        object Profile : ComponentsWitBottomBar("${route}_profile"){
+            override val label = R.string.profile
+            override val icon = R.drawable.ic_person
+        }
+        companion object{
+            const val route = "${ManagerUserRouting.route}_components_wit_bottom_bar"
+            val listBottomItemFeature = listOf<BottomItemFeature>(Dashboard,Analytics,Profile)
+        }
     }
-    object Analytics : ManagerUserRouting("${route}_analytics"), BottomItemFeature{
-        override val label = R.string.statics
-        override val icon = R.drawable.ic_bar_chart
-    }
-    object Profile : ManagerUserRouting("${route}_profile"), BottomItemFeature {
-        override val label = R.string.profile
-        override val icon = R.drawable.ic_person
-    }
+    object CreateMaterial : ManagerUserRouting("${route}_create_material")
+
+    object CrateProduct : ManagerUserRouting("${route}_create_product")
+
     companion object{
         const val route = "manager_user"
-        val listBottomItemFeature = listOf<BottomItemFeature>(Dashboard,Analytics,Profile)
     }
 }

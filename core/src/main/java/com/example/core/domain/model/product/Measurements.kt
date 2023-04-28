@@ -6,5 +6,7 @@ enum class Measurements {
     Gram,
     Liter,
     Milliliter,
+    Meter,
+    Centimeter,
     Other,
 }

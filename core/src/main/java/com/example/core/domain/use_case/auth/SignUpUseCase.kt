@@ -18,7 +18,7 @@ class SignUpUseCase(
         appRepos.setRefreshToken(tokenModel.refreshToken)
         val token = tokenModel.accessToken.split(' ')[1]
         val map = JWT(token).getMap(1)
-            ?: return@runCatching userRepos.getSingleUser().role
+            ?: return@runCatching userRepos.getUser().role
         val role = map["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
         RoleLevel.valueOf(role.toString())
     }

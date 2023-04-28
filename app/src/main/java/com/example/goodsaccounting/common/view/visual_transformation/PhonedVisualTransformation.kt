@@ -57,7 +57,7 @@ internal class PhonedVisualTransformation(
         fun transformText(
             text: String,
             mask: String = russianMask,
-            numberCharForMask: Char = '0',
+            numberCharForMask: Char = numberCharForRussianMask,
         ) = remember {
             PhonedVisualTransformation(
                 mask,

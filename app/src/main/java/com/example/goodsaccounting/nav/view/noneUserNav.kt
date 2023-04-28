@@ -20,7 +20,7 @@ import com.example.goodsaccounting.R
 import com.example.goodsaccounting.nav.model.NoneUserRouting
 import com.example.goodsaccounting.profile.view.ProfileScreen
 
-internal fun NavGraphBuilder.noneUserNav(appNavController: NavController) {
+internal fun NavGraphBuilder.noneUserNav() {
     composable(NoneUserRouting.route) {
         val navHostController = rememberNavController()
         Scaffold(

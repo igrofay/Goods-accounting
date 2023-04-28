@@ -1,7 +1,10 @@
 package com.example.goodsaccounting.nav.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.core.domain.model.user.RoleLevel
@@ -13,13 +16,19 @@ import com.example.goodsaccounting.nav.model.StartingRouting
 @Composable
 internal fun InitNav() {
     val appNavController = rememberNavController()
-    NavHost(navController = appNavController, startDestination = StartingRouting.route) {
-        staringNav(appNavController)
-        noneUserNav(appNavController)
-        administratorUserNav(appNavController)
-        managerUserNav(appNavController)
+    CompositionLocalProvider(
+        LocalAppNavController provides appNavController
+    ) {
+        NavHost(navController = appNavController, startDestination = StartingRouting.route) {
+            staringNav()
+            noneUserNav()
+            administratorUserNav()
+            managerUserNav()
+        }
     }
 }
+
+val LocalAppNavController = staticCompositionLocalOf<NavHostController> { error("Not Found AppNavController") }
 
 internal fun NavController.navWithClearStack(route:String){
     val lastRoute = currentBackStackEntry?.destination?.route ?: return

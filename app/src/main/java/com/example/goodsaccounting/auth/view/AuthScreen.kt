@@ -39,7 +39,6 @@ internal fun AuthScreen(
     val res = LocalContext.current.resources
     authVM.collectSideEffect{
         when(it){
-            AuthSideEffect.GoToRestorePassword -> goToRestorePassword()
             is AuthSideEffect.GoToUserContent -> goToUserContent(it.roleLevel)
             is AuthSideEffect.ShowMessage -> {
                 scaffoldState.snackbarHostState.showSnackbar(
@@ -80,7 +79,7 @@ internal fun AuthScreen(
                 }
             }
             Spacer(modifier = Modifier.weight(1f))
-            ActionButtons(state = state, eventBase = authVM)
+            ActionButtons(state = state, eventBase = authVM, restorePassword = goToRestorePassword)
         }
     }
 }

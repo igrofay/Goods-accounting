@@ -31,4 +31,24 @@
     <string name="select_status">Выберите статус:</string>
     <string name="close">Закрыть</string>
     <string name="statics">Статика</string>
+    <string name="products">Товары</string>
+    <string name="materials">Материалы</string>
+    <string name="products_and_materials">Товары и материалы</string>
+    <string name="warehouse">Склад</string>
+    <string name="warehouse_history">История склада</string>
+    <string name="piece">шт.</string>
+    <string name="kilogram">кг.</string>
+    <string name="gram">г.</string>
+    <string name="liter">л.</string>
+    <string name="milliliter">мл.</string>
+    <string name="mater">м.</string>
+    <string name="centimeter">см.</string>
+    <string name="material_name">Имя материала</string>
+    <string name="measurement_type">Тип измерения</string>
+    <string name="other">другая</string>
+    <string name="create">Создать</string>
+    <string name="type_of_measurement_needed">Вид измерения нужен для указания, в чем измеряется материал для расчетов при списании или добавлении материалов на складе</string>
+    <string name="other_implies_that_required">Другой подразумевает, что требуемый тип не существует и будет рассчитываться как шт.</string>
+    <string name="ok">Хорошо</string>
+    <string name="product_created">Продукт создан</string>
 </resources>

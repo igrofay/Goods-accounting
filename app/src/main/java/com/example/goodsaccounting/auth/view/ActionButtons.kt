@@ -17,7 +17,11 @@ import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view_model.EventBase
 
 @Composable
-internal fun ActionButtons(state: AuthState, eventBase: EventBase<AuthEvent>) {
+internal fun ActionButtons(
+    state: AuthState,
+    eventBase: EventBase<AuthEvent>,
+    restorePassword: ()-> Unit
+) {
     Column(
         modifier = Modifier
             .padding(vertical = MaterialTheme.padding.medium1),
@@ -38,7 +42,7 @@ internal fun ActionButtons(state: AuthState, eventBase: EventBase<AuthEvent>) {
             label = stringResource(id = R.string.forgot_password),
             colorBorder = MaterialTheme.colors.secondary
         ){
-            eventBase.onEvent(AuthEvent.RestorePassword)
+            restorePassword.invoke()
         }
     }
 }

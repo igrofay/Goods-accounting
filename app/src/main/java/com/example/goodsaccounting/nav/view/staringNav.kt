@@ -10,12 +10,13 @@ import com.example.goodsaccounting.nav.model.AdministratorUserRouting
 import com.example.goodsaccounting.nav.model.StartingRouting
 import com.example.goodsaccounting.splash.view.SplashScreen
 
-internal fun NavGraphBuilder.staringNav(appNavController: NavController) {
+internal fun NavGraphBuilder.staringNav() {
     navigation(
         startDestination = StartingRouting.Splash.route,
         route = StartingRouting.route,
     ) {
         composable(StartingRouting.Splash.route) {
+            val appNavController = LocalAppNavController.current
             SplashScreen(
                 needAuth = {
                     appNavController.navWithClearStack(StartingRouting.Auth.route)
@@ -26,6 +27,7 @@ internal fun NavGraphBuilder.staringNav(appNavController: NavController) {
             )
         }
         composable(StartingRouting.Auth.route) {
+            val appNavController = LocalAppNavController.current
             AuthScreen(
                 goToRestorePassword = {
                     appNavController.navigate(

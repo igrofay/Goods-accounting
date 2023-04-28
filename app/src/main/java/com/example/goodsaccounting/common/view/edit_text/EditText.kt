@@ -20,6 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.goodsaccounting.common.view.theme.Padding
+import com.example.goodsaccounting.common.view.theme.While200
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view.theme.textColor
 
@@ -57,13 +58,13 @@ internal fun EditText(
                 .fillMaxWidth()
                 .clip(shape)
                 .background(
-                    MaterialTheme.colors.surface,
+                    While200,
                     shape,
                 )
                 .border(
-                    1.dp,
-                    if (isError) MaterialTheme.colors.error.copy(0.4f)
-                    else MaterialTheme.colors.textColor.copy(0.3f),
+                    1.5.dp,
+                    if (isError) MaterialTheme.colors.error.copy(0.6f)
+                    else MaterialTheme.colors.textColor.copy(0.4f),
                     shape
                 )
                 .padding(

@@ -12,15 +12,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.example.core.domain.model.user.RoleLevel
-import com.example.goodsaccounting.R
 import com.example.goodsaccounting.common.view.click.alphaClick
 import com.example.goodsaccounting.common.view.theme.Black900
+import com.example.goodsaccounting.common.view.theme.While200
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view.utils.getStringRole
 
@@ -50,15 +48,15 @@ internal fun ListRole(
 @Composable
 private fun CartRoleView(
     roleLevel: RoleLevel,
-    selected: Boolean,
+    isSelected: Boolean,
     onClick: ()-> Unit,
 ) {
     val animatorColorBox by animateColorAsState(
-        targetValue = if(selected) MaterialTheme.colors.primary
-        else MaterialTheme.colors.surface,
+        targetValue = if(isSelected) MaterialTheme.colors.primary
+        else While200,
     )
     val animatorColorText by animateColorAsState(
-        targetValue = if(selected) Color.White
+        targetValue = if(isSelected) Color.White
         else Black900.copy(0.6f),
     )
     Box(

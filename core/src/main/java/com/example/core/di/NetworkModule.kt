@@ -20,7 +20,7 @@ const val baseClient = "TAG_baseClient"
 const val authorizedClient = "TAG_authorizedClient"
 
 internal val networkMode by DI.Module{
-    bindConstant(tag = url){ "https://c8f3-95-183-17-160.ngrok-free.app" }
+    bindConstant(tag = url){ "https://efab-95-183-16-18.ngrok-free.app/" }
     bindSingleton(tag = baseClient) { baseClient(instance(url)) }
     bindSingleton(tag = authorizedClient){ authorizedClient(instance(url),instance()) }
 }

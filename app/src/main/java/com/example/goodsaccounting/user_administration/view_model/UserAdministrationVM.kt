@@ -1,28 +1,25 @@
 package com.example.goodsaccounting.user_administration.view_model
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.core.domain.repos.AdminRepos
+import com.example.core.domain.repos.AdminPanelRepos
 import com.example.core.domain.use_case.admin.GetUsersUseCase
 import com.example.goodsaccounting.common.view_model.AppVM
 import com.example.goodsaccounting.user_administration.model.UserAdministrationEvent
 import com.example.goodsaccounting.user_administration.model.UserAdministrationSideEffect
 import com.example.goodsaccounting.user_administration.model.UserAdministrationState
-import kotlinx.coroutines.delay
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.container
 import org.orbitmvi.orbit.syntax.simple.intent
-import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 
 internal class UserAdministrationVM(
     override val di: DI,
 ) : AppVM<UserAdministrationState, UserAdministrationSideEffect, UserAdministrationEvent>(),
     DIAware {
-    private val adminRepos: AdminRepos by di.instance()
+    private val adminPanelRepos: AdminPanelRepos by di.instance()
     private val getUsersUseCase: GetUsersUseCase by di.instance()
 
     override val container: Container<UserAdministrationState, UserAdministrationSideEffect> =
@@ -46,7 +43,7 @@ internal class UserAdministrationVM(
             is UserAdministrationEvent.SaveNewUserRole ->  {
                 state.newUserRole?.let {newRole ->
                     state.changeUserRole?.email?.let { emailUser->
-                        adminRepos.updateUserRole(emailUser, newRole)
+                        adminPanelRepos.updateUserRole(emailUser, newRole)
                     }
                 }
                 reduce { state.copy(changeUserRole = null, newUserRole = null) }

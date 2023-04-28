@@ -21,7 +21,7 @@ private val DarkColorPalette = darkColors(
     primary = Orange500,
     secondary = Green500,
     background = Black900,
-    surface = While200,
+    surface = Black700,
     error = Red500,
 )
 

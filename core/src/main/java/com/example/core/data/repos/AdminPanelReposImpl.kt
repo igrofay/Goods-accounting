@@ -5,13 +5,13 @@ import com.example.core.data.model.admin.ChangeRoleUser
 import com.example.core.data.model.user.UserBody
 import com.example.core.domain.model.user.RoleLevel
 import com.example.core.domain.model.user.UserModel
-import com.example.core.domain.repos.AdminRepos
+import com.example.core.domain.repos.AdminPanelRepos
 import io.ktor.client.call.*
 import io.ktor.http.*
 
-internal class AdminReposImpl(
+internal class AdminPanelReposImpl(
     private val adminApi: AdminApi
-) : AdminRepos{
+) : AdminPanelRepos{
     override suspend fun getUsers(): List<UserModel> {
         val answer = adminApi.getUsers()
         when(answer.status) {

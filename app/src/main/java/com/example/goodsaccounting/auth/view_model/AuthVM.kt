@@ -107,9 +107,7 @@ internal class AuthVM(
                     AuthType.SignUp -> signUp()
                 }
             }
-            AuthEvent.RestorePassword -> blockingIntent {
-                postSideEffect(AuthSideEffect.GoToRestorePassword)
-            }
+
         }
     }
 

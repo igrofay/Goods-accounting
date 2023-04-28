@@ -11,6 +11,7 @@ internal val Orange500 = Color(0xFFFF9F40)
 internal val While100 = Color(0xE6FFFFFF)
 internal val While200 = Color(0xFFF4F4F5)
 internal val Black900 = Color(0xFF1D2533)
+internal val Black700 = Color(0xFF3D4555)
 internal val Red700 = Color(0xFFFF0C0C)
 internal val Red500 = Color(0xFFFF4747)
 internal val Colors.textColor: Color

@@ -22,9 +22,11 @@ import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.user.RoleLevel
 import com.example.core.domain.model.user.UserModel
 import com.example.goodsaccounting.R
+import com.example.goodsaccounting.common.view.button.CustomTextButton
 import com.example.goodsaccounting.common.view.click.alphaClick
 import com.example.goodsaccounting.common.view.theme.Black900
 import com.example.goodsaccounting.common.view.theme.padding
+import com.example.goodsaccounting.common.view.theme.textColor
 import com.example.goodsaccounting.common.view.utils.getStringRole
 import com.example.goodsaccounting.common.view.visual_transformation.PhonedVisualTransformation
 import com.example.goodsaccounting.common.view_model.EventBase
@@ -39,7 +41,7 @@ internal fun UserInfoView(
 ) {
     Box(
         modifier = Modifier
-            .fillMaxWidth(1f)
+            .fillMaxWidth()
             .padding(top = 25.dp)
             .background(
                 MaterialTheme.colors.background,
@@ -93,7 +95,7 @@ internal fun UserInfoView(
                     style = MaterialTheme.typography.body2,
                 )
                 var expanded by remember { mutableStateOf(false) }
-                Box{
+                Box {
                     Row(
                         modifier = Modifier.alphaClick { expanded = !expanded },
                         verticalAlignment = Alignment.Bottom,
@@ -101,7 +103,6 @@ internal fun UserInfoView(
                         Text(
                             text = getStringRole(roleLevel = newUserRole ?: userModel.role),
                             style = MaterialTheme.typography.body2,
-
                         )
                         val animRotate by animateFloatAsState(
                             targetValue = if (expanded) 180f else 0f
@@ -121,7 +122,7 @@ internal fun UserInfoView(
                         modifier = Modifier
                             .width(IntrinsicSize.Min)
                     ) {
-                        RoleLevel.values().forEach {  role ->
+                        RoleLevel.values().forEach { role ->
                             DropdownMenuItem(onClick = {
                                 eventBase.onEvent(UserAdministrationEvent.SelectedNewUserRole(role))
                                 expanded = false
@@ -129,7 +130,7 @@ internal fun UserInfoView(
                                 Text(
                                     text = getStringRole(roleLevel = role),
                                     style = MaterialTheme.typography.body2,
-                                    color = Black900
+                                    color = MaterialTheme.colors.textColor
                                 )
                             }
                         }
@@ -140,23 +141,18 @@ internal fun UserInfoView(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = stringResource(id = R.string.close),
-                    style = MaterialTheme.typography.button,
+                CustomTextButton(
+                    label = stringResource(id = R.string.close),
                     color = MaterialTheme.colors.error,
-                    modifier = Modifier
-                        .alphaClick(alpha = 0.6f) {
-                            eventBase.onEvent(UserAdministrationEvent.CloseChangeUserRole)
-                        }.padding(vertical = MaterialTheme.padding.small2)
-                )
-                Text(
-                    text = stringResource(id = R.string.save),
-                    style = MaterialTheme.typography.button,
+                ) {
+                    eventBase.onEvent(UserAdministrationEvent.CloseChangeUserRole)
+                }
+                CustomTextButton(
+                    label = stringResource(id = R.string.save),
                     color = MaterialTheme.colors.secondary,
-                    modifier = Modifier
-                        .alphaClick { eventBase.onEvent(UserAdministrationEvent.SaveNewUserRole) }
-                        .padding(vertical = MaterialTheme.padding.small2)
-                )
+                ) {
+                    eventBase.onEvent(UserAdministrationEvent.SaveNewUserRole)
+                }
             }
         }
         GlideImage(

@@ -14,5 +14,4 @@ internal sealed class AuthEvent : UIEvent() {
     class InputPatronymic(val patronymic: String): AuthEvent()
     class InputPhone(val phone:String) : AuthEvent()
     object Authorization : AuthEvent()
-    object RestorePassword : AuthEvent()
 }

@@ -12,7 +12,7 @@ import com.example.goodsaccounting.nav.model.AdministratorUserRouting
 import com.example.goodsaccounting.profile.view.ProfileScreen
 import com.example.goodsaccounting.user_administration.view.UserAdministrationScreen
 
-internal fun NavGraphBuilder.administratorUserNav(appNavController: NavController){
+internal fun NavGraphBuilder.administratorUserNav(){
     composable(AdministratorUserRouting.route){
         val navHostController = rememberNavController()
         Scaffold(

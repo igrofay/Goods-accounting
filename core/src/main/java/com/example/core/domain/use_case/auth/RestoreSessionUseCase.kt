@@ -1,5 +1,6 @@
 package com.example.core.domain.use_case.auth
 
+import com.example.core.BuildConfig
 import com.example.core.domain.model.error.AuthError
 import com.example.core.domain.model.user.RoleLevel
 import com.example.core.domain.repos.AppRepos
@@ -14,13 +15,14 @@ class RestoreSessionUseCase(
 ) {
     suspend fun execute() = runCatching{
         try {
+            if (BuildConfig.DEBUG) return@runCatching RoleLevel.Manager
             val refreshToken = appRepos.getRefreshToken() ?: throw AuthError.NullRefreshToken
             val tokenModel = authRepos.restoreSession(refreshToken)
             appRepos.setAccessToken(tokenModel.accessToken)
             appRepos.setRefreshToken(tokenModel.refreshToken)
             val accessToken = tokenModel.accessToken.split(' ')[1]
             val map = JWT(accessToken).getMap(1)
-                ?: return@runCatching userRepos.getSingleUser().role
+                ?: return@runCatching userRepos.getUser().role
             val role = map["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
             RoleLevel.valueOf(role.toString())
         }catch (e: AuthError.FailedToRestoreSession){
