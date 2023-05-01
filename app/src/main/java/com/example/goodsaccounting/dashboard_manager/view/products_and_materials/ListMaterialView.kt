@@ -70,48 +70,45 @@ internal fun ListMaterialView(
 }
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MaterialCard(
     materialModel: MaterialModel,
 ) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement
-            .spacedBy(MaterialTheme.padding.small2),
-    ) {
-        CustomImage(
-            image = materialModel.imageUrl,
-            modifier = Modifier
-                .height(50.dp)
-                .width(90.dp)
-                .shadow(1.dp)
-        )
-        Column(
-            modifier = Modifier.height(68.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-        ){
-            Spacer(modifier = Modifier)
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small2)
+    Column {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement
+                .spacedBy(MaterialTheme.padding.medium1),
+        ) {
+            CustomImage(
+                image = materialModel.imageUrl,
+                modifier = Modifier
+                    .height(60.dp)
+                    .width(100.dp)
+                    .shadow(1.dp)
+            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small1),
             ) {
                 Text(
                     text = materialModel.name,
                     maxLines = 1,
-                    modifier = Modifier
-                        .weight(0.6f)
-                        .basicMarquee()
+                    modifier = Modifier,
+                    style = MaterialTheme.typography.subtitle1
                 )
                 Text(
                     text = "${stringResource(id = R.string.measurement_type)}: ${materialModel.measurement.getDesignation()}",
-                    modifier = Modifier.weight(1f).basicMarquee(),
-                    textAlign = TextAlign.End,
+                    modifier = Modifier,
                     maxLines = 1,
+                    style = MaterialTheme.typography.body1
                 )
             }
-            Divider()
         }
+        Divider(
+            startIndent = 100.dp + MaterialTheme.padding.medium1,
+            modifier = Modifier.padding(vertical = MaterialTheme.padding.small2)
+        )
     }
+
 }

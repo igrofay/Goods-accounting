@@ -29,6 +29,14 @@ internal fun Currency.getChar(): Char {
 }
 
 @Composable
+internal fun Currency.getDesignation() : String {
+    return when(this){
+        Currency.Rub -> stringResource(R.string.rubles)
+        Currency.Dollar ->  stringResource(R.string.dollars)
+        Currency.Euro -> stringResource(R.string.euro)
+    }
+}
+@Composable
 internal fun Measurements.getDesignation() : String{
     val res = LocalContext.current.resources
     return this.getDesignation(res)

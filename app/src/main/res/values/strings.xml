@@ -51,4 +51,10 @@
     <string name="other_implies_that_required">Другой подразумевает, что требуемый тип не существует и будет рассчитываться как шт.</string>
     <string name="ok">Хорошо</string>
     <string name="product_created">Продукт создан</string>
+    <string name="product_name">Имя продукта</string>
+    <string name="product_price">Цена продукта</string>
+    <string name="rubles">Рубли</string>
+    <string name="dollars">Доллары</string>
+    <string name="euro">Евро</string>
+    <string name="materials_used_in_manufacture_of_product">Материалы, которые используются в изготовлении продукта</string>
 </resources>

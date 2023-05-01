@@ -23,10 +23,6 @@ import com.example.goodsaccounting.common.view_model.rememberDIAwareViewModel
 import com.example.goodsaccounting.create.model.material.CreateMaterialEvent
 import com.example.goodsaccounting.create.model.material.CreateMaterialSideEffect
 import com.example.goodsaccounting.create.view_model.CreateMaterialVM
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -61,7 +57,7 @@ internal fun CreateMaterialScreen(
                 eventBase = createMaterialVM,
             )
             Spacer(modifier = Modifier.weight(1f))
-            if (state.isCrating){
+            if (state.isCreating){
                 CircularProgressIndicator(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)

@@ -71,14 +71,14 @@ internal class CreateMaterialVM(
         } else {
             reduce {
                 state.copy(
-                    isCrating = true
+                    isCreating = true
                 )
             }
             createMaterialUseCase.execute(state)
                 .onSuccess {
                     postSideEffect(CreateMaterialSideEffect.ProductCreated)
                 }.onFailure {
-                    reduce { state.copy(isCrating = false) }
+                    reduce { state.copy(isCreating = false) }
                     onError(it)
                 }
         }
