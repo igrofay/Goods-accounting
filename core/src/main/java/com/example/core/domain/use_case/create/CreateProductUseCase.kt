@@ -7,9 +7,9 @@ class CreateProductUseCase(
     private val createProductAndMaterialRepos: CreateProductAndMaterialRepos
 ) {
     suspend fun execute(createProductModel: CreateProductModel, imageUri: String?) = runCatching {
-        val id = createProductAndMaterialRepos.createProduct(createProductModel)
+        val idModel = createProductAndMaterialRepos.createProduct(createProductModel)
         imageUri?.let {imageUriNotNull->
-            createProductAndMaterialRepos.updateImageProduct(imageUriNotNull, id)
+            createProductAndMaterialRepos.updateImageProduct(imageUriNotNull, idModel.id)
         }
     }
 }

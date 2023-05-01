@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.product.ProductModel
 import com.example.goodsaccounting.R
+import com.example.goodsaccounting.common.view.image.CustomImage
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view.utils.getProductComponents
 import com.example.goodsaccounting.common.view.utils.getProductCost
@@ -76,42 +77,11 @@ private fun ProductCard(
         Column(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            val color = MaterialTheme.colors.onBackground.copy(0.2f)
-            var backgroundImage by remember { mutableStateOf(color) }
-            GlideImage(
-                imageModel = { productModel.imageUrl },
+            CustomImage(
+                image = productModel.imageUrl,
                 modifier = Modifier
                     .height(140.dp)
                     .fillMaxWidth()
-                    .background(backgroundImage),
-                failure = {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_image),
-                            contentDescription = null,
-                        )
-                    }
-                },
-                imageOptions = ImageOptions(
-                    alignment = Alignment.Center,
-                    contentScale = ContentScale.FillHeight
-                ),
-                success = { success ->
-                    LaunchedEffect(success.imageBitmap) {
-                        backgroundImage = Color(
-                            success.imageBitmap!!
-                                .asAndroidBitmap().getPixel(0, 0)
-                        )
-                    }
-                    Image(
-                        bitmap = success.imageBitmap!!,
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
             )
             Divider()
             Column(

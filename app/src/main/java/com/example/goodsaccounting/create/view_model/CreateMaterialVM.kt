@@ -2,14 +2,11 @@ package com.example.goodsaccounting.create.view_model
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.core.domain.repos.CreateProductAndMaterialRepos
 import com.example.core.domain.use_case.create.CreateMaterialUseCase
-import com.example.goodsaccounting.R
 import com.example.goodsaccounting.common.view_model.AppVM
 import com.example.goodsaccounting.create.model.material.CreateMaterialEvent
 import com.example.goodsaccounting.create.model.material.CreateMaterialSideEffect
 import com.example.goodsaccounting.create.model.material.CreateMaterialState
-import kotlinx.coroutines.delay
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
@@ -54,7 +51,7 @@ internal class CreateMaterialVM(
             is CreateMaterialEvent.SelectMeasurements -> intent {
                 reduce {
                     state.copy(
-                        measurements = event.measurements
+                        measurement = event.measurements
                     )
                 }
             }
@@ -79,9 +76,7 @@ internal class CreateMaterialVM(
             }
             createMaterialUseCase.execute(state)
                 .onSuccess {
-                    postSideEffect(CreateMaterialSideEffect.ShowMessage(R.string.product_created))
-                    delay(1000)
-                    postSideEffect(CreateMaterialSideEffect.Exit)
+                    postSideEffect(CreateMaterialSideEffect.ProductCreated)
                 }.onFailure {
                     reduce { state.copy(isCrating = false) }
                     onError(it)

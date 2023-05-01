@@ -64,7 +64,7 @@ internal fun EditText(
                 .border(
                     1.5.dp,
                     if (isError) MaterialTheme.colors.error.copy(0.6f)
-                    else MaterialTheme.colors.textColor.copy(0.4f),
+                    else MaterialTheme.colors.textColor.copy(0.2f),
                     shape
                 )
                 .padding(

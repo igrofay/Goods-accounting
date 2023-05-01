@@ -33,12 +33,15 @@ internal class ProductsAndMaterialsVM(
     }
 
     override val container: Container<ProductsAndMaterialsState, ProductsAndMaterialsSideEffect> =
-        viewModelScope.container(ProductsAndMaterialsState()) {
-            test1()
-        }
+        viewModelScope.container(ProductsAndMaterialsState())
 
     override fun onEvent(event: ProductsAndMaterialsEvent) {
-
+        when(event){
+            ProductsAndMaterialsEvent.Refresh -> intent {
+                reduce { state.copy(isRefreshing = true) }
+                load()
+            }
+        }
     }
 
     private fun test1() = intent {
@@ -58,7 +61,7 @@ internal class ProductsAndMaterialsVM(
                                     override val materialModel = object : MaterialModel {
                                         override val id = UUID.randomUUID().toString()
                                         override val name = "Магнит 25x25"
-                                        override val measurements = Measurements.Piece
+                                        override val measurement = Measurements.Piece
                                         override val imageUrl = null
                                     }
                                 },
@@ -67,7 +70,7 @@ internal class ProductsAndMaterialsVM(
                                     override val materialModel = object : MaterialModel{
                                         override val id = UUID.randomUUID().toString()
                                         override val name = "Рамка 120x72"
-                                        override val measurements = Measurements.Piece
+                                        override val measurement = Measurements.Piece
                                         override val imageUrl = null
                                     }
 
@@ -96,7 +99,8 @@ internal class ProductsAndMaterialsVM(
         }.onSuccess { list->
             reduce {
                 state.copy(
-                    listMaterialModel = list
+                    listMaterialModel = list,
+                    isRefreshing = false,
                 )
             }
         }.onFailure(::onError)
@@ -105,7 +109,8 @@ internal class ProductsAndMaterialsVM(
         }.onSuccess { list->
             reduce {
                 state.copy(
-                    listProductModel = list
+                    listProductModel = list,
+                    isRefreshing = false,
                 )
             }
         }.onFailure(::onError)

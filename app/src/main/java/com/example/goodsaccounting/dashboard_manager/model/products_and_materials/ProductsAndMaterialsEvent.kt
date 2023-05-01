@@ -3,5 +3,5 @@ package com.example.goodsaccounting.dashboard_manager.model.products_and_materia
 import com.example.goodsaccounting.common.model.UIEvent
 
 internal sealed class ProductsAndMaterialsEvent : UIEvent() {
-
+    object Refresh : ProductsAndMaterialsEvent()
 }

@@ -28,7 +28,7 @@ class ExampleUnitTest {
                         object : MaterialModel{
                             override val id = ""
                             override val name = ""
-                            override val measurements = Measurements.Piece
+                            override val measurement = Measurements.Piece
                             override val imageUrl = null
 
                         }

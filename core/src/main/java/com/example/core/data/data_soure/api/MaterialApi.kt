@@ -18,13 +18,13 @@ internal class MaterialApi(
         authorizedClient.get("/api/materials")
 
     suspend fun createMaterial(materialBody: MaterialBody) =
-        authorizedClient.post("api/material") {
+        authorizedClient.post("/api/material") {
             setBody(materialBody)
             contentType(ContentType.Application.Json)
         }
 
     suspend fun updateImageMaterial(byteArray: ByteArray, id: String) =
-        authorizedClient.put("api/material/productIcon/$id") {
+        authorizedClient.put("/api/materialIcon/$id") {
             setBody(byteArray)
             contentType(ContentType.Image.Any)
         }

@@ -8,12 +8,12 @@ import kotlinx.serialization.Serializable
 internal data class MaterialBody(
     override val id: String,
     override val name: String,
-    override val measurements: Measurements,
+    override val measurement: Measurements,
     override val imageUrl: String?
 ) : MaterialModel{
     companion object{
         internal fun MaterialModel.fromModelToMaterialBody() = MaterialBody(
-            id, name, measurements, imageUrl
+            id, name, measurement, imageUrl
         )
     }
 }

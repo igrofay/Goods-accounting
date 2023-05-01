@@ -4,66 +4,71 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.goodsaccounting.R
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view_model.rememberDIAwareViewModel
 import com.example.goodsaccounting.dashboard_manager.model.LocalDashboardSetting
+import com.example.goodsaccounting.dashboard_manager.model.products_and_materials.ProductsAndMaterialsEvent
 import com.example.goodsaccounting.dashboard_manager.view_model.ProductsAndMaterialsVM
 import com.example.goodsaccounting.nav.model.ManagerUserRouting
 import com.example.goodsaccounting.nav.view.LocalAppNavController
-import com.example.goodsaccounting.nav.view.navWithClearStack
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.reduce
+
+internal const val message_for_ProductsAndMaterialsScreen = "message_for_ProductsAndMaterialsScreen"
 
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 internal fun ProductsAndMaterialsScreen() {
     val productsAndMaterialsState by rememberDIAwareViewModel<ProductsAndMaterialsVM>()
     val state by productsAndMaterialsState.collectAsState()
     val pagerState = rememberPagerState()
     val localCoroutine = rememberCoroutineScope()
     val dashboardSetting = LocalDashboardSetting.current
+    val appNavController = LocalAppNavController.current
+    val scaffoldState = rememberScaffoldState()
+    val refreshState = rememberPullRefreshState(refreshing = state.isRefreshing, onRefresh = { productsAndMaterialsState.onEvent(ProductsAndMaterialsEvent.Refresh) })
+    LaunchedEffect(Unit){
+        productsAndMaterialsState.onEvent(ProductsAndMaterialsEvent.Refresh)
+    }
     LaunchedEffect(dashboardSetting) {
         dashboardSetting.setLabel(R.string.products_and_materials)
     }
-    Column(
-        modifier = Modifier
-            .padding(top = MaterialTheme.padding.extraLarge1 * 1.75f),
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small2)
-    ) {
-        TapProductsAndMaterial(
-            currentPage = pagerState.currentPage,
-            onClick = { page ->
-                localCoroutine.launch {
-                    pagerState.animateScrollToPage(page)
-                }
-            }
-        )
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            val appNavController = LocalAppNavController.current
-            ProductsAndMaterialsPager(
-                state = state,
-                pagerState = pagerState
-            )
+    val message = appNavController.currentBackStackEntry
+        ?.savedStateHandle
+        ?.get<String>(message_for_ProductsAndMaterialsScreen)
+    LaunchedEffect(message){
+        message?.let {
+            scaffoldState.snackbarHostState.showSnackbar(it)
+            appNavController.currentBackStackEntry
+                ?.savedStateHandle
+                ?.set(message_for_ProductsAndMaterialsScreen, null)
+        }
+    }
+    Scaffold (
+        scaffoldState = scaffoldState,
+        floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     when (pagerState.currentPage) {
@@ -75,12 +80,6 @@ internal fun ProductsAndMaterialsScreen() {
                         }
                     }
                 },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(
-                        bottom = MaterialTheme.padding.medium1,
-                        end = MaterialTheme.padding.medium1,
-                    )
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -88,6 +87,36 @@ internal fun ProductsAndMaterialsScreen() {
                 )
             }
         }
+    ){padding->
+        Box(
+            modifier = Modifier
+                .padding(padding)
+                .pullRefresh(refreshState)
+        ){
+            Column(
+                verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small2),
+            ) {
+                TapProductsAndMaterial(
+                    currentPage = pagerState.currentPage,
+                    onClick = { page ->
+                        localCoroutine.launch {
+                            pagerState.animateScrollToPage(page)
+                        }
+                    }
+                )
+                ProductsAndMaterialsPager(
+                    state = state,
+                    pagerState = pagerState
+                )
+            }
+            PullRefreshIndicator(
+                state.isRefreshing,
+                refreshState,
+                Modifier.align(Alignment.TopCenter),
+                contentColor = MaterialTheme.colors.primary
+            )
+        }
 
     }
+
 }

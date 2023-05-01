@@ -5,5 +5,5 @@ import com.example.goodsaccounting.common.model.UISideEffect
 
 internal sealed class CreateMaterialSideEffect : UISideEffect() {
     class ShowMessage(@StringRes val message: Int) : CreateMaterialSideEffect()
-    object Exit : CreateMaterialSideEffect()
+    object ProductCreated : CreateMaterialSideEffect()
 }

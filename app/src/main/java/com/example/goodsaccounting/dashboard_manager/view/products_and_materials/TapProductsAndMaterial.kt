@@ -32,10 +32,11 @@ import com.example.goodsaccounting.common.view.utils.getStringRole
 @Composable
 internal fun TapProductsAndMaterial(
     currentPage: Int,
-    onClick: (Int) -> Unit
+    onClick: (Int) -> Unit,
 ) {
     Row(
         modifier = Modifier
+            .padding(vertical = MaterialTheme.padding.small2)
             .fillMaxWidth()
             .padding(horizontal = MaterialTheme.padding.medium2),
         horizontalArrangement = Arrangement

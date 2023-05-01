@@ -9,7 +9,7 @@ internal data class CreateMaterialState(
     override val id: String = "",
     override val name: String = "",
     val isErrorName: Boolean = false,
-    override val measurements: Measurements = Measurements.Other,
+    override val measurement: Measurements = Measurements.Other,
     override val imageUrl: String? = null,
     val isCrating: Boolean = false,
 ) : MaterialModel, UIState()

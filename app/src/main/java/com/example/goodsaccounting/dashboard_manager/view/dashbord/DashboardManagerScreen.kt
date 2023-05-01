@@ -60,6 +60,9 @@ internal fun DashboardManagerScreen() {
                     navController = dashboardNavController,
                     startDestination = DashboardRouting.Warehouse.route,
                     modifier = Modifier
+                        .padding(
+                            top = MaterialTheme.padding.extraLarge1 * 1.75f
+                        )
                         .fillMaxHeight()
                         .weight(1f)
                 ) {

@@ -5,11 +5,8 @@ import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import com.example.core.domain.model.product.Currency
 import com.example.core.domain.model.product.ProductModel
-import kotlin.math.ceil
 import kotlin.math.floor
-import kotlin.math.roundToInt
 import android.icu.util.Currency as AndroidCurrency
 
 @Composable
@@ -40,7 +37,7 @@ internal fun ProductModel.getProductComponents() : String{
                 material.amount
             }.toString()
             answer.add(
-                "${material.materialModel.name} - $amount ${material.materialModel.measurements.getDesignation(res)}"
+                "${material.materialModel.name} - $amount ${material.materialModel.measurement.getDesignation(res)}"
             )
         }
         answer.joinToString(", ")
