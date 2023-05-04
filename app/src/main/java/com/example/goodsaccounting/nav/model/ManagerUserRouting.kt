@@ -26,6 +26,11 @@ internal sealed class ManagerUserRouting(route:String) : AppRouting(route) {
 
     object CrateProduct : ManagerUserRouting("${route}_create_product")
 
+    object CreateReceiptOrWriteOfMaterial : ManagerUserRouting("${route}_create_receipt_material"){
+        const val arg1= "isReceipt"
+        fun allRoute() = "${route}/{$arg1}"
+        fun allRoute(isReceipt: Boolean) = "${route}/$isReceipt"
+    }
     companion object{
         const val route = "manager_user"
     }

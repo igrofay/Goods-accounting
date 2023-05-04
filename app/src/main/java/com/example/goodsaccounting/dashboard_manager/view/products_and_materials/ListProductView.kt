@@ -91,12 +91,12 @@ private fun ProductCard(
             ) {
                 Text(
                     text = productModel.name,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.subtitle1,
                     maxLines = 3,
                 )
                 Text(
                     text = productModel.getProductCost(),
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.body1,
                     maxLines = 1,
                 )
                 val components = productModel.getProductComponents()
@@ -104,7 +104,7 @@ private fun ProductCard(
                     Spacer(modifier = Modifier.height(MaterialTheme.padding.small2))
                     Text(
                         text = productModel.getProductComponents(),
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.caption,
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis,
                     )

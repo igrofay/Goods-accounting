@@ -1,4 +1,4 @@
-package com.example.goodsaccounting.dashboard_manager.model
+package com.example.goodsaccounting.dashboard_manager.model.dashboard
 
 import androidx.annotation.DrawableRes
 import com.example.goodsaccounting.R

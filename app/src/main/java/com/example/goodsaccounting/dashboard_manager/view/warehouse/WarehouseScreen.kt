@@ -3,7 +3,7 @@ package com.example.goodsaccounting.dashboard_manager.view.warehouse
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.example.goodsaccounting.R
-import com.example.goodsaccounting.dashboard_manager.model.LocalDashboardSetting
+import com.example.goodsaccounting.dashboard_manager.model.dashboard.LocalDashboardSetting
 
 @Composable
 internal fun WarehouseScreen() {

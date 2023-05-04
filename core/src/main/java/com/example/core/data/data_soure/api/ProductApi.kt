@@ -23,7 +23,7 @@ internal class ProductApi(
         }
 
     suspend fun updateImageProduct(byteArray: ByteArray, id: String) = authorizedClient
-        .put("api/product/productIcon/$id") {
+        .put("api/productIcon/$id") {
             setBody(byteArray)
             contentType(ContentType.Image.Any)
         }

@@ -12,6 +12,7 @@ import com.example.goodsaccounting.common.view_model.AppVM
 import com.example.goodsaccounting.dashboard_manager.model.products_and_materials.ProductsAndMaterialsEvent
 import com.example.goodsaccounting.dashboard_manager.model.products_and_materials.ProductsAndMaterialsSideEffect
 import com.example.goodsaccounting.dashboard_manager.model.products_and_materials.ProductsAndMaterialsState
+import kotlinx.coroutines.launch
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance

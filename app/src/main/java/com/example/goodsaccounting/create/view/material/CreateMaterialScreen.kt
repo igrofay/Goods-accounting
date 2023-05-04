@@ -17,11 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.goodsaccounting.R
+import com.example.goodsaccounting.common.view.button.CreateButton
 import com.example.goodsaccounting.common.view.button.CustomButton
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view_model.rememberDIAwareViewModel
 import com.example.goodsaccounting.create.model.material.CreateMaterialEvent
 import com.example.goodsaccounting.create.model.material.CreateMaterialSideEffect
+import com.example.goodsaccounting.create.model.product.CreateProductEvent
 import com.example.goodsaccounting.create.view_model.CreateMaterialVM
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -36,7 +38,7 @@ internal fun CreateMaterialScreen(
     val res = LocalContext.current.resources
     createMaterialVM.collectSideEffect{sideEffect ->
         when(sideEffect){
-            CreateMaterialSideEffect.ProductCreated -> exit()
+            CreateMaterialSideEffect.MaterialCreated -> exit()
             is CreateMaterialSideEffect.ShowMessage -> {
                 scaffoldState.snackbarHostState
                     .showSnackbar(res.getString(sideEffect.message))
@@ -57,19 +59,10 @@ internal fun CreateMaterialScreen(
                 eventBase = createMaterialVM,
             )
             Spacer(modifier = Modifier.weight(1f))
-            if (state.isCreating){
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(vertical = MaterialTheme.padding.medium2)
-                )
-            }else{
-                CustomButton(
-                    label = stringResource(R.string.create),
-                    modifier = Modifier.padding(MaterialTheme.padding.medium1)
-                ) {
-                    createMaterialVM.onEvent(CreateMaterialEvent.Create)
-                }
+            CreateButton(
+                isCreating = state.isCreating
+            ){
+                createMaterialVM.onEvent(CreateMaterialEvent.Create)
             }
         }
     }

@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,7 +28,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,27 +35,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asAndroidBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.core.domain.model.product.Measurements
 import com.example.goodsaccounting.R
-import com.example.goodsaccounting.common.view.image.CustomImage
 import com.example.goodsaccounting.common.view.button.CustomTextButton
 import com.example.goodsaccounting.common.view.click.alphaClick
 import com.example.goodsaccounting.common.view.edit_text.EditText
+import com.example.goodsaccounting.common.view.image.CustomImage
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view.theme.textColor
 import com.example.goodsaccounting.common.view.utils.getDesignation
 import com.example.goodsaccounting.common.view_model.EventBase
 import com.example.goodsaccounting.create.model.material.CreateMaterialEvent
 import com.example.goodsaccounting.create.model.material.CreateMaterialState
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 internal fun MainSettingView(
@@ -194,7 +186,7 @@ internal fun MainSettingView(
             Column(
                 modifier = Modifier
                     .background(
-                        MaterialTheme.colors.background,
+                        MaterialTheme.colors.background.copy(1f),
                         MaterialTheme.shapes.medium
                     )
                     .padding(MaterialTheme.padding.medium2),

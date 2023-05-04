@@ -57,4 +57,17 @@
     <string name="dollars">Доллары</string>
     <string name="euro">Евро</string>
     <string name="materials_used_in_manufacture_of_product">Материалы, которые используются в изготовлении продукта</string>
+    <string name="material_created">Mатериал создан</string>
+    <string name="sales">Продажи</string>
+    <string name="receipts">Поступления</string>
+    <string name="write_offs">Списания</string>
+    <string name="receipt_of_material">Поступление материала</string>
+    <string name="write_off_material">Списание материала</string>
+    <string name="name_of_receipt">Наименование поступления</string>
+    <string name="name_of_write_off">Наименование списания</string>
+    <string name="materials_that_arrived_at_warehouse">Материалы, которые поступили на склад</string>
+    <string name="materials_that_are_written_off_from_warehouse">Материалы, которые списываются со склада</string>
+    <string name="add_photos">"Добавьте фотографии "</string>
+    <string name="add_materials">Добавьте материалы</string>
+    <string name="created">Создано</string>
 </resources>

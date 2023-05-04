@@ -35,7 +35,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.goodsaccounting.common.view.click.alphaClick
 import com.example.goodsaccounting.common.view.theme.padding
-import com.example.goodsaccounting.dashboard_manager.model.DashboardRouting
+import com.example.goodsaccounting.dashboard_manager.model.dashboard.DashboardRouting
 
 @Composable
 internal fun ColumnNavbarView(

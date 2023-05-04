@@ -26,15 +26,13 @@ import androidx.compose.ui.Modifier
 import com.example.goodsaccounting.R
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view_model.rememberDIAwareViewModel
-import com.example.goodsaccounting.dashboard_manager.model.LocalDashboardSetting
+import com.example.goodsaccounting.dashboard_manager.model.dashboard.LocalDashboardSetting
 import com.example.goodsaccounting.dashboard_manager.model.products_and_materials.ProductsAndMaterialsEvent
 import com.example.goodsaccounting.dashboard_manager.view_model.ProductsAndMaterialsVM
 import com.example.goodsaccounting.nav.model.ManagerUserRouting
 import com.example.goodsaccounting.nav.view.LocalAppNavController
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.syntax.simple.intent
-import org.orbitmvi.orbit.syntax.simple.reduce
 
 internal const val message_for_ProductsAndMaterialsScreen = "message_for_ProductsAndMaterialsScreen"
 

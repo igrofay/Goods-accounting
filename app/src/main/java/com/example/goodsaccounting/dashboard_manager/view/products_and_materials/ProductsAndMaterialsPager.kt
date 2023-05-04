@@ -19,13 +19,11 @@ internal fun ProductsAndMaterialsPager(
         state = pagerState,
         modifier = Modifier.fillMaxSize()
     ) {page->
-        // Products
-        if (page == 0){
-            ListProductView(state.listProductModel)
-        }
-        // Materials
-        else if(page == 1){
-            ListMaterialView(state.listMaterialModel)
+        when(page){
+            // Products
+            0->ListProductView(state.listProductModel)
+            // Materials
+            1-> ListMaterialView(state.listMaterialModel)
         }
     }
 }

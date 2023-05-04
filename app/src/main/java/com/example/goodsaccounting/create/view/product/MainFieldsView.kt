@@ -16,9 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.DropdownMenu
@@ -42,7 +40,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.product.Currency
-import com.example.core.domain.model.product.Measurements
 import com.example.goodsaccounting.R
 import com.example.goodsaccounting.common.view.click.alphaClick
 import com.example.goodsaccounting.common.view.edit_text.EditText
@@ -52,12 +49,11 @@ import com.example.goodsaccounting.common.view.theme.textColor
 import com.example.goodsaccounting.common.view.utils.getDesignation
 import com.example.goodsaccounting.common.view.visual_transformation.CurrencyAmountInputVisualTransformation
 import com.example.goodsaccounting.common.view_model.EventBase
-import com.example.goodsaccounting.create.model.material.CreateMaterialEvent
 import com.example.goodsaccounting.create.model.product.CreateProductEvent
 import com.example.goodsaccounting.create.model.product.CreateProductState
 
 @Composable
-internal fun MainSettingView(
+internal fun MainFieldsView(
     state: CreateProductState,
     eventBase: EventBase<CreateProductEvent>,
 ) {

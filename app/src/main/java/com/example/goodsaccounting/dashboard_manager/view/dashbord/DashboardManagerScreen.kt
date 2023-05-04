@@ -20,9 +20,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.goodsaccounting.common.view.theme.padding
-import com.example.goodsaccounting.dashboard_manager.model.DashboardRouting
-import com.example.goodsaccounting.dashboard_manager.model.DashboardSetting
-import com.example.goodsaccounting.dashboard_manager.model.LocalDashboardSetting
+import com.example.goodsaccounting.dashboard_manager.model.dashboard.DashboardRouting
+import com.example.goodsaccounting.dashboard_manager.model.dashboard.DashboardSetting
+import com.example.goodsaccounting.dashboard_manager.model.dashboard.LocalDashboardSetting
 import com.example.goodsaccounting.dashboard_manager.view.products_and_materials.ProductsAndMaterialsScreen
 import com.example.goodsaccounting.dashboard_manager.view.warehouse.WarehouseScreen
 import com.example.goodsaccounting.dashboard_manager.view.warehouse_history.WarehouseHistoryScreen

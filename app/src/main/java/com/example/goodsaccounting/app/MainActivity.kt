@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -25,10 +26,10 @@ internal class MainActivity : ComponentActivity(), DIAware {
         super.onCreate(savedInstanceState)
         setContent {
             GoodsAccountingTheme {
-                Box(
+                Surface(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colors.background),
+                        .fillMaxSize(),
+                    color = MaterialTheme.colors.background,
                 ) {
                     InitNav()
                 }

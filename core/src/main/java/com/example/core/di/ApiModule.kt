@@ -2,6 +2,7 @@ package com.example.core.di
 
 import com.example.core.data.data_soure.api.AdminApi
 import com.example.core.data.data_soure.api.AuthApi
+import com.example.core.data.data_soure.api.MaterialAccountingApi
 import com.example.core.data.data_soure.api.MaterialApi
 import com.example.core.data.data_soure.api.ProductApi
 import com.example.core.data.data_soure.api.UserApi
@@ -15,4 +16,5 @@ internal val apiModule by DI.Module {
     bindProvider { AdminApi(instance(authorizedClient)) }
     bindProvider { MaterialApi(instance(authorizedClient)) }
     bindProvider { ProductApi(instance(authorizedClient)) }
+    bindProvider { MaterialAccountingApi(instance(authorizedClient)) }
 }

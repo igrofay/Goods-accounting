@@ -10,4 +10,10 @@ internal sealed class CreateProductEvent : UIEvent(){
     class SelectCurrency(val currency: Currency): CreateProductEvent()
     class InputName(val name: String) : CreateProductEvent()
     class InputPrice(val price: String) : CreateProductEvent()
+
+    class AddMaterial(val id: String): CreateProductEvent()
+
+    class RemoveMaterial(val id: String) : CreateProductEvent()
+
+    class InputAmountMaterial(val amount: String, val id: String) : CreateProductEvent()
 }

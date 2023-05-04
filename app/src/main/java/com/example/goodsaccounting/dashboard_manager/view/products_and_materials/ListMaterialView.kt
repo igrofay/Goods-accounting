@@ -71,7 +71,7 @@ internal fun ListMaterialView(
 
 
 @Composable
-fun MaterialCard(
+private fun MaterialCard(
     materialModel: MaterialModel,
 ) {
     Column {

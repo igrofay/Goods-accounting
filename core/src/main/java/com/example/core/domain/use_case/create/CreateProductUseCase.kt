@@ -1,15 +1,15 @@
 package com.example.core.domain.use_case.create
 
 import com.example.core.domain.model.create.CreateProductModel
-import com.example.core.domain.repos.CreateProductAndMaterialRepos
+import com.example.core.domain.repos.CreateRepos
 
 class CreateProductUseCase(
-    private val createProductAndMaterialRepos: CreateProductAndMaterialRepos
+    private val createRepos: CreateRepos
 ) {
     suspend fun execute(createProductModel: CreateProductModel, imageUri: String?) = runCatching {
-        val idModel = createProductAndMaterialRepos.createProduct(createProductModel)
+        val idModel = createRepos.createProduct(createProductModel)
         imageUri?.let {imageUriNotNull->
-            createProductAndMaterialRepos.updateImageProduct(imageUriNotNull, idModel.id)
+            createRepos.updateImageProduct(imageUriNotNull, idModel.id)
         }
     }
 }

@@ -1,0 +1,10 @@
+package com.example.goodsaccounting.dashboard_manager.model.warehouse_history
+
+import com.example.core.domain.model.warehouse.ReceiptOrWriteOffMaterialModel
+import com.example.goodsaccounting.common.model.UIState
+
+internal data class WarehouseHistoryState(
+    val isRefreshing: Boolean = true,
+    val receiptMaterial: List<ReceiptOrWriteOffMaterialModel> = listOf(),
+    val writeOffMaterial: List<ReceiptOrWriteOffMaterialModel> = listOf(),
+) : UIState()
