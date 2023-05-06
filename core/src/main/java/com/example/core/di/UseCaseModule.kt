@@ -7,7 +7,9 @@ import com.example.core.domain.use_case.auth.SignUpUseCase
 import com.example.core.domain.use_case.create.CreateMaterialUseCase
 import com.example.core.domain.use_case.create.CreateProductUseCase
 import com.example.core.domain.use_case.create.CreateReceiptOrWriteOffMaterialUseCase
-import com.example.core.domain.use_case.material.GetMapIdToMaterialModelUseCase
+import com.example.core.domain.use_case.create.CreateSaleSellerUseCase
+import com.example.core.domain.use_case.product.GetMapIdToMaterialModelUseCase
+import com.example.core.domain.use_case.product.GetMapIdToProductModelUseCase
 import com.example.core.domain.use_case.user.GetUserFlowUseCase
 import com.example.core.domain.use_case.user.UpdateUserDataUseCase
 import org.kodein.di.DI
@@ -29,5 +31,9 @@ internal val useCaseModule by DI.Module{
     bindProvider { new(::CreateMaterialUseCase) }
     bindProvider { new(::CreateProductUseCase) }
     bindProvider { new(::CreateReceiptOrWriteOffMaterialUseCase) }
+    // Product
     bindProvider { new(::GetMapIdToMaterialModelUseCase) }
+    bindProvider { new(::GetMapIdToProductModelUseCase) }
+    // Seller
+    bindProvider { new(::CreateSaleSellerUseCase) }
 }

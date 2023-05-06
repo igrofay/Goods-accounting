@@ -36,8 +36,9 @@ internal class MaterialAccountingApi(
                 MultiPartFormDataContent(
                     formData {
                         for (index in images.indices) {
-                            append("image${index}", images[index], Headers.build {
+                            append("document", images[index], Headers.build {
                                 append(HttpHeaders.ContentType, "image/*")
+                                append(HttpHeaders.ContentDisposition, "filename=image${index}")
                             })
                         }
                     }

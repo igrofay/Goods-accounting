@@ -5,4 +5,5 @@ interface MaterialModel {
     val name: String
     val measurement: Measurements
     val imageUrl: String?
+    val minimumQuantity: Float
 }

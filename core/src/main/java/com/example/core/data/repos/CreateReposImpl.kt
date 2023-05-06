@@ -5,12 +5,15 @@ import android.net.Uri
 import com.example.core.data.data_soure.api.MaterialAccountingApi
 import com.example.core.data.data_soure.api.MaterialApi
 import com.example.core.data.data_soure.api.ProductApi
+import com.example.core.data.model.create.CreateMaterialBody.Companion.fromModelToCreateMaterialBody
 import com.example.core.data.model.create.CreateProductBody.Companion.fromModelToCreateProductBody
 import com.example.core.data.model.create.CreateReceiptOrWriteOffMaterialBody.Companion.fromModelToCreateReceiptOrWriteOffMaterialBody
 import com.example.core.data.model.create.IdBody
 import com.example.core.data.model.product.MaterialBody.Companion.fromModelToMaterialBody
+import com.example.core.domain.model.create.CreateMaterialModel
 import com.example.core.domain.model.create.CreateProductModel
 import com.example.core.domain.model.create.CreateReceiptOrWriteOffMaterialModel
+import com.example.core.domain.model.create.CreateSaleModel
 import com.example.core.domain.model.create.IdModel
 import com.example.core.domain.model.product.MaterialModel
 import com.example.core.domain.repos.CreateRepos
@@ -24,9 +27,10 @@ internal class CreateReposImpl(
     private val materialAccountingApi: MaterialAccountingApi,
     private val context: Context,
 ) : CreateRepos {
-    override suspend fun createMaterial(materialModel: MaterialModel): IdModel {
-        return materialApi.createMaterial(materialModel.fromModelToMaterialBody()).body<IdBody>()
+    override suspend fun createMaterial(createMaterialModel: CreateMaterialModel): IdModel {
+        return materialApi.createMaterial(createMaterialModel.fromModelToCreateMaterialBody()).body<IdBody>()
     }
+
 
     override suspend fun createProduct(createProductModel: CreateProductModel): IdModel {
         return productApi.createProduct(createProductModel.fromModelToCreateProductBody()).body<IdBody>()
@@ -75,6 +79,22 @@ internal class CreateReposImpl(
                 stream.close()
             }
             materialAccountingApi.updateImages(id, listByteArray)
+        }
+    }
+
+    override suspend fun createSale(createSaleModel: CreateSaleModel): IdModel {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateImagesSale(listImageUri: List<String>, id: String) {
+        withContext(Dispatchers.IO){
+            val listByteArray = mutableListOf<ByteArray>()
+            for (imageUri in listImageUri){
+                val stream = context.contentResolver.openInputStream(Uri.parse(imageUri))!!
+                listByteArray.add(stream.readBytes())
+                stream.close()
+            }
+            // TODO
         }
     }
 

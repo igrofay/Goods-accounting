@@ -45,55 +45,6 @@ internal class ProductsAndMaterialsVM(
         }
     }
 
-    private fun test1() = intent {
-        reduce {
-            state.copy(
-                listProductModel = listOf(
-                    object : ProductModel {
-                        override val id = UUID.randomUUID().toString()
-                        override val imageUrl =
-                            "https://epnew.ru/wp-content/uploads/2019/11/magnit-s-foto-10h10-sm-500x500.jpg"
-                        override val name = "Магнит с фото (маленький)"
-                        override val price = 199f
-                        override val currency = Currency.Rub
-                        override val materials = listOf(
-                                object : AmountOfMaterialModel {
-                                    override val amount = 2f
-                                    override val materialModel = object : MaterialModel {
-                                        override val id = UUID.randomUUID().toString()
-                                        override val name = "Магнит 25x25"
-                                        override val measurement = Measurements.Piece
-                                        override val imageUrl = null
-                                    }
-                                },
-                                object : AmountOfMaterialModel {
-                                    override val amount = 1f
-                                    override val materialModel = object : MaterialModel{
-                                        override val id = UUID.randomUUID().toString()
-                                        override val name = "Рамка 120x72"
-                                        override val measurement = Measurements.Piece
-                                        override val imageUrl = null
-                                    }
-
-                                },
-                            )
-                    },
-                    object : ProductModel {
-                        override val id = UUID.randomUUID().toString()
-                        override val imageUrl = null
-
-                        //                            "https://39magnets.ru/wp-content/uploads/2019/08/akrilovyj-magnit-55-80.png"
-                        override val name = "Магнит с фото"
-                        override val price = 399f
-                        override val currency = Currency.Rub
-                        override val materials: List<AmountOfMaterialModel>
-                            get() = listOf()
-                    },
-                )
-            )
-        }
-    }
-
     private fun load()= intent {
         runCatching {
             productsAndMaterialsRepos.getMaterials()

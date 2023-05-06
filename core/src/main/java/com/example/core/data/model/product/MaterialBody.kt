@@ -9,11 +9,12 @@ internal data class MaterialBody(
     override val id: String,
     override val name: String,
     override val measurement: Measurements,
-    override val imageUrl: String?
+    override val imageUrl: String?,
+    override val minimumQuantity: Float
 ) : MaterialModel{
     companion object{
         internal fun MaterialModel.fromModelToMaterialBody() = MaterialBody(
-            id, name, measurement, imageUrl
+            id, name, measurement, imageUrl, minimumQuantity
         )
     }
 }

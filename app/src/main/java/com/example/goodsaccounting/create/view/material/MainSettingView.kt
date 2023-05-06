@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.DropdownMenu
@@ -37,6 +39,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.core.domain.model.product.Measurements
@@ -48,6 +53,7 @@ import com.example.goodsaccounting.common.view.image.CustomImage
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view.theme.textColor
 import com.example.goodsaccounting.common.view.utils.getDesignation
+import com.example.goodsaccounting.common.view.visual_transformation.CurrencyAmountInputVisualTransformation
 import com.example.goodsaccounting.common.view_model.EventBase
 import com.example.goodsaccounting.create.model.material.CreateMaterialEvent
 import com.example.goodsaccounting.create.model.material.CreateMaterialState
@@ -177,7 +183,60 @@ internal fun MainSettingView(
                 }
             }
         }
-
+        Card {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.padding.medium1),
+                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.medium1),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.minimum_quantity_in_warehouse),
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.weight(2f)
+                )
+                BasicTextField(
+                    value = state.stringMinimumQuantity,
+                    onValueChange = {
+                        if (it.startsWith("0")) {
+                            eventBase.onEvent(CreateMaterialEvent.InputStringMinimumQuantity(""))
+                        } else {
+                            eventBase.onEvent(CreateMaterialEvent.InputStringMinimumQuantity(it))
+                        }
+                    },
+                    visualTransformation = CurrencyAmountInputVisualTransformation(
+                        fixedCursorAtTheEnd = false,
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.NumberPassword,
+                        imeAction = ImeAction.Next,
+                    ),
+                    textStyle = MaterialTheme.typography.body2.copy(
+                        color = if (state.isErrorMinimumQuantity)
+                            MaterialTheme.colors.error else
+                            MaterialTheme.colors.textColor,
+                        textAlign = TextAlign.End
+                    ),
+                    modifier = Modifier.weight(1f),
+                    singleLine = true
+                ) { innerTextField ->
+                    Column(
+                        verticalArrangement = Arrangement
+                            .spacedBy(MaterialTheme.padding.small1),
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        innerTextField()
+                        Divider(
+                            color = if (state.isErrorMinimumQuantity) MaterialTheme.colors.error.copy(
+                                alpha = 0.12f
+                            )
+                            else MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
+                        )
+                    }
+                }
+            }
+        }
     }
     if (isDisplayDialogMeasurementTypeInformation) {
         Dialog(

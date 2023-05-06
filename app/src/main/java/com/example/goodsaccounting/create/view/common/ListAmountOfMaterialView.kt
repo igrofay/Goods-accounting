@@ -153,7 +153,7 @@ private fun AmountOfMaterialCart(
             ) {
                 Text(
                     text = materialModel.name,
-                    maxLines = 1,
+                    maxLines = 2,
                     modifier = Modifier,
                     style = MaterialTheme.typography.subtitle1,
                     overflow = TextOverflow.Ellipsis,

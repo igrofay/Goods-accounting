@@ -21,9 +21,11 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,84 +42,23 @@ import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view_model.EventBase
 import com.example.goodsaccounting.create.model.receipt_or_write_of_material.CreateReceiptOrWriteOfMaterialEvent
 import com.example.goodsaccounting.create.model.receipt_or_write_of_material.CreateReceiptOrWriteOfMaterialState
+import com.example.goodsaccounting.create.view.common.PhotoSelectionPagerView
 import kotlinx.coroutines.launch
 
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
 internal fun MainFieldsView(
     state: CreateReceiptOrWriteOfMaterialState,
     eventBase: EventBase<CreateReceiptOrWriteOfMaterialEvent>
 ) {
-    val pagerState = rememberPagerState()
-    val localCoroutine = rememberCoroutineScope()
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let { uriIsNotNull ->
-            eventBase.onEvent(
-                CreateReceiptOrWriteOfMaterialEvent.SelectImage(
-                    uriIsNotNull.toString(),
-                    pagerState.currentPage
-                )
-            )
-        }
-    }
-    HorizontalPager(
-        pageCount = state.listImageUri.size.inc(),
-        state = pagerState,
-    ) {
-        val modifier = Modifier
-            .fillMaxWidth()
-            .height(220.dp)
-            .clickable { launcher.launch("image/*") }
-        if (it == state.listImageUri.size) {
-            Box(
-                modifier = modifier
-                    .background(MaterialTheme.colors.onBackground.copy(0.2f)),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null,
-                    modifier = Modifier.size(34.dp)
-                )
-            }
-        } else {
-            CustomImage(
-                image = state.listImageUri[it],
-                modifier = modifier
-            )
-        }
-    }
-    LazyRow(
-        horizontalArrangement = Arrangement
-            .spacedBy(MaterialTheme.padding.small2, Alignment.CenterHorizontally),
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                vertical = MaterialTheme.padding.medium1,
-            ),
-        contentPadding = PaddingValues(
-            horizontal = MaterialTheme.padding.medium2
-        )
-    ) {
-        items(state.listImageUri.size.inc()) { index ->
-            val animateColor by animateColorAsState(
-                targetValue = if (index == pagerState.currentPage)
-                    MaterialTheme.colors.secondary
-                else MaterialTheme.colors.onSurface
-            )
-            Spacer(
-                modifier = Modifier
-                    .scaleClick {
-                        localCoroutine.launch { pagerState.animateScrollToPage(index) }
-                    }
-                    .size(15.dp)
-                    .clip(CircleShape)
-                    .background(animateColor, CircleShape)
-            )
-        }
-    }
+    PhotoSelectionPagerView(
+        listImageUri = state.listImageUri,
+        add = { position, uri ->
+              eventBase.onEvent(CreateReceiptOrWriteOfMaterialEvent.SelectImage(uri, position))
+        },
+        remove = {position->
+            eventBase.onEvent(CreateReceiptOrWriteOfMaterialEvent.RemoveImage(position))
+        },
+    )
     Spacer(modifier = Modifier.height(MaterialTheme.padding.medium2))
     EditText(
         value = state.name,

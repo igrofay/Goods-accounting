@@ -81,7 +81,7 @@ internal fun CreateReceiptOrWriteOfMaterialFields(
                     materials = state.materials,
                     isErrorAmountOfMaterial = state.isErrorAmountOfMaterial,
                     onAmountChange = {id, amount ->
-                        eventBase.onEvent(CreateReceiptOrWriteOfMaterialEvent.InputAmountMaterial(id, amount))
+                        eventBase.onEvent(CreateReceiptOrWriteOfMaterialEvent.InputAmountOfMaterial(id, amount))
                     }
                 )
             }

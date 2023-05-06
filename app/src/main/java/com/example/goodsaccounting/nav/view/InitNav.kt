@@ -11,6 +11,7 @@ import com.example.core.domain.model.user.RoleLevel
 import com.example.goodsaccounting.nav.model.AdministratorUserRouting
 import com.example.goodsaccounting.nav.model.ManagerUserRouting
 import com.example.goodsaccounting.nav.model.NoneUserRouting
+import com.example.goodsaccounting.nav.model.SellerUserRouting
 import com.example.goodsaccounting.nav.model.StartingRouting
 
 @Composable
@@ -22,6 +23,7 @@ internal fun InitNav() {
         NavHost(navController = appNavController, startDestination = StartingRouting.route) {
             staringNav()
             noneUserNav()
+            sellerUserNav()
             administratorUserNav()
             managerUserNav()
         }
@@ -44,7 +46,9 @@ internal fun NavController.navigateToUserRole(role: RoleLevel){
         RoleLevel.None -> navigate(NoneUserRouting.route){
             popUpTo(lastRoute){ inclusive = true}
         }
-        RoleLevel.Seller -> {}
+        RoleLevel.Seller -> navigate(SellerUserRouting.route){
+            popUpTo(lastRoute){ inclusive = true}
+        }
         RoleLevel.Manager -> navigate(ManagerUserRouting.route){
             popUpTo(lastRoute){ inclusive = true}
         }

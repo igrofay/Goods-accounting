@@ -71,7 +71,7 @@ internal fun AuthInputFields(
                     onChange = { eventBase.onEvent(AuthEvent.InputPhone(it)) },
                     hint = stringResource(id = R.string.phone),
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone,
+                        keyboardType = KeyboardType.NumberPassword,
                         imeAction = ImeAction.Next
                     ),
                     visualTransformation = PhonedVisualTransformation(

@@ -8,4 +8,5 @@ internal sealed class CreateMaterialEvent : UIEvent(){
     class SelectMeasurements(val measurements: Measurements) : CreateMaterialEvent()
     class SelectImage(val uri: String) : CreateMaterialEvent()
     object Create: CreateMaterialEvent()
+    class InputStringMinimumQuantity(val minimumQuantity: String) : CreateMaterialEvent()
 }

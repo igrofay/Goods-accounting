@@ -57,15 +57,21 @@ internal class CreateMaterialVM(
             }
 
             CreateMaterialEvent.Create -> create()
+            is CreateMaterialEvent.InputStringMinimumQuantity -> blockingIntent {
+                reduce { state.copy(stringMinimumQuantity = event.minimumQuantity) }
+            }
         }
     }
 
 
     private fun create() = intent {
-        if (state.name.isBlank()) {
+        val isErrorName = state.name.isBlank()
+        val isErrorMinimumQuantity =  state.minimumQuantity == 0f
+        if (isErrorName || isErrorMinimumQuantity) {
             reduce {
                 state.copy(
-                    isErrorName = true
+                    isErrorName = true,
+                    isErrorMinimumQuantity = isErrorMinimumQuantity,
                 )
             }
         } else {
@@ -74,7 +80,7 @@ internal class CreateMaterialVM(
                     isCreating = true
                 )
             }
-            createMaterialUseCase.execute(state)
+            createMaterialUseCase.execute(state, state.imageUrl)
                 .onSuccess {
                     postSideEffect(CreateMaterialSideEffect.MaterialCreated)
                 }.onFailure {

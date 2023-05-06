@@ -15,7 +15,7 @@ class RestoreSessionUseCase(
 ) {
     suspend fun execute() = runCatching{
         try {
-//            if (BuildConfig.DEBUG) return@runCatching RoleLevel.Manager
+//            if (BuildConfig.DEBUG) return@runCatching RoleLevel.Seller
             val refreshToken = appRepos.getRefreshToken() ?: throw AuthError.NullRefreshToken
             val tokenModel = authRepos.restoreSession(refreshToken)
             appRepos.setAccessToken(tokenModel.accessToken)

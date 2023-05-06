@@ -42,7 +42,9 @@ internal fun CreateReceiptOrWriteOfMaterialScreen(
                 eventBase = createReceiptOrWriteOfMaterialVM,
                 scaffoldState = scaffoldState,
                 choiceOfMaterials = {
-                    navController.navigate(CreateReceiptOrWriteOfMaterialRouting.ChoiceOfMaterials.route)
+                    navController.navigate(CreateReceiptOrWriteOfMaterialRouting.ChoiceOfMaterials.route){
+                        popUpTo(CreateReceiptOrWriteOfMaterialRouting.FillingInFieldsReceiptOrWriteOffMaterial.route)
+                    }
                 }
             )
         }

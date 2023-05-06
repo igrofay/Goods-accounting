@@ -1,6 +1,8 @@
 package com.example.goodsaccounting.common.view.utils
 
 import android.content.res.Resources
+import android.icu.text.NumberFormat
+import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -23,8 +25,8 @@ internal fun getStringRole(roleLevel: RoleLevel) : String {
 internal fun Currency.getChar(): Char {
     return when(this){
         Currency.Rub -> '₽'
-        Currency.Dollar -> '$'
-        Currency.Euro -> '€'
+//        Currency.Dollar -> '$'
+//        Currency.Euro -> '€'
     }
 }
 
@@ -32,8 +34,8 @@ internal fun Currency.getChar(): Char {
 internal fun Currency.getDesignation() : String {
     return when(this){
         Currency.Rub -> stringResource(R.string.rubles)
-        Currency.Dollar ->  stringResource(R.string.dollars)
-        Currency.Euro -> stringResource(R.string.euro)
+//        Currency.Dollar ->  stringResource(R.string.dollars)
+//        Currency.Euro -> stringResource(R.string.euro)
     }
 }
 @Composable
@@ -51,5 +53,20 @@ internal fun Measurements.getDesignation(res : Resources) : String{
         Measurements.Meter -> res.getString(R.string.mater)
         Measurements.Centimeter -> res.getString(R.string.centimeter)
         Measurements.Other -> res.getString(R.string.other)
+    }
+}
+@Composable
+internal fun getCost(currencyData: Currency, cost: Float ) : String {
+    return remember(currencyData, cost) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val numberFormat = NumberFormat.getCurrencyInstance().apply {
+                currency = android.icu.util.Currency.getInstance(
+                    currencyData.isoCode
+                )
+            }
+            numberFormat.format(cost)
+        }else {
+            "$cost ${currencyData.getChar()}"
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.core.domain.use_case.material
+package com.example.core.domain.use_case.product
 
 import com.example.core.domain.repos.ProductsAndMaterialsRepos
 

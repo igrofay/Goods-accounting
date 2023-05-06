@@ -4,13 +4,13 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.model.create.AmountOfIdModel
 import com.example.core.domain.model.create.CreateProductModel
-import com.example.core.domain.repos.ProductsAndMaterialsRepos
 import com.example.core.domain.use_case.create.CreateProductUseCase
-import com.example.core.domain.use_case.material.GetMapIdToMaterialModelUseCase
+import com.example.core.domain.use_case.product.GetMapIdToMaterialModelUseCase
 import com.example.goodsaccounting.common.view_model.AppVM
 import com.example.goodsaccounting.create.model.product.CreateProductEvent
 import com.example.goodsaccounting.create.model.product.CreateProductSideEffect
 import com.example.goodsaccounting.create.model.product.CreateProductState
+import com.example.goodsaccounting.create.model.utils.stringToFloat
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
@@ -129,17 +129,6 @@ internal class CreateProductVM(
             }.onFailure(::onError)
     }
 
-    private fun stringToFloat(text: String): Float {
-        return if (text.length > 2) {
-            val intPart = text
-                .dropLast(2)
-            val fractionPart = text
-                .takeLast(2)
-            "$intPart.$fractionPart".toFloat()
-        } else {
-            "0.$text".toFloat()
-        }
-    }
 
     private fun create() = intent {
         reduce {

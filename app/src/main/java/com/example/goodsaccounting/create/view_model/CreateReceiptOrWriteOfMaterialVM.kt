@@ -6,12 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.core.domain.model.create.AmountOfIdModel
 import com.example.core.domain.model.create.CreateReceiptOrWriteOffMaterialModel
 import com.example.core.domain.use_case.create.CreateReceiptOrWriteOffMaterialUseCase
-import com.example.core.domain.use_case.material.GetMapIdToMaterialModelUseCase
+import com.example.core.domain.use_case.product.GetMapIdToMaterialModelUseCase
 import com.example.goodsaccounting.R
 import com.example.goodsaccounting.common.view_model.AppVM
 import com.example.goodsaccounting.create.model.receipt_or_write_of_material.CreateReceiptOrWriteOfMaterialEvent
 import com.example.goodsaccounting.create.model.receipt_or_write_of_material.CreateReceiptOrWriteOfMaterialSideEffect
 import com.example.goodsaccounting.create.model.receipt_or_write_of_material.CreateReceiptOrWriteOfMaterialState
+import com.example.goodsaccounting.create.model.utils.stringToFloat
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
@@ -94,7 +95,7 @@ internal class CreateReceiptOrWriteOfMaterialVM(
                 }
             }
 
-            is CreateReceiptOrWriteOfMaterialEvent.InputAmountMaterial -> blockingIntent {
+            is CreateReceiptOrWriteOfMaterialEvent.InputAmountOfMaterial -> blockingIntent {
                 val newMaterials = state.materials.toMutableMap()
                 newMaterials[event.id] = event.amount
                 val isErrorAmountOfMaterial = state.isErrorAmountOfMaterial.toMutableMap()
@@ -103,6 +104,16 @@ internal class CreateReceiptOrWriteOfMaterialVM(
                     state.copy(
                         materials = newMaterials,
                         isErrorAmountOfMaterial = isErrorAmountOfMaterial
+                    )
+                }
+            }
+
+            is CreateReceiptOrWriteOfMaterialEvent.RemoveImage -> intent {
+                val newListImage = state.listImageUri.toMutableList()
+                newListImage.removeAt(event.position)
+                reduce {
+                    state.copy(
+                        listImageUri = newListImage
                     )
                 }
             }
@@ -145,7 +156,7 @@ internal class CreateReceiptOrWriteOfMaterialVM(
             }
             if(isErrorListImage)
                 postSideEffect(CreateReceiptOrWriteOfMaterialSideEffect.Message(R.string.add_photos))
-            if (isErrorAmountOfMaterial.values.isEmpty())
+            if (isErrorAmountOfMaterial.isEmpty())
                 postSideEffect(CreateReceiptOrWriteOfMaterialSideEffect.Message(R.string.add_materials))
         }else{
             createReceiptOrWriteOffMaterialUseCase.execute(
@@ -172,15 +183,5 @@ internal class CreateReceiptOrWriteOfMaterialVM(
             }
         }
     }
-    private fun stringToFloat(text: String): Float {
-        return if (text.length > 2) {
-            val intPart = text
-                .dropLast(2)
-            val fractionPart = text
-                .takeLast(2)
-            "$intPart.$fractionPart".toFloat()
-        } else {
-            "0.$text".toFloat()
-        }
-    }
+
 }

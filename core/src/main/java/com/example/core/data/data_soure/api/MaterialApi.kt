@@ -1,5 +1,6 @@
 package com.example.core.data.data_soure.api
 
+import com.example.core.data.model.create.CreateMaterialBody
 import com.example.core.data.model.product.MaterialBody
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
@@ -17,9 +18,9 @@ internal class MaterialApi(
     suspend fun getMaterials() =
         authorizedClient.get("/api/materials")
 
-    suspend fun createMaterial(materialBody: MaterialBody) =
+    suspend fun createMaterial(createMaterialBody: CreateMaterialBody) =
         authorizedClient.post("/api/material") {
-            setBody(materialBody)
+            setBody(createMaterialBody)
             contentType(ContentType.Application.Json)
         }
 

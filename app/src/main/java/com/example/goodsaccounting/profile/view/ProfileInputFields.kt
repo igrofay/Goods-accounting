@@ -57,7 +57,7 @@ internal fun <State>  ProfileInputFields(
             onChange = { eventBase.onEvent(ProfileEvent.InputPhone(it)) },
             hint = stringResource(id = R.string.phone),
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Phone,
+                keyboardType = KeyboardType.NumberPassword,
                 imeAction = ImeAction.Next
             ),
             visualTransformation = PhonedVisualTransformation(
