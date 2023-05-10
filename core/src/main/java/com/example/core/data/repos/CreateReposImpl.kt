@@ -5,19 +5,20 @@ import android.net.Uri
 import com.example.core.data.data_soure.api.MaterialAccountingApi
 import com.example.core.data.data_soure.api.MaterialApi
 import com.example.core.data.data_soure.api.ProductApi
+import com.example.core.data.data_soure.api.SaleApi
 import com.example.core.data.model.create.CreateMaterialBody.Companion.fromModelToCreateMaterialBody
+import com.example.core.data.model.create.CreateOrEditOrEditSaleBody.Companion.fromModelToCreateOrEditOrEditSaleBody
 import com.example.core.data.model.create.CreateProductBody.Companion.fromModelToCreateProductBody
 import com.example.core.data.model.create.CreateReceiptOrWriteOffMaterialBody.Companion.fromModelToCreateReceiptOrWriteOffMaterialBody
 import com.example.core.data.model.create.IdBody
-import com.example.core.data.model.product.MaterialBody.Companion.fromModelToMaterialBody
 import com.example.core.domain.model.create.CreateMaterialModel
 import com.example.core.domain.model.create.CreateProductModel
 import com.example.core.domain.model.create.CreateReceiptOrWriteOffMaterialModel
-import com.example.core.domain.model.create.CreateSaleModel
+import com.example.core.domain.model.create.CreateOrEditSaleModel
 import com.example.core.domain.model.create.IdModel
-import com.example.core.domain.model.product.MaterialModel
 import com.example.core.domain.repos.CreateRepos
 import io.ktor.client.call.body
+import io.ktor.client.statement.readBytes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -25,6 +26,7 @@ internal class CreateReposImpl(
     private val materialApi: MaterialApi,
     private val productApi: ProductApi,
     private val materialAccountingApi: MaterialAccountingApi,
+    private val saleApi: SaleApi,
     private val context: Context,
 ) : CreateRepos {
     override suspend fun createMaterial(createMaterialModel: CreateMaterialModel): IdModel {
@@ -82,19 +84,27 @@ internal class CreateReposImpl(
         }
     }
 
-    override suspend fun createSale(createSaleModel: CreateSaleModel): IdModel {
-        TODO("Not yet implemented")
-    }
+    override suspend fun createSale(createOrEditSaleModel: CreateOrEditSaleModel)=
+        saleApi.createSale(
+            createOrEditSaleModel.fromModelToCreateOrEditOrEditSaleBody()
+        ).body<IdBody>()
 
     override suspend fun updateImagesSale(listImageUri: List<String>, id: String) {
         withContext(Dispatchers.IO){
             val listByteArray = mutableListOf<ByteArray>()
             for (imageUri in listImageUri){
-                val stream = context.contentResolver.openInputStream(Uri.parse(imageUri))!!
-                listByteArray.add(stream.readBytes())
-                stream.close()
+                if (imageUri.contains("http")){
+                    val filename = imageUri.split("/").last()
+                    listByteArray.add(
+                        saleApi.getSaleImage(filename).readBytes()
+                    )
+                }else{
+                    val stream = context.contentResolver.openInputStream(Uri.parse(imageUri))!!
+                    listByteArray.add(stream.readBytes())
+                    stream.close()
+                }
             }
-            // TODO
+            saleApi.updateImages(id, listByteArray)
         }
     }
 

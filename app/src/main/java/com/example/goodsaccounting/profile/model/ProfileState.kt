@@ -2,7 +2,7 @@ package com.example.goodsaccounting.profile.model
 
 import com.example.core.domain.model.user.RoleLevel
 import com.example.core.domain.model.user.UserModel
-import com.example.goodsaccounting.common.model.UIState
+import com.example.goodsaccounting.common.model.mvi.UIState
 
 internal sealed class ProfileState : UIState() {
     object LoadProfileInfo : ProfileState()
@@ -29,12 +29,14 @@ internal sealed class ProfileState : UIState() {
         val isErrorPhone: Boolean = false,
         val isUpdating: Boolean = false,
     ): UserModel, ProfileState()
+    companion object{
+        internal fun UserModel.fromModelToUserData()= UserData(
+            firstname, lastname, patronymic, phone, email, imageUrl, role
+        )
+
+        internal fun UserData.toEditMode() = EditingUserData(
+            firstname, lastname, patronymic, phone, email, imageUrl, role
+        )
+    }
 }
 
-internal fun UserModel.fromModelToUserData()= ProfileState.UserData(
-    firstname, lastname, patronymic, phone, email, imageUrl, role
-)
-
-internal fun ProfileState.UserData.toEditMode() = ProfileState.EditingUserData(
-    firstname, lastname, patronymic, phone, email, imageUrl, role
-)

@@ -49,11 +49,11 @@ android {
 dependencies {
     implementation project(':core')
     // Android
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.10"
     // Compose
-    implementation 'androidx.activity:activity-compose:1.7.0'
+    implementation 'androidx.activity:activity-compose:1.7.1'
     implementation "androidx.compose.ui:ui:$compose_ui_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
     implementation 'androidx.compose.material:material:1.4.0'
@@ -72,4 +72,8 @@ dependencies {
     implementation "org.orbit-mvi:orbit-compose:$orbit_mvi_version"
     // Glide
     implementation "com.github.skydoves:landscapist-glide:2.1.10"
+    // Vico
+    implementation "com.patrykandpatrick.vico:compose:1.6.5"
+    // datatime
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 }

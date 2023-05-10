@@ -20,7 +20,7 @@ const val baseClient = "TAG_baseClient"
 const val authorizedClient = "TAG_authorizedClient"
 
 internal val networkMode by DI.Module{
-    bindConstant(tag = url){ "https://721c-95-183-16-18.ngrok-free.app" }
+    bindConstant(tag = url){ "https://3117-95-183-16-18.ngrok-free.app" }
     bindSingleton(tag = baseClient) { baseClient(instance(url)) }
     bindSingleton(tag = authorizedClient){ authorizedClient(instance(url),instance()) }
 }
@@ -38,6 +38,10 @@ private fun baseClient(serverUrl: String) : HttpClient {
             url(serverUrl)
         }
         expectSuccess = true
+        install(HttpRequestRetry){
+            retryOnServerErrors(maxRetries = 5)
+            exponentialDelay()
+        }
     }
     client.plugin(HttpSend).intercept { sender->
         execute(sender).apply {
@@ -58,6 +62,10 @@ private fun authorizedClient(serverUrl: String, appRepos: AppRepos) : HttpClient
         }
         defaultRequest {
             url(serverUrl)
+        }
+        install(HttpRequestRetry){
+            retryOnServerErrors(maxRetries = 5)
+            exponentialDelay()
         }
     }
     client.plugin(HttpSend).intercept { sender->

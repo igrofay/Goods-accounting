@@ -1,6 +1,6 @@
 package com.example.goodsaccounting.auth.model
 
-import com.example.goodsaccounting.common.model.UIState
+import com.example.goodsaccounting.common.model.mvi.UIState
 
 
 

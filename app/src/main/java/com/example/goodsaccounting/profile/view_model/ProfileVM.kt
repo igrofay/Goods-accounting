@@ -2,17 +2,13 @@ package com.example.goodsaccounting.profile.view_model
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.core.domain.model.user.UserModel
-import com.example.core.domain.repos.UserRepos
 import com.example.core.domain.use_case.user.GetUserFlowUseCase
 import com.example.core.domain.use_case.user.UpdateUserDataUseCase
 import com.example.goodsaccounting.R
 import com.example.goodsaccounting.common.view_model.AppVM
 import com.example.goodsaccounting.profile.model.*
-import com.example.goodsaccounting.profile.model.ProfileEvent
-import com.example.goodsaccounting.profile.model.ProfileSideEffect
-import com.example.goodsaccounting.profile.model.ProfileState
-import com.example.goodsaccounting.profile.model.fromModelToUserData
+import com.example.goodsaccounting.profile.model.ProfileState.Companion.fromModelToUserData
+import com.example.goodsaccounting.profile.model.ProfileState.Companion.toEditMode
 import kotlinx.coroutines.flow.catch
 import org.kodein.di.DI
 import org.kodein.di.DIAware

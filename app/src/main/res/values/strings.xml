@@ -49,6 +49,7 @@
     <string name="create">Создать</string>
     <string name="type_of_measurement_needed">Вид измерения нужен для указания, в чем измеряется материал для расчетов при списании или добавлении материалов на складе</string>
     <string name="other_implies_that_required">Другой подразумевает, что требуемый тип не существует и будет рассчитываться как шт.</string>
+    <string name="minimum_quantity_in_warehouse_need">Минимальное количество на складе необходимо, чтобы сообщить, что материал вот-вот закончится</string>
     <string name="ok">Хорошо</string>
     <string name="product_created">Продукт создан</string>
     <string name="product_name">Имя продукта</string>
@@ -58,6 +59,7 @@
     <string name="euro">Евро</string>
     <string name="materials_used_in_manufacture_of_product">Материалы, которые используются в изготовлении продукта</string>
     <string name="material_created">Mатериал создан</string>
+    <string name="sold">Продано</string>
     <string name="sales">Продажи</string>
     <string name="receipts">Поступления</string>
     <string name="write_offs">Списания</string>
@@ -77,5 +79,24 @@
     <string name="price">Цена</string>
     <string name="sum">Сумма</string>
     <string name="add_products">Добавьте продукты</string>
-    <string name="minimum_quantity_in_warehouse">Минимальное количество на складе</string>
+    <string name="minimum_quantity">Минимальное количество</string>
+    <string name="your_statistics">Ваша статистика</string>
+    <string name="income_in">Доход в</string>
+    <string name="income_for_today">Доход за сегодня</string>
+    <string name="monthly_earning_statistics">Статистика заработка за месяца</string>
+    <string name="earnings_statistics_for">Статистика заработка за</string>
+    <string name="jan">Январь</string>
+    <string name="feb">Февраль</string>
+    <string name="mar">Март</string>
+    <string name="apr">Апрель</string>
+    <string name="may">Май</string>
+    <string name="jun">Июнь</string>
+    <string name="jul">Июль</string>
+    <string name="aug">Август</string>
+    <string name="sep">Сентябрь</string>
+    <string name="oct">Октябрь</string>
+    <string name="nov">Ноябрь</string>
+    <string name="dec">Декабрь</string>
+    <string name="of_which_earned">Из них заработанно</string>
+    <string name="edited">Отредактировано</string>
 </resources>

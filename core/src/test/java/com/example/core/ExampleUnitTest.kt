@@ -20,23 +20,7 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        println(
-            Json.decodeFromString<A>(
-                Json.encodeToString(
-                    AmountOfMaterialModel(
-                        10f,
-                        object : MaterialModel{
-                            override val id = ""
-                            override val name = ""
-                            override val measurement = Measurements.Piece
-                            override val imageUrl = null
 
-                        }
-                    )
-                )
-            )
-        )
     }
-    @Serializable
-    data class A(val c: Currency)
+
 }

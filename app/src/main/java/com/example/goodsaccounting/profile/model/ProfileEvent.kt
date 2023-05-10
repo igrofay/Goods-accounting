@@ -1,6 +1,6 @@
 package com.example.goodsaccounting.profile.model
 
-import com.example.goodsaccounting.common.model.UIEvent
+import com.example.goodsaccounting.common.model.mvi.UIEvent
 
 internal sealed class ProfileEvent : UIEvent(){
     class SelectImage(val uri: String) : ProfileEvent()

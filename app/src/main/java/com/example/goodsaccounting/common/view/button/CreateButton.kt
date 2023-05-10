@@ -15,6 +15,7 @@ import com.example.goodsaccounting.common.view.theme.padding
 @Composable
 internal fun CreateButton(
     isCreating: Boolean,
+    label: String = stringResource(R.string.create),
     create: ()-> Unit,
 ) {
     Box(
@@ -28,7 +29,7 @@ internal fun CreateButton(
             )
         } else {
             CustomButton(
-                label = stringResource(R.string.create),
+                label = label,
                 modifier = Modifier.padding(MaterialTheme.padding.medium1),
                 onClick = create
             )

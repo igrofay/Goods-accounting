@@ -1,9 +1,9 @@
 package com.example.goodsaccounting.common.view_model
 
 import androidx.lifecycle.ViewModel
-import com.example.goodsaccounting.common.model.UIEvent
-import com.example.goodsaccounting.common.model.UISideEffect
-import com.example.goodsaccounting.common.model.UIState
+import com.example.goodsaccounting.common.model.mvi.UIEvent
+import com.example.goodsaccounting.common.model.mvi.UISideEffect
+import com.example.goodsaccounting.common.model.mvi.UIState
 import org.orbitmvi.orbit.ContainerHost
 
 internal abstract class AppVM <S: UIState,SF: UISideEffect, E: UIEvent>

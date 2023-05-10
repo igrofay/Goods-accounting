@@ -2,11 +2,12 @@ package com.example.goodsaccounting.nav.model
 
 import com.example.goodsaccounting.R
 
-internal sealed class SellerUserRouting (route:String) : AppRouting(route) {
+internal sealed class SellerUserRouting(route: String) : AppRouting(route) {
 
-    sealed class ComponentsWitBottomBar(route: String) : SellerUserRouting(route), BottomItemFeature{
+    sealed class ComponentsWitBottomBar(route: String) : SellerUserRouting(route),
+        BottomItemFeature {
 
-        object Sales : ComponentsWitBottomBar("${route}_sales"){
+        object Sales : ComponentsWitBottomBar("${route}_sales") {
             override val label = R.string.home
             override val icon = R.drawable.ic_home
         }
@@ -15,17 +16,27 @@ internal sealed class SellerUserRouting (route:String) : AppRouting(route) {
             override val label = R.string.statics
             override val icon = R.drawable.ic_bar_chart
         }
+
         object Profile : ComponentsWitBottomBar("${route}_profile") {
             override val label = R.string.profile
             override val icon = R.drawable.ic_person
         }
-        companion object{
+
+        companion object {
             const val route = "${SellerUserRouting.route}_components_wit_bottom_bar"
             val listBottomItemFeature = listOf<BottomItemFeature>(Sales, Analytics, Profile)
         }
     }
-    object CreateSale: SellerUserRouting("${route}_create_sale")
-    companion object{
+
+    object CreateOrEditSale : SellerUserRouting("${route}_create_or_edit_sale") {
+        const val arg1 = "idSale"
+        fun getAllRoute() = "${route}?$arg1={$arg1}"
+        fun getAllRoute(idSale: String?) = idSale?.let {
+            "${route}?$arg1=$it"
+        } ?: route
+    }
+
+    companion object {
         const val route = "seller_user"
     }
 }

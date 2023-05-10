@@ -2,7 +2,7 @@ package com.example.goodsaccounting.user_administration.model
 
 import com.example.core.domain.model.user.RoleLevel
 import com.example.core.domain.model.user.UserModel
-import com.example.goodsaccounting.common.model.UIState
+import com.example.goodsaccounting.common.model.mvi.UIState
 
 internal data class UserAdministrationState(
     val users: Map<RoleLevel,List<UserModel>> = mapOf(),

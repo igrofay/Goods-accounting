@@ -3,13 +3,10 @@ package com.example.goodsaccounting.splash.view_model
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.model.error.AuthError
-import com.example.core.domain.model.user.UserModel
-import com.example.core.domain.repos.AuthRepos
-import com.example.core.domain.repos.UserRepos
 import com.example.core.domain.use_case.auth.RestoreSessionUseCase
 import com.example.goodsaccounting.R
-import com.example.goodsaccounting.common.model.UIEvent
-import com.example.goodsaccounting.common.model.UIState
+import com.example.goodsaccounting.common.model.mvi.UIEvent
+import com.example.goodsaccounting.common.model.mvi.UIState
 import com.example.goodsaccounting.common.view_model.AppVM
 import com.example.goodsaccounting.splash.model.SplashSideEffect
 import org.kodein.di.DI

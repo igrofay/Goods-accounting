@@ -3,9 +3,8 @@ package com.example.core.domain.repos
 import com.example.core.domain.model.create.CreateMaterialModel
 import com.example.core.domain.model.create.CreateProductModel
 import com.example.core.domain.model.create.CreateReceiptOrWriteOffMaterialModel
-import com.example.core.domain.model.create.CreateSaleModel
+import com.example.core.domain.model.create.CreateOrEditSaleModel
 import com.example.core.domain.model.create.IdModel
-import com.example.core.domain.model.product.MaterialModel
 
 interface CreateRepos {
 
@@ -23,6 +22,6 @@ interface CreateRepos {
         listImageUri: List<String>,
         id: String
     )
-    suspend fun createSale(createSaleModel: CreateSaleModel) : IdModel
+    suspend fun createSale(createOrEditSaleModel: CreateOrEditSaleModel) : IdModel
     suspend fun updateImagesSale(listImageUri: List<String>, id: String)
 }

@@ -44,7 +44,7 @@ internal fun UserInfoView(
             .fillMaxWidth()
             .padding(top = 25.dp)
             .background(
-                MaterialTheme.colors.background,
+                MaterialTheme.colors.background.copy(1f),
                 MaterialTheme.shapes.medium
             ),
         contentAlignment = Alignment.TopCenter

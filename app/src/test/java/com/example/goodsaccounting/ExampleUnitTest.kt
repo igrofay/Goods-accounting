@@ -1,8 +1,9 @@
 package com.example.goodsaccounting
 
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Month
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -12,6 +13,6 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-//       println(listOf(false,false,false,false).max())
+        println(LocalDate(2023, 5, 10))
     }
 }

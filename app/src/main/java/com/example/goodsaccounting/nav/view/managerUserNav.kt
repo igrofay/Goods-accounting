@@ -13,9 +13,9 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.goodsaccounting.R
-import com.example.goodsaccounting.create.view.material.CreateMaterialScreen
-import com.example.goodsaccounting.create.view.product.CreateProductScreen
-import com.example.goodsaccounting.create.view.receipt_or_write_of_material.CreateReceiptOrWriteOfMaterialScreen
+import com.example.goodsaccounting.create_or_edit.view.material.CreateMaterialScreen
+import com.example.goodsaccounting.create_or_edit.view.product.CreateProductScreen
+import com.example.goodsaccounting.create_or_edit.view.receipt_or_write_of_material.CreateReceiptOrWriteOfMaterialScreen
 import com.example.goodsaccounting.dashboard_manager.view.dashbord.DashboardManagerScreen
 import com.example.goodsaccounting.dashboard_manager.view.products_and_materials.message_for_ProductsAndMaterialsScreen
 import com.example.goodsaccounting.dashboard_manager.view.warehouse_history.message_for_WarehouseHistoryScreen

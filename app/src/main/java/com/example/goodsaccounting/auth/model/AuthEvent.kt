@@ -1,6 +1,6 @@
 package com.example.goodsaccounting.auth.model
 
-import com.example.goodsaccounting.common.model.UIEvent
+import com.example.goodsaccounting.common.model.mvi.UIEvent
 
 internal sealed class AuthEvent : UIEvent() {
     object SetSignIn : AuthEvent()

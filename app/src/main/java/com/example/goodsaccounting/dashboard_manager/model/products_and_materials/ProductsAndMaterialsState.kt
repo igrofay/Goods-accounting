@@ -2,7 +2,7 @@ package com.example.goodsaccounting.dashboard_manager.model.products_and_materia
 
 import com.example.core.domain.model.product.MaterialModel
 import com.example.core.domain.model.product.ProductModel
-import com.example.goodsaccounting.common.model.UIState
+import com.example.goodsaccounting.common.model.mvi.UIState
 
 internal data class ProductsAndMaterialsState(
     val listProductModel: List<ProductModel> = listOf(),
