@@ -6,11 +6,11 @@ import com.example.core.domain.model.sale.SaleModel
 import com.example.goodsaccounting.R
 //…
 @Composable
-internal fun SaleModel.getMaterialsName() : String {
+internal fun SaleModel.getAmountOfProductName() : String {
     val answer = mutableListOf<String>()
     for (amountOfProduct in this.products){
         val name = if (amountOfProduct.product.name.length > 15)
-            amountOfProduct.product.name
+            amountOfProduct.product.name.take(15)+"…"
         else amountOfProduct.product.name
         answer.add(
             "${amountOfProduct.amount} ${stringResource(R.string.piece)} $name"

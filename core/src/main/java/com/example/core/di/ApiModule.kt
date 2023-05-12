@@ -8,6 +8,7 @@ import com.example.core.data.data_soure.api.MaterialApi
 import com.example.core.data.data_soure.api.ProductApi
 import com.example.core.data.data_soure.api.SaleApi
 import com.example.core.data.data_soure.api.UserApi
+import com.example.core.data.data_soure.api.WarehouseApi
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.instance
@@ -21,4 +22,5 @@ internal val apiModule by DI.Module {
     bindProvider { MaterialAccountingApi(instance(authorizedClient)) }
     bindProvider { AnalyticsApi(instance(authorizedClient)) }
     bindProvider { SaleApi(instance(authorizedClient)) }
+    bindProvider { WarehouseApi(instance(authorizedClient)) }
 }

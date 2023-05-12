@@ -7,6 +7,9 @@ import com.example.goodsaccounting.common.view_model.AppVM
 import com.example.goodsaccounting.dashboard_manager.model.warehouse_history.WarehouseHistoryEvent
 import com.example.goodsaccounting.dashboard_manager.model.warehouse_history.WarehouseHistorySideEffect
 import com.example.goodsaccounting.dashboard_manager.model.warehouse_history.WarehouseHistoryState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
@@ -40,25 +43,43 @@ internal class WarehouseHistoryVM (
                 isRefreshing = true
             )
         }
-        runCatching {
-            warehouseRepos.getReceiptMaterial()
-        }.onSuccess { list->
-            reduce {
-                state.copy(
-                    isRefreshing = false,
-                    receiptMaterial = list
-                )
+        withContext(Dispatchers.Default){
+            launch {
+                runCatching {
+                    warehouseRepos.getReceiptMaterial()
+                }.onSuccess { list->
+                    reduce {
+                        state.copy(
+                            isRefreshing = false,
+                            receiptMaterial = list
+                        )
+                    }
+                }.onFailure(::onError)
             }
-        }.onFailure(::onError)
-        runCatching {
-            warehouseRepos.getWriteOffMaterial()
-        }.onSuccess {list->
-            reduce {
-                state.copy(
-                    isRefreshing = false,
-                    writeOffMaterial = list
-                )
+            launch {
+                runCatching {
+                    warehouseRepos.getWriteOffMaterial()
+                }.onSuccess {list->
+                    reduce {
+                        state.copy(
+                            isRefreshing = false,
+                            writeOffMaterial = list
+                        )
+                    }
+                }.onFailure(::onError)
             }
-        }.onFailure(::onError)
+            launch {
+                runCatching {
+                    warehouseRepos.getAllSale()
+                }.onSuccess {  list->
+                    reduce {
+                        state.copy(
+                            isRefreshing = false,
+                            sales = list,
+                        )
+                    }
+                }.onFailure(::onError)
+            }
+        }
     }
 }

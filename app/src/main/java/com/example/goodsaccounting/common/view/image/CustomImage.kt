@@ -62,7 +62,8 @@ internal fun CustomImage(
             Image(
                 bitmap = success.imageBitmap!!,
                 contentDescription = null,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillHeight
             )
         },
         loading = {

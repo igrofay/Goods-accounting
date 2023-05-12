@@ -24,7 +24,7 @@ internal class MaterialAccountingApi(
         }
 
     suspend fun writeOffMaterial(createReceiptOrWriteOffMaterialBody: CreateReceiptOrWriteOffMaterialBody) =
-        authorizedClient.post("/api/materialAccounting/write-off") {
+        authorizedClient.post("/api/materialAccounting/writeOff") {
             setBody(createReceiptOrWriteOffMaterialBody)
             contentType(ContentType.Application.Json)
         }

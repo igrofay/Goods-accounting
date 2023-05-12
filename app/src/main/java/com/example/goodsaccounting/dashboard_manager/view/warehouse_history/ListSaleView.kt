@@ -1,4 +1,4 @@
-package com.example.goodsaccounting.sales_seller.view
+package com.example.goodsaccounting.dashboard_manager.view.warehouse_history
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -32,41 +34,31 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.sale.SaleModel
 import com.example.goodsaccounting.R
-import com.example.goodsaccounting.common.view.button.CustomTextButton
 import com.example.goodsaccounting.common.view.image.CustomImage
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view.theme.textColor
-import com.example.goodsaccounting.common.view.utils.getCost
 import com.example.goodsaccounting.common.view.utils.getAmountOfProductName
+import com.example.goodsaccounting.common.view.utils.getCost
 import com.example.goodsaccounting.common.view.utils.getDateString
-import com.example.goodsaccounting.common.view_model.EventBase
-import com.example.goodsaccounting.sales_seller.model.SalesSellerEvent
-import com.example.goodsaccounting.sales_seller.model.SalesSellerState
-import kotlinx.datetime.LocalDate
 
 @Composable
-internal fun ListSaleSellerView(
-    state: SalesSellerState,
-    eventBase: EventBase<SalesSellerEvent>,
-    editSale: (idSale: String) -> Unit
+internal fun ListSaleView(
+    listSale : List<SaleModel>,
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(344.dp),
         contentPadding = PaddingValues(
             horizontal = MaterialTheme.padding.medium2,
             vertical = MaterialTheme.padding.medium1
         ),
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small2 * 1.5f),
-        verticalArrangement =  Arrangement.spacedBy(MaterialTheme.padding.small2 * 1.5f),
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement
+            .spacedBy(MaterialTheme.padding.medium1),
+        horizontalArrangement = Arrangement
+            .spacedBy(MaterialTheme.padding.medium1),
+        columns = GridCells.Adaptive(280.dp)
     ){
-        items(state.listSale){sale->
-            SaleCard(
-                sale = sale,
-                edit = {
-                    editSale(sale.id)
-                }
-            )
+        items(listSale){ sale->
+            SaleCard(sale)
         }
     }
 }
@@ -74,23 +66,21 @@ internal fun ListSaleSellerView(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun SaleCard(
-    sale: SaleModel,
-    edit: ()-> Unit,
+    sale: SaleModel
 ) {
-    val pagerState = rememberPagerState()
     Card {
         Column {
+            val pagerState = rememberPagerState()
             HorizontalPager(
                 pageCount = sale.imagesUrl.size,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(194.dp),
+                    .height(180.dp),
                 state = pagerState,
             ) {
                 CustomImage(
-                    image =  sale.imagesUrl[it],
-                    modifier =Modifier
-                        .fillMaxSize()
+                    image = sale.imagesUrl[it],
+                    modifier = Modifier.fillMaxSize()
                 )
             }
             if (sale.imagesUrl.size > 1){
@@ -112,12 +102,12 @@ private fun SaleCard(
                             .background(animationColor, CircleShape))
                     }
                 }
-                Spacer(modifier = Modifier.height(MaterialTheme.padding.small2))
             }
             Column(
                 modifier = Modifier
                     .padding(
                         horizontal = MaterialTheme.padding.medium1,
+                        vertical = MaterialTheme.padding.small2 * 1.5f,
                     )
             ) {
                 Row(
@@ -140,6 +130,7 @@ private fun SaleCard(
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
                 ){
                     Text(
                         text = sale.creatorName,
@@ -164,17 +155,6 @@ private fun SaleCard(
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.textColor.copy(0.6f)
                 )
-                Row(
-                    modifier = Modifier.padding(
-                        bottom = MaterialTheme.padding.small2
-                    )
-                ){
-                    CustomTextButton(
-                        label = stringResource(R.string.edit),
-                        onClick = edit,
-                        color = MaterialTheme.colors.primary,
-                    )
-                }
             }
         }
     }

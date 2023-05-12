@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.model.create.AmountOfIdModel
 import com.example.core.domain.model.create.CreateOrEditSaleModel
+import com.example.core.domain.model.error.SaleError
 import com.example.core.domain.use_case.create.CreateSaleSellerUseCase
 import com.example.core.domain.use_case.edit.EditSaleUseCase
 import com.example.core.domain.use_case.product.GetMapIdToProductModelUseCase
@@ -142,7 +143,23 @@ internal class CreateOrEditSaleSellerVM(
     }
 
     override fun onError(error: Throwable) = intent {
-        postSideEffect(CreateOrEditSaleSellerSideEffect.Message(R.string.network_problems))
+        when(error){
+            SaleError.ThereAreFewerMaterialsInStock -> {
+                postSideEffect(
+                    CreateOrEditSaleSellerSideEffect.Message(
+                        R.string.we_dont_have_that_much_material_in_stock
+                    )
+                )
+            }
+            else -> {
+                postSideEffect(CreateOrEditSaleSellerSideEffect.Message(R.string.network_problems))
+            }
+        }
+        reduce {
+            (state as CreateOrEditSaleSellerState.CreateOrEdit).copy(
+                isCreatingOrEditing = false
+            )
+        }
         Log.e("CreateSaleSellerVM", error.message.toString())
     }
 
@@ -175,6 +192,7 @@ internal class CreateOrEditSaleSellerVM(
                                         products = sale.products.associate { it.product.id to it.product.price.toInt() },
                                         checkPrice = sale.checkPrice,
                                         currency = sale.currency,
+                                        isErrorAmountOfProduct = sale.products.associate { it.product.id to false }
                                     )
                                 }
                             }
@@ -229,11 +247,7 @@ internal class CreateOrEditSaleSellerVM(
                 listImageUri = lastState.listImageUri
             ).onSuccess {
                 postSideEffect(CreateOrEditSaleSellerSideEffect.Created)
-            }.onFailure {
-                reduce {
-                    lastState.copy(isCreatingOrEditing = false)
-                }
-            }
+            }.onFailure(::onError)
         }
     }
 

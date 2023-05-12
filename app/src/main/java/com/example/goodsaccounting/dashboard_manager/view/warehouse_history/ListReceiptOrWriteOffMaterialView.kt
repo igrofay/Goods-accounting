@@ -1,4 +1,4 @@
-package com.example.goodsaccounting.sales_seller.view
+package com.example.goodsaccounting.dashboard_manager.view.warehouse_history
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -26,74 +28,64 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.core.domain.model.sale.SaleModel
-import com.example.goodsaccounting.R
-import com.example.goodsaccounting.common.view.button.CustomTextButton
+import com.example.core.domain.model.warehouse.ReceiptOrWriteOffMaterialModel
 import com.example.goodsaccounting.common.view.image.CustomImage
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view.theme.textColor
-import com.example.goodsaccounting.common.view.utils.getCost
-import com.example.goodsaccounting.common.view.utils.getAmountOfProductName
+import com.example.goodsaccounting.common.view.utils.getAmountOfMaterialName
 import com.example.goodsaccounting.common.view.utils.getDateString
-import com.example.goodsaccounting.common.view_model.EventBase
-import com.example.goodsaccounting.sales_seller.model.SalesSellerEvent
-import com.example.goodsaccounting.sales_seller.model.SalesSellerState
+import com.skydoves.landscapist.glide.GlideImage
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @Composable
-internal fun ListSaleSellerView(
-    state: SalesSellerState,
-    eventBase: EventBase<SalesSellerEvent>,
-    editSale: (idSale: String) -> Unit
+internal fun ListReceiptOrWriteOffMaterialView(
+    list: List<ReceiptOrWriteOffMaterialModel>
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(344.dp),
+        modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
             horizontal = MaterialTheme.padding.medium2,
             vertical = MaterialTheme.padding.medium1
         ),
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small2 * 1.5f),
-        verticalArrangement =  Arrangement.spacedBy(MaterialTheme.padding.small2 * 1.5f),
-        modifier = Modifier.fillMaxSize()
+        verticalArrangement = Arrangement
+            .spacedBy(MaterialTheme.padding.medium1),
+        horizontalArrangement = Arrangement
+            .spacedBy(MaterialTheme.padding.medium1),
+        columns = GridCells.Adaptive(280.dp),
     ){
-        items(state.listSale){sale->
-            SaleCard(
-                sale = sale,
-                edit = {
-                    editSale(sale.id)
-                }
-            )
+        items(list){ model->
+            ReceiptOrWriteOffMaterialCard(model)
         }
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun SaleCard(
-    sale: SaleModel,
-    edit: ()-> Unit,
+@OptIn(ExperimentalFoundationApi::class)
+private fun ReceiptOrWriteOffMaterialCard(
+    receiptOrWriteOffMaterial: ReceiptOrWriteOffMaterialModel
 ) {
-    val pagerState = rememberPagerState()
     Card {
         Column {
+            val pagerState = rememberPagerState()
             HorizontalPager(
-                pageCount = sale.imagesUrl.size,
+                pageCount = receiptOrWriteOffMaterial.listImageUrl.size,
+                state = pagerState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(194.dp),
-                state = pagerState,
-            ) {
+                    .height(180.dp)
+            ) { index->
                 CustomImage(
-                    image =  sale.imagesUrl[it],
-                    modifier =Modifier
-                        .fillMaxSize()
+                    image = receiptOrWriteOffMaterial.listImageUrl[index],
+                    modifier = Modifier.fillMaxSize()
                 )
             }
-            if (sale.imagesUrl.size > 1){
+            if (receiptOrWriteOffMaterial.listImageUrl.size > 1){
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement
@@ -102,7 +94,7 @@ private fun SaleCard(
                         .fillMaxWidth()
                         .padding(top = MaterialTheme.padding.small2 * 1.5f),
                 ){
-                    for(index in sale.imagesUrl.indices){
+                    for(index in receiptOrWriteOffMaterial.listImageUrl.indices){
                         val animationColor by animateColorAsState(
                             if (pagerState.currentPage == index) MaterialTheme.colors.secondary
                             else MaterialTheme.colors.onSurface.copy(0.3f)
@@ -112,44 +104,31 @@ private fun SaleCard(
                             .background(animationColor, CircleShape))
                     }
                 }
-                Spacer(modifier = Modifier.height(MaterialTheme.padding.small2))
             }
             Column(
                 modifier = Modifier
                     .padding(
                         horizontal = MaterialTheme.padding.medium1,
+                        vertical = MaterialTheme.padding.small2 * 1.5f
                     )
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth(),
-                ){
-                    Text(
-                        text = sale.name,
-                        maxLines = 2,
-                        style = MaterialTheme.typography.h6,
-                        modifier = Modifier.weight(3f),
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    Text(
-                        text = getCost(currencyData = sale.currency, cost = sale.checkPrice),
-                        style = MaterialTheme.typography.body2,
-                        modifier = Modifier.weight(2f),
-                        textAlign = TextAlign.End,
-                    )
-                }
+                Text(
+                    text = receiptOrWriteOffMaterial.name,
+                    style = MaterialTheme.typography.subtitle1,
+                )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                 ){
                     Text(
-                        text = sale.creatorName,
+                        text = receiptOrWriteOffMaterial.creatorName,
                         maxLines = 1,
                         style = MaterialTheme.typography.body2,
                         color = MaterialTheme.colors.textColor.copy(0.6f),
-                        modifier = Modifier.weight(3f)
+                        modifier = Modifier.weight(2f),
+                        overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = getDateString(sale.date),
+                        text = getDateString(receiptOrWriteOffMaterial.date),
                         maxLines = 1,
                         style = MaterialTheme.typography.body2,
                         color = MaterialTheme.colors.textColor.copy(0.6f),
@@ -157,24 +136,14 @@ private fun SaleCard(
                         textAlign = TextAlign.End
                     )
                 }
-                Spacer(modifier = Modifier.height(MaterialTheme.padding.small2))
+                Spacer(modifier = Modifier.height(MaterialTheme.padding.small1))
                 Text(
-                    text = stringResource(R.string.sold) +": "+ sale.getAmountOfProductName(),
-                    maxLines = 3,
+                    text = receiptOrWriteOffMaterial.listAmountOfMaterial.getAmountOfMaterialName(),
                     style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.textColor.copy(0.6f)
+                    color = MaterialTheme.colors.textColor.copy(0.6f),
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
                 )
-                Row(
-                    modifier = Modifier.padding(
-                        bottom = MaterialTheme.padding.small2
-                    )
-                ){
-                    CustomTextButton(
-                        label = stringResource(R.string.edit),
-                        onClick = edit,
-                        color = MaterialTheme.colors.primary,
-                    )
-                }
             }
         }
     }

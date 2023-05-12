@@ -104,9 +104,12 @@ internal fun WarehouseHistoryScreen() {
         Box(
             modifier = Modifier
                 .padding(it)
-                .pullRefresh(refreshState)
         ){
-            Column {
+            Column(
+                modifier = Modifier
+                    .pullRefresh(refreshState),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
                 TapWarehouseHistory(
                     currentPage = pagerState.currentPage,
                     onClick = {page->

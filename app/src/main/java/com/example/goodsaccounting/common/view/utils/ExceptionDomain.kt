@@ -11,8 +11,7 @@ import com.example.core.domain.model.product.Currency
 import com.example.core.domain.model.product.Measurements
 import com.example.core.domain.model.user.RoleLevel
 import com.example.goodsaccounting.R
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Month
+import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import android.icu.util.Currency as AndroidCurrency
@@ -113,4 +112,12 @@ internal fun getMonthName(res: Resources, monthNumber: Int) : String{
         12 -> res.getString(R.string.dec)
         else -> ""
     }
+}
+
+internal fun getDateString(dateIso: String) = Instant.parse(dateIso)
+    .toLocalDateTime(TimeZone.currentSystemDefault())
+    .date.toString()
+
+internal fun Float.transformationToString() : String{
+    return String.format("%.2f", this)
 }

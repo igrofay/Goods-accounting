@@ -1,6 +1,5 @@
 package com.example.core.data.data_soure.api
 
-import android.util.Log
 import com.example.core.data.model.create.CreateOrEditOrEditSaleBody
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.MultiPartFormDataContent
@@ -48,4 +47,6 @@ internal class SaleApi(
         }
     suspend fun getSaleImage(filename: String) = authorizedClient
         .get("/api/salesAccountingIcon/$filename")
+    suspend fun getAllSale() =authorizedClient
+        .get("/api/salesAccounting")
 }

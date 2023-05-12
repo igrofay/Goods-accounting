@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.product.ProductModel
 import com.example.goodsaccounting.common.view.image.CustomImage
 import com.example.goodsaccounting.common.view.theme.padding
+import com.example.goodsaccounting.common.view.theme.textColor
 import com.example.goodsaccounting.common.view.utils.getProductComponents
 import com.example.goodsaccounting.common.view.utils.getCost
 
@@ -77,7 +78,7 @@ private fun ProductCard(
             ) {
                 Text(
                     text = productModel.name,
-                    style = MaterialTheme.typography.subtitle1,
+                    style = MaterialTheme.typography.h6,
                     maxLines = 3,
                 )
                 Text(
@@ -90,9 +91,10 @@ private fun ProductCard(
                     Spacer(modifier = Modifier.height(MaterialTheme.padding.small2))
                     Text(
                         text = productModel.getProductComponents(),
-                        style = MaterialTheme.typography.caption,
+                        style = MaterialTheme.typography.body2,
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colors.textColor.copy(0.6f)
                     )
                 }
             }

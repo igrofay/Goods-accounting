@@ -63,7 +63,8 @@ internal fun TapProductsAndMaterial(
                     .padding(
                         horizontal = MaterialTheme.padding.medium2,
                         vertical = MaterialTheme.padding.medium1
-                    ),
+                    )
+                    .basicMarquee(),
                 contentAlignment = Alignment.Center
             ){
                 Text(

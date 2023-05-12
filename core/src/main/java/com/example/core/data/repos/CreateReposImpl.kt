@@ -16,9 +16,12 @@ import com.example.core.domain.model.create.CreateProductModel
 import com.example.core.domain.model.create.CreateReceiptOrWriteOffMaterialModel
 import com.example.core.domain.model.create.CreateOrEditSaleModel
 import com.example.core.domain.model.create.IdModel
+import com.example.core.domain.model.error.SaleError
 import com.example.core.domain.repos.CreateRepos
 import io.ktor.client.call.body
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.statement.readBytes
+import io.ktor.http.HttpStatusCode.Companion.BadRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -84,10 +87,20 @@ internal class CreateReposImpl(
         }
     }
 
-    override suspend fun createSale(createOrEditSaleModel: CreateOrEditSaleModel)=
-        saleApi.createSale(
-            createOrEditSaleModel.fromModelToCreateOrEditOrEditSaleBody()
-        ).body<IdBody>()
+    override suspend fun createSale(createOrEditSaleModel: CreateOrEditSaleModel): IdModel{
+        try {
+            return saleApi.createSale(
+                createOrEditSaleModel.fromModelToCreateOrEditOrEditSaleBody()
+            ).body<IdBody>()
+        }catch (e: ClientRequestException){
+            throw when(e.response.status){
+                BadRequest-> SaleError.ThereAreFewerMaterialsInStock
+                else-> e
+            }
+        }
+
+    }
+
 
     override suspend fun updateImagesSale(listImageUri: List<String>, id: String) {
         withContext(Dispatchers.IO){

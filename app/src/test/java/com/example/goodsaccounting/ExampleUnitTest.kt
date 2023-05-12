@@ -1,6 +1,7 @@
 package com.example.goodsaccounting
 
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 import org.junit.Test
@@ -13,6 +14,6 @@ import org.junit.Test
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        println(LocalDate(2023, 5, 10))
+        println(Instant.parse("2023-05-11T00:00:00.0000000Z"))
     }
 }

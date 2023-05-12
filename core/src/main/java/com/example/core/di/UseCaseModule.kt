@@ -16,6 +16,7 @@ import com.example.core.domain.use_case.seller.GetSaleUseCase
 import com.example.core.domain.use_case.seller.GetSalesUseCase
 import com.example.core.domain.use_case.user.GetUserFlowUseCase
 import com.example.core.domain.use_case.user.UpdateUserDataUseCase
+import com.example.core.domain.use_case.warehouse.GetFilteredListUseCase
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
@@ -35,6 +36,7 @@ internal val useCaseModule by DI.Module{
     bindProvider { new(::CreateMaterialUseCase) }
     bindProvider { new(::CreateProductUseCase) }
     bindProvider { new(::CreateReceiptOrWriteOffMaterialUseCase) }
+    bindProvider { new(::GetFilteredListUseCase) }
     // Product
     bindProvider { new(::GetMapIdToMaterialModelUseCase) }
     bindProvider { new(::GetMapIdToProductModelUseCase) }
