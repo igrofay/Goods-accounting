@@ -17,6 +17,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,7 +26,9 @@ import com.example.goodsaccounting.analytics.model.seller.AnalyticsSellerEvent
 import com.example.goodsaccounting.analytics.model.seller.AnalyticsSellerState
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view.utils.getCost
+import com.example.goodsaccounting.common.view.utils.getCurrentMonth
 import com.example.goodsaccounting.common.view_model.EventBase
+import kotlinx.datetime.LocalDate
 
 
 @Composable
@@ -72,7 +75,7 @@ internal fun AnalyticsDataSellerView(
                             style = MaterialTheme.typography.subtitle1,
                         )
                         Text(
-                            text = "Проданно на сумму",
+                            text = stringResource(R.string.was_sold_for_amount),
                             style = MaterialTheme.typography.body1,
                         )
                         Text(
@@ -104,7 +107,7 @@ internal fun AnalyticsDataSellerView(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ){
                             Text(
-                                text = stringResource(R.string.earnings_statistics_for) + " Май",
+                                text = stringResource(R.string.earnings_statistics_for) +" "+ getCurrentMonth(),
                                 style = MaterialTheme.typography.subtitle1,
                             )
                         }

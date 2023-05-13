@@ -11,6 +11,7 @@ import com.example.core.domain.model.product.Currency
 import com.example.core.domain.model.product.Measurements
 import com.example.core.domain.model.user.RoleLevel
 import com.example.goodsaccounting.R
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -112,6 +113,15 @@ internal fun getMonthName(res: Resources, monthNumber: Int) : String{
         12 -> res.getString(R.string.dec)
         else -> ""
     }
+}
+
+@Composable
+internal fun getCurrentMonth() : String{
+    val res = LocalContext.current.resources
+    val month = Clock.System.now()
+        .toLocalDateTime(TimeZone.currentSystemDefault())
+        .date.monthNumber
+    return getMonthName(res, month)
 }
 
 internal fun getDateString(dateIso: String) = Instant.parse(dateIso)

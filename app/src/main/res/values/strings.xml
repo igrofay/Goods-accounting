@@ -102,4 +102,5 @@
     <string name="we_dont_have_that_much_material_in_stock">Нет такого количества материала на складе</string>
     <string name="alphabetically">По алфавиту</string>
     <string name="in_count">По количеству</string>
+    <string name="was_sold_for_amount">Продано на сумму</string>
 </resources>

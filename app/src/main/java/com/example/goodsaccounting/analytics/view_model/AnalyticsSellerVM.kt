@@ -23,7 +23,7 @@ internal class AnalyticsSellerVM(
     private val getSellerIncomeUseCase : GetSellerIncomeUseCase by di.instance()
 
     override val container: Container<AnalyticsSellerState, AnalyticsSellerSideEffect> =
-        viewModelScope.container(AnalyticsSellerState.Loading){ load()}
+        viewModelScope.container(AnalyticsSellerState.Loading)
 
     override fun onError(error: Throwable) {
         Log.e("AnalyticsSellerVM", error.message.toString())

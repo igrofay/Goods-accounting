@@ -75,5 +75,5 @@ dependencies {
     // Vico
     implementation "com.patrykandpatrick.vico:compose:1.6.5"
     // datatime
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+    implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 }
