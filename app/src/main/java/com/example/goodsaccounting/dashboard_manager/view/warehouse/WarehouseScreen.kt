@@ -56,6 +56,9 @@ internal fun WarehouseScreen() {
         refreshing = state.isRefreshing,
         onRefresh = { warehouseVM.onEvent(WarehouseEvent.Refresh) }
     )
+    LaunchedEffect(Unit){
+        warehouseVM.onEvent(WarehouseEvent.Refresh)
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -110,6 +113,7 @@ internal fun WarehouseScreen() {
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
                     modifier = Modifier
+                        .align(Alignment.Center)
                         .width(with(LocalDensity.current){width.toDp()})
                 ) {
                     FilterListMaterial.values().forEach {

@@ -13,6 +13,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.goodsaccounting.R
+import com.example.goodsaccounting.analytics.view.manager.AnalyticsManagerScreen
 import com.example.goodsaccounting.create_or_edit.view.material.CreateMaterialScreen
 import com.example.goodsaccounting.create_or_edit.view.product.CreateProductScreen
 import com.example.goodsaccounting.create_or_edit.view.receipt_or_write_of_material.CreateReceiptOrWriteOfMaterialScreen
@@ -46,7 +47,7 @@ internal fun NavGraphBuilder.managerUserNav(){
                         DashboardManagerScreen()
                     }
                     composable(ManagerUserRouting.ComponentsWitBottomBar.Analytics.route){
-
+                        AnalyticsManagerScreen()
                     }
                     composable(ManagerUserRouting.ComponentsWitBottomBar.Profile.route){
                         ProfileScreen()

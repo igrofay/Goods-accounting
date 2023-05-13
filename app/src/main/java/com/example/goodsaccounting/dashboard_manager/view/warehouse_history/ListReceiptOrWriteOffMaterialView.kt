@@ -132,7 +132,7 @@ private fun ReceiptOrWriteOffMaterialCard(
                         maxLines = 1,
                         style = MaterialTheme.typography.body2,
                         color = MaterialTheme.colors.textColor.copy(0.6f),
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1.35f),
                         textAlign = TextAlign.End
                     )
                 }
