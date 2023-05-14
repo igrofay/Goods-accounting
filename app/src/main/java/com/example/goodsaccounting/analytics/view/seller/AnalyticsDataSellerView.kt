@@ -101,16 +101,10 @@ internal fun AnalyticsDataSellerView(
                             MaterialTheme.padding.medium1
                         ),
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ){
-                            Text(
-                                text = stringResource(R.string.earnings_statistics_for) +" "+ getCurrentMonth(),
-                                style = MaterialTheme.typography.subtitle1,
-                            )
-                        }
+                        Text(
+                            text = stringResource(R.string.earnings_statistics_for) +" "+ getCurrentMonth(),
+                            style = MaterialTheme.typography.subtitle1,
+                        )
                         ColumnChartView(
                             listEntry = state.earningThisMonth,
                             bottomFormatter = axisDayFormatter()
@@ -125,16 +119,10 @@ internal fun AnalyticsDataSellerView(
                             MaterialTheme.padding.medium1
                         ),
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ){
-                            Text(
-                                text = stringResource(R.string.monthly_earning_statistics),
-                                style = MaterialTheme.typography.subtitle1,
-                            )
-                        }
+                        Text(
+                            text = stringResource(R.string.monthly_earning_statistics),
+                            style = MaterialTheme.typography.subtitle1,
+                        )
                         ColumnChartView(
                             listEntry = state.monthlyEarnings,
                             bottomFormatter = axisMonthFormatter(),

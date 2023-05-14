@@ -1,5 +1,6 @@
 package com.example.goodsaccounting.analytics.view.seller
 
+import android.graphics.Paint
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -7,8 +8,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFontFamilyResolver
 import androidx.compose.ui.text.font.resolveAsTypeface
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.goodsaccounting.analytics.model.common.AmountOfProductCartEntry
 import com.example.goodsaccounting.analytics.model.common.IncomePerDateChartEntry
+import com.example.goodsaccounting.analytics.model.common.SellerIncomeCartEntry
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view.theme.sf
 import com.example.goodsaccounting.common.view.utils.getMonthName
@@ -49,10 +53,29 @@ internal fun axisDayFormatter(): AxisValueFormatter<AxisPosition.Horizontal.Bott
     }
 }
 
+internal fun axisSellerNameFormatter() : AxisValueFormatter<AxisPosition.Horizontal.Bottom> {
+    return AxisValueFormatter { value, chartValues ->
+        (chartValues.chartEntryModel.entries.first()
+            .getOrNull(value.toInt()) as? SellerIncomeCartEntry)
+            ?.sellerName
+            .orEmpty()
+    }
+}
+
+internal fun axisProductNameFormatter() : AxisValueFormatter<AxisPosition.Horizontal.Bottom> {
+    return AxisValueFormatter { value, chartValues ->
+        (chartValues.chartEntryModel.entries.first()
+            .getOrNull(value.toInt()) as? AmountOfProductCartEntry)
+            ?.productName
+            .orEmpty()
+    }
+}
+
 @Composable
 internal fun ColumnChartView(
     listEntry: ChartEntryModel,
-    bottomFormatter: AxisValueFormatter<AxisPosition.Horizontal.Bottom>
+    bottomFormatter: AxisValueFormatter<AxisPosition.Horizontal.Bottom>,
+    thickness: Dp = 20.dp,
 ) {
     val typeface by LocalFontFamilyResolver.current.resolveAsTypeface(fontFamily = sf)
     Chart(
@@ -61,7 +84,7 @@ internal fun ColumnChartView(
             columns = listOf(
                 lineComponent(
                     color = MaterialTheme.colors.secondary,
-                    thickness = 20.dp,
+                    thickness = thickness,
                     shape = MaterialTheme.shapes.small
                 )
             ),
@@ -76,6 +99,8 @@ internal fun ColumnChartView(
             valueFormatter = bottomFormatter,
             label = axisLabelComponent(
                 typeface = typeface,
+                lineCount = 3,
+                textAlign = Paint.Align.CENTER
             )
         ),
         marker = markerComponent(

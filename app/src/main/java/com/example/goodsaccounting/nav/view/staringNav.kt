@@ -8,6 +8,7 @@ import com.example.core.domain.model.user.RoleLevel
 import com.example.goodsaccounting.auth.view.AuthScreen
 import com.example.goodsaccounting.nav.model.AdministratorUserRouting
 import com.example.goodsaccounting.nav.model.StartingRouting
+import com.example.goodsaccounting.restore_password.view.RestorePasswordScreen
 import com.example.goodsaccounting.splash.view.SplashScreen
 
 internal fun NavGraphBuilder.staringNav() {
@@ -42,7 +43,7 @@ internal fun NavGraphBuilder.staringNav() {
             )
         }
         composable(StartingRouting.RestorePassword.route){
-
+            RestorePasswordScreen()
         }
     }
 }

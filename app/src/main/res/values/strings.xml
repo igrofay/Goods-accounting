@@ -103,4 +103,10 @@
     <string name="alphabetically">По алфавиту</string>
     <string name="in_count">По количеству</string>
     <string name="was_sold_for_amount">Продано на сумму</string>
+    <string name="sold_today">Продано за сегодня</string>
+    <string name="sales_statistics_for_today">Статистика продаж за сегодня</string>
+    <string name="sales_statistics_for">Статистика продаж за</string>
+    <string name="selling_product_today">Продаваемый продукт за сегодня</string>
+    <string name="product_sales_for_today">Продажи продуктов за сегодня</string>
+    <string name="product_sales_for">Продажи продуктов за</string>
 </resources>

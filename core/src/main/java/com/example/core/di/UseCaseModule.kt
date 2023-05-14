@@ -1,6 +1,7 @@
 package com.example.core.di
 
 import com.example.core.domain.use_case.admin.GetUsersUseCase
+import com.example.core.domain.use_case.analytics.GetManagerIncomeUseCase
 import com.example.core.domain.use_case.analytics.GetSellerIncomeUseCase
 import com.example.core.domain.use_case.auth.RestoreSessionUseCase
 import com.example.core.domain.use_case.auth.SignInUseCase
@@ -37,6 +38,7 @@ internal val useCaseModule by DI.Module{
     bindProvider { new(::CreateProductUseCase) }
     bindProvider { new(::CreateReceiptOrWriteOffMaterialUseCase) }
     bindProvider { new(::GetFilteredListUseCase) }
+    bindProvider { new(::GetManagerIncomeUseCase) }
     // Product
     bindProvider { new(::GetMapIdToMaterialModelUseCase) }
     bindProvider { new(::GetMapIdToProductModelUseCase) }
