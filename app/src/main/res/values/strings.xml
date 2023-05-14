@@ -109,4 +109,16 @@
     <string name="selling_product_today">Продаваемый продукт за сегодня</string>
     <string name="product_sales_for_today">Продажи продуктов за сегодня</string>
     <string name="product_sales_for">Продажи продуктов за</string>
+    <string name="password_recovery">Восстановление пароля</string>
+    <string name="enter_your_email">Введите адрес электронной почты</string>
+    <string name="next">Далее</string>
+    <string name="user_does_not_exist">Пользователь не существует</string>
+    <string name="invalid_code_or_code_time_out">Неверный код или время ожидания кода истекло</string>
+    <string name="enter_code_from_email">Введите код из E-mail</string>
+    <string name="you_can_send_the_code_again_after_n_seconds">Отправить код повторно можно будет через %1$d сек.</string>
+    <string name="send_code_again">Отправить код повторно</string>
+    <string name="creating_new_password">Создание нового пароля</string>
+    <string name="enter_new_password">Введите новый пароль</string>
+    <string name="password_replay">Повтор пароля</string>
+    <string name="update">Обновить</string>
 </resources>

@@ -7,6 +7,7 @@ import com.example.core.data.repos.AuthReposImpl
 import com.example.core.data.repos.CreateReposImpl
 import com.example.core.data.repos.EditReposImpl
 import com.example.core.data.repos.ProductsAndMaterialsReposImpl
+import com.example.core.data.repos.RestorePasswordReposImpl
 import com.example.core.data.repos.SellerReposImpl
 import com.example.core.data.repos.UserReposImpl
 import com.example.core.data.repos.WarehouseReposImpl
@@ -17,6 +18,7 @@ import com.example.core.domain.repos.AuthRepos
 import com.example.core.domain.repos.CreateRepos
 import com.example.core.domain.repos.EditRepos
 import com.example.core.domain.repos.ProductsAndMaterialsRepos
+import com.example.core.domain.repos.RestorePasswordRepos
 import com.example.core.domain.repos.SellerRepos
 import com.example.core.domain.repos.UserRepos
 import com.example.core.domain.repos.WarehouseRepos
@@ -36,4 +38,5 @@ internal val reposModule by DI.Module {
     bindProvider<AnalyticsRepos> { new(::AnalyticsReposImpl) }
     bindProvider<SellerRepos> { new(::SellerReposImpl) }
     bindProvider<EditRepos> { new(::EditReposImpl) }
+    bindProvider<RestorePasswordRepos> { new(::RestorePasswordReposImpl) }
 }

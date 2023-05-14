@@ -43,7 +43,12 @@ internal fun NavGraphBuilder.staringNav() {
             )
         }
         composable(StartingRouting.RestorePassword.route){
-            RestorePasswordScreen()
+            val appNavController = LocalAppNavController.current
+            RestorePasswordScreen(
+                exit = {
+                    appNavController.popBackStack()
+                }
+            )
         }
     }
 }
