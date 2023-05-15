@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.goodsaccounting.R
 import com.example.goodsaccounting.common.view.button.CreateButton
 import com.example.goodsaccounting.common.view_model.EventBase
+import com.example.goodsaccounting.create_or_edit.model.common.CreateOrEditState
 import com.example.goodsaccounting.create_or_edit.model.product.CreateOrEditProductEvent
 import com.example.goodsaccounting.create_or_edit.model.product.CreateOrEditProductState
 import com.example.goodsaccounting.create_or_edit.view.common.ListAmountOfMaterialView
@@ -78,7 +79,11 @@ internal fun ProductInformationFields(
             }
         }
         CreateButton(
-            isCreating = state.isCreating
+            isCreating = state.isCreatingOrEditing,
+            label = when(state.createOrEditState){
+                CreateOrEditState.Create -> stringResource(R.string.create)
+                CreateOrEditState.Edit -> stringResource(R.string.edit)
+            }
         ){
             eventBase.onEvent(CreateOrEditProductEvent.CreateOrEdit)
         }

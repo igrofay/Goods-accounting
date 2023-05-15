@@ -12,5 +12,4 @@ internal sealed class CreateOrEditSaleSellerEvent : UIEvent(){
     class RemoveProduct(val id: String) : CreateOrEditSaleSellerEvent()
     class InputAmountOfProduct(val id: String, val amount: String) : CreateOrEditSaleSellerEvent()
     class SelectCurrency(val currency: Currency) : CreateOrEditSaleSellerEvent()
-    object Edit: CreateOrEditSaleSellerEvent()
 }

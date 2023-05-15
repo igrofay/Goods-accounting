@@ -140,7 +140,7 @@ internal class CreateOrEditProductVM(
                 ?: return@intent
         reduce {
             lastState.copy(
-                isCreating = true
+                isCreatingOrEditing = true
             )
         }
         val isErrorName = lastState.name.isBlank()
@@ -155,7 +155,7 @@ internal class CreateOrEditProductVM(
         if (isErrorName || isErrorPrice || isErrorCommonAmountOfMaterial) {
             reduce {
                 lastState.copy(
-                    isCreating = false,
+                    isCreatingOrEditing = false,
                     isErrorAmountOfMaterial = isErrorAmountOfMaterial,
                     isErrorName = isErrorName,
                     isErrorPrice = isErrorPrice
@@ -190,7 +190,7 @@ internal class CreateOrEditProductVM(
         }.onFailure {
             reduce {
                 (state as? CreateOrEditProductState.CreateOrEdit)?.copy(
-                    isCreating = false,
+                    isCreatingOrEditing = false,
                 ) ?: state
             }
             onError(it)
@@ -218,7 +218,7 @@ internal class CreateOrEditProductVM(
         }.onFailure {
             reduce {
                 (state as? CreateOrEditProductState.CreateOrEdit)?.copy(
-                    isCreating = false,
+                    isCreatingOrEditing = false,
                 ) ?: state
             }
             onError(it)

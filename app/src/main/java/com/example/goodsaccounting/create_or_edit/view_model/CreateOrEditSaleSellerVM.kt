@@ -83,7 +83,7 @@ internal class CreateOrEditSaleSellerVM(
                 }
             }
 
-            CreateOrEditSaleSellerEvent.CreateOrEdit -> create()
+            CreateOrEditSaleSellerEvent.CreateOrEdit -> createOrEdit()
             is CreateOrEditSaleSellerEvent.AddProduct -> blockingIntent {
                 val lastState =
                     (state as? CreateOrEditSaleSellerState.CreateOrEdit) ?: return@blockingIntent
@@ -134,7 +134,6 @@ internal class CreateOrEditSaleSellerVM(
                 reduce { lastState.copy(currency = event.currency) }
             }
 
-            CreateOrEditSaleSellerEvent.Edit -> edit()
         }
     }
 
@@ -186,7 +185,7 @@ internal class CreateOrEditSaleSellerVM(
         }
     }
 
-    private fun create() = intent {
+    private fun createOrEdit() = intent {
         val lastState = (state as? CreateOrEditSaleSellerState.CreateOrEdit) ?: return@intent
         reduce {
             lastState.copy(isCreatingOrEditing = true)
@@ -214,75 +213,54 @@ internal class CreateOrEditSaleSellerVM(
                 postSideEffect(CreateOrEditSaleSellerSideEffect.Message(R.string.add_photos))
             if (isErrorAmountOfProduct.isEmpty())
                 postSideEffect(CreateOrEditSaleSellerSideEffect.Message(R.string.add_products))
-        } else {
-            createSaleSellerUseCase.execute(
-                createOrEditSaleModel = object : CreateOrEditSaleModel {
-                    override val name = lastState.name
-                    override val products = lastState.products.map {
-                        object : AmountOfIdModel {
-                            override val id = it.key
-                            override val amount = it.value!!.toFloat()
-                        }
-                    }
-                    override val checkPrice = lastState.checkPrice
-                    override val currency = lastState.currency
-                },
-                listImageUri = lastState.listImageUri
-            ).onSuccess {
-                postSideEffect(CreateOrEditSaleSellerSideEffect.Created)
-            }.onFailure(::onError)
+        }else{
+            when(lastState.createOrEditState){
+                CreateOrEditState.Create -> create()
+                CreateOrEditState.Edit -> edit()
+            }
         }
+    }
+    private fun create() = intent {
+        val lastState = state as CreateOrEditSaleSellerState.CreateOrEdit
+        createSaleSellerUseCase.execute(
+            createOrEditSaleModel = object : CreateOrEditSaleModel {
+                override val name = lastState.name
+                override val products = lastState.products.map {
+                    object : AmountOfIdModel {
+                        override val id = it.key
+                        override val amount = it.value!!.toFloat()
+                    }
+                }
+                override val checkPrice = lastState.checkPrice
+                override val currency = lastState.currency
+            },
+            listImageUri = lastState.listImageUri
+        ).onSuccess {
+            postSideEffect(CreateOrEditSaleSellerSideEffect.Created)
+        }.onFailure(::onError)
     }
 
     private fun edit() = intent {
-        val lastState = (state as? CreateOrEditSaleSellerState.CreateOrEdit) ?: return@intent
-        reduce {
-            lastState.copy(isCreatingOrEditing = true)
-        }
-        val isErrorName = lastState.name.isBlank()
-        val isErrorListImage = lastState.listImageUri.isEmpty()
-        val isErrorAmountOfProduct = lastState.isErrorAmountOfProduct.toMutableMap()
-        for ((id, amount) in lastState.products) {
-            isErrorAmountOfProduct[id] = amount == null || amount == 0
-        }
-        val isErrorCommonAmountOfProduct =
-            if (isErrorAmountOfProduct.values.isEmpty()) true
-            else isErrorAmountOfProduct.values.max()
-        if (
-            isErrorName || isErrorListImage || isErrorCommonAmountOfProduct
-        ) {
-            reduce {
-                lastState.copy(
-                    isCreatingOrEditing = false,
-                    isErrorName = isErrorName,
-                    isErrorAmountOfProduct = isErrorAmountOfProduct
-                )
-            }
-            if (isErrorListImage)
-                postSideEffect(CreateOrEditSaleSellerSideEffect.Message(R.string.add_photos))
-            if (isErrorAmountOfProduct.isEmpty())
-                postSideEffect(CreateOrEditSaleSellerSideEffect.Message(R.string.add_products))
-        } else {
-            editSaleSellerUseCase.execute(
-                idSale = idSale!!,
-                saleModel = object : CreateOrEditSaleModel {
-                    override val name = lastState.name
-                    override val products = lastState.products.map {
-                        object : AmountOfIdModel {
-                            override val id = it.key
-                            override val amount = it.value!!.toFloat()
-                        }
+        val lastState = state as CreateOrEditSaleSellerState.CreateOrEdit
+        editSaleSellerUseCase.execute(
+            idSale = idSale!!,
+            saleModel = object : CreateOrEditSaleModel {
+                override val name = lastState.name
+                override val products = lastState.products.map {
+                    object : AmountOfIdModel {
+                        override val id = it.key
+                        override val amount = it.value!!.toFloat()
                     }
-                    override val checkPrice = lastState.checkPrice
-                    override val currency = lastState.currency
-                },
-                listImageUri = lastState.listImageUri
-            ).onSuccess {
-                postSideEffect(CreateOrEditSaleSellerSideEffect.Created)
-            }.onFailure {
-                reduce {
-                    lastState.copy(isCreatingOrEditing = false)
                 }
+                override val checkPrice = lastState.checkPrice
+                override val currency = lastState.currency
+            },
+            listImageUri = lastState.listImageUri
+        ).onSuccess {
+            postSideEffect(CreateOrEditSaleSellerSideEffect.Created)
+        }.onFailure {
+            reduce {
+                lastState.copy(isCreatingOrEditing = false)
             }
         }
     }

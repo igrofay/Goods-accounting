@@ -185,10 +185,7 @@ internal fun CreateSaleSellerFields(
                 CreateOrEditState.Edit -> stringResource(R.string.edit)
             }
         ) {
-           when (state.createOrEditState){
-               CreateOrEditState.Create ->  eventBase.onEvent(CreateOrEditSaleSellerEvent.CreateOrEdit)
-               CreateOrEditState.Edit ->  eventBase.onEvent(CreateOrEditSaleSellerEvent.Edit)
-           }
+            eventBase.onEvent(CreateOrEditSaleSellerEvent.CreateOrEdit)
         }
     }
 }

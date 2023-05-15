@@ -18,7 +18,7 @@ internal sealed class CreateOrEditProductState : UIState(){
         val currency: Currency = Currency.Rub,
         val materials: Map<String, String> = mapOf(), // id material to amount
         val isErrorAmountOfMaterial: Map<String, Boolean> = mapOf(), // id material to error
-        val isCreating: Boolean = false,
+        val isCreatingOrEditing: Boolean = false,
         val isErrorName: Boolean = false,
         val materialsForAdd: Map<String, MaterialModel> = mapOf() // id material to material model
     ) :  CreateOrEditProductState(){

@@ -67,12 +67,7 @@ internal class CreateOrEditMaterialVM(
                 }
             }
 
-            CreateOrEditMaterialEvent.CreateOrEdit -> intent {
-                when ((state as CreateOrEditMaterialState.CreateOrEdit).createOrEditState) {
-                    CreateOrEditState.Create -> create()
-                    CreateOrEditState.Edit -> edit()
-                }
-            }
+            CreateOrEditMaterialEvent.CreateOrEdit -> createOrEdit()
 
             is CreateOrEditMaterialEvent.InputStringMinimumQuantity -> blockingIntent {
                 if (event.minimumQuantity.startsWith("0") || event.minimumQuantity.isBlank()) {
@@ -95,8 +90,7 @@ internal class CreateOrEditMaterialVM(
         }
     }
 
-
-    private fun create() = intent {
+    private fun createOrEdit() = intent {
         val lastState = (
                 state as? CreateOrEditMaterialState.CreateOrEdit
                 ) ?: return@intent
@@ -110,52 +104,46 @@ internal class CreateOrEditMaterialVM(
                     isErrorMinimumQuantity = isErrorMinimumQuantity,
                 )
             }
-        } else {
-            reduce {
-                lastState.copy(
-                    isCreatingOrEdit = true
-                )
+        }else {
+            when(lastState.createOrEditState){
+                CreateOrEditState.Create ->  create()
+                CreateOrEditState.Edit -> edit()
             }
-            createMaterialUseCase.execute(lastState, lastState.imageUrl)
-                .onSuccess {
-                    postSideEffect(CreateOrEditMaterialSideEffect.Created)
-                }.onFailure {
-                    reduce { lastState.copy(isCreatingOrEdit = false) }
-                    postSideEffect(CreateOrEditMaterialSideEffect.ShowMessage(R.string.network_problems))
-                    onError(it)
-                }
         }
+    }
+    private fun create() = intent {
+        val lastState = state as CreateOrEditMaterialState.CreateOrEdit
+
+        reduce {
+            lastState.copy(
+                isCreatingOrEdit = true
+            )
+        }
+        createMaterialUseCase.execute(lastState, lastState.imageUrl)
+            .onSuccess {
+                postSideEffect(CreateOrEditMaterialSideEffect.Created)
+            }.onFailure {
+                reduce { lastState.copy(isCreatingOrEdit = false) }
+                postSideEffect(CreateOrEditMaterialSideEffect.ShowMessage(R.string.network_problems))
+                onError(it)
+            }
     }
 
     private fun edit() = intent {
-        val lastState = (
-                state as? CreateOrEditMaterialState.CreateOrEdit
-                ) ?: return@intent
-        val isErrorName = lastState.name.isBlank()
-        val isErrorMinimumQuantity =
-            lastState.minimumQuantity == 0f || lastState.minimumQuantity > Float.MAX_VALUE
-        if (isErrorName || isErrorMinimumQuantity) {
-            reduce {
-                lastState.copy(
-                    isErrorName = isErrorName,
-                    isErrorMinimumQuantity = isErrorMinimumQuantity,
-                )
-            }
-        } else {
-            reduce {
-                lastState.copy(
-                    isCreatingOrEdit = true
-                )
-            }
-            editMaterialUseCase.execute(idMaterial!!, lastState, lastState.imageUrl)
-                .onSuccess {
-                    postSideEffect(CreateOrEditMaterialSideEffect.Edited)
-                }.onFailure {
-                    reduce { lastState.copy(isCreatingOrEdit = false) }
-                    postSideEffect(CreateOrEditMaterialSideEffect.ShowMessage(R.string.network_problems))
-                    onError(it)
-                }
+        val lastState = state as CreateOrEditMaterialState.CreateOrEdit
+        reduce {
+            lastState.copy(
+                isCreatingOrEdit = true
+            )
         }
+        editMaterialUseCase.execute(idMaterial!!, lastState, lastState.imageUrl)
+            .onSuccess {
+                postSideEffect(CreateOrEditMaterialSideEffect.Edited)
+            }.onFailure {
+                reduce { lastState.copy(isCreatingOrEdit = false) }
+                postSideEffect(CreateOrEditMaterialSideEffect.ShowMessage(R.string.network_problems))
+                onError(it)
+            }
     }
 
     override fun onError(error: Throwable) {

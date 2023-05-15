@@ -34,7 +34,7 @@ internal class ProductApi(
         .get("/api/product/$id")
 
     suspend fun editProduct(id: String, createOrEditProductBody: CreateOrEditProductBody) = authorizedClient
-        .post("/api/product/$id"){
+        .put("/api/product/$id"){
             setBody(createOrEditProductBody)
             contentType(ContentType.Application.Json)
         }
