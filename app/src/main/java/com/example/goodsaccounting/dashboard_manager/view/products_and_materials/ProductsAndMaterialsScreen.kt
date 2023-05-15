@@ -70,10 +70,10 @@ internal fun ProductsAndMaterialsScreen() {
             FloatingActionButton(
                 onClick = {
                     when (pagerState.currentPage) {
-                        0 -> appNavController.navigate(ManagerUserRouting.CrateProduct.route){
+                        0 -> appNavController.navigate(ManagerUserRouting.CrateOrEditProduct.getAllRoute(null)){
                             popUpTo(ManagerUserRouting.ComponentsWitBottomBar.route)
                         }
-                        1 -> appNavController.navigate(ManagerUserRouting.CreateMaterial.route){
+                        1 -> appNavController.navigate(ManagerUserRouting.CreateOrEditMaterial.getAllRoute(null)){
                             popUpTo(ManagerUserRouting.ComponentsWitBottomBar.route)
                         }
                     }
@@ -104,7 +104,17 @@ internal fun ProductsAndMaterialsScreen() {
                 )
                 ProductsAndMaterialsPager(
                     state = state,
-                    pagerState = pagerState
+                    pagerState = pagerState,
+                    editProduct = {
+                        appNavController.navigate(ManagerUserRouting.CrateOrEditProduct.getAllRoute(it)){
+                            popUpTo(ManagerUserRouting.ComponentsWitBottomBar.route)
+                        }
+                    },
+                    editMaterial = {
+                        appNavController.navigate(ManagerUserRouting.CreateOrEditMaterial.getAllRoute(it)){
+                            popUpTo(ManagerUserRouting.ComponentsWitBottomBar.route)
+                        }
+                    }
                 )
             }
             PullRefreshIndicator(

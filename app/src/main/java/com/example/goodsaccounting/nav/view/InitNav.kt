@@ -57,3 +57,9 @@ internal fun NavController.navigateToUserRole(role: RoleLevel){
         }
     }
 }
+internal fun NavController.navStart(){
+    val lastRoute = currentBackStackEntry?.destination?.route ?: return
+    navigate(StartingRouting.route,){
+        popUpTo(lastRoute){ inclusive = true }
+    }
+}

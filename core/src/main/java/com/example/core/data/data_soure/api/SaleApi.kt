@@ -1,6 +1,6 @@
 package com.example.core.data.data_soure.api
 
-import com.example.core.data.model.create.CreateOrEditOrEditSaleBody
+import com.example.core.data.model.create_or_edit.CreateOrEditOrEditSaleBody
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
@@ -45,7 +45,7 @@ internal class SaleApi(
             setBody(saleBody)
             contentType(ContentType.Application.Json)
         }
-    suspend fun getSaleImage(filename: String) = authorizedClient
+    suspend fun getImageSale(filename: String) = authorizedClient
         .get("/api/salesAccountingIcon/$filename")
     suspend fun getAllSale() =authorizedClient
         .get("/api/salesAccounting")

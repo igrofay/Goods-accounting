@@ -1,7 +1,7 @@
 package com.example.core.data.data_soure.api
 
 import android.util.Log
-import com.example.core.data.model.create.CreateReceiptOrWriteOffMaterialBody
+import com.example.core.data.model.create_or_edit.CreateReceiptOrWriteOffMaterialBody
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData

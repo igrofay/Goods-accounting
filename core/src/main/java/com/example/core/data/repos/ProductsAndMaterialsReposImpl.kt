@@ -21,4 +21,12 @@ internal class ProductsAndMaterialsReposImpl(
         return productApi.getProducts().body<List<ProductBody>>()
     }
 
+    override suspend fun getMaterial(id: String): MaterialModel {
+        return materialApi.getMaterial(id).body<MaterialBody>()
+    }
+
+    override suspend fun getProduct(id: String): ProductModel {
+        return productApi.getProduct(id).body<ProductBody>()
+    }
+
 }

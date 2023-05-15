@@ -3,8 +3,8 @@ package com.example.goodsaccounting.create_or_edit.view_model
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.example.core.domain.model.create.AmountOfIdModel
-import com.example.core.domain.model.create.CreateReceiptOrWriteOffMaterialModel
+import com.example.core.domain.model.create_or_edit.AmountOfIdModel
+import com.example.core.domain.model.create_or_edit.CreateReceiptOrWriteOffMaterialModel
 import com.example.core.domain.use_case.create.CreateReceiptOrWriteOffMaterialUseCase
 import com.example.core.domain.use_case.product.GetMapIdToMaterialModelUseCase
 import com.example.goodsaccounting.R

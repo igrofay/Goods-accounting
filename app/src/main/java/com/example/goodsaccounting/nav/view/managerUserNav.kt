@@ -14,7 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.goodsaccounting.R
 import com.example.goodsaccounting.analytics.view.manager.AnalyticsManagerScreen
-import com.example.goodsaccounting.create_or_edit.view.material.CreateMaterialScreen
+import com.example.goodsaccounting.create_or_edit.view.material.CreateOrEditMaterialScreen
 import com.example.goodsaccounting.create_or_edit.view.product.CreateProductScreen
 import com.example.goodsaccounting.create_or_edit.view.receipt_or_write_of_material.CreateReceiptOrWriteOfMaterialScreen
 import com.example.goodsaccounting.dashboard_manager.view.dashbord.DashboardManagerScreen
@@ -50,31 +50,60 @@ internal fun NavGraphBuilder.managerUserNav(){
                         AnalyticsManagerScreen()
                     }
                     composable(ManagerUserRouting.ComponentsWitBottomBar.Profile.route){
-                        ProfileScreen()
+                        val appNavController = LocalAppNavController.current
+                        ProfileScreen(
+                            exit = {
+                                appNavController.navStart()
+                            }
+                        )
                     }
                 }
             }
         }
-        composable(ManagerUserRouting.CreateMaterial.route){
+        composable(
+            ManagerUserRouting.CreateOrEditMaterial.getAllRoute(),
+            listOf(
+                navArgument(ManagerUserRouting.CreateOrEditMaterial.arg1){ nullable = true}
+            )
+        ){
             val appNavController = LocalAppNavController.current
-            val message = stringResource(R.string.material_created)
-            CreateMaterialScreen(
-                exit = {
+            val message1 = stringResource(R.string.material_created)
+            val message2 = stringResource(R.string.edited)
+            CreateOrEditMaterialScreen(
+                created = {
                     appNavController.previousBackStackEntry
                         ?.savedStateHandle
-                        ?.set(message_for_ProductsAndMaterialsScreen, message)
+                        ?.set(message_for_ProductsAndMaterialsScreen, message1)
+                    appNavController.popBackStack()
+                },
+                edited = {
+                    appNavController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set(message_for_ProductsAndMaterialsScreen, message2)
                     appNavController.popBackStack()
                 }
             )
         }
-        composable(ManagerUserRouting.CrateProduct.route){
+        composable(
+            ManagerUserRouting.CrateOrEditProduct.getAllRoute(),
+            listOf(
+                navArgument(ManagerUserRouting.CrateOrEditProduct.arg1){ nullable = true}
+            )
+        ){
             val appNavController = LocalAppNavController.current
-            val message = stringResource(R.string.product_created)
+            val message1 = stringResource(R.string.product_created)
+            val message2 = stringResource(R.string.edited)
             CreateProductScreen(
-                exit = {
+                created = {
                     appNavController.previousBackStackEntry
                         ?.savedStateHandle
-                        ?.set(message_for_ProductsAndMaterialsScreen, message)
+                        ?.set(message_for_ProductsAndMaterialsScreen, message1)
+                    appNavController.popBackStack()
+                },
+                edited = {
+                    appNavController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set(message_for_ProductsAndMaterialsScreen, message2)
                     appNavController.popBackStack()
                 }
             )

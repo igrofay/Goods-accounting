@@ -49,20 +49,20 @@ import com.example.goodsaccounting.common.view.theme.textColor
 import com.example.goodsaccounting.common.view.utils.getDesignation
 import com.example.goodsaccounting.common.view.visual_transformation.CurrencyAmountInputVisualTransformation
 import com.example.goodsaccounting.common.view_model.EventBase
-import com.example.goodsaccounting.create_or_edit.model.product.CreateProductEvent
-import com.example.goodsaccounting.create_or_edit.model.product.CreateProductState
+import com.example.goodsaccounting.create_or_edit.model.product.CreateOrEditProductEvent
+import com.example.goodsaccounting.create_or_edit.model.product.CreateOrEditProductState
 
 @Composable
 internal fun MainFieldsView(
-    state: CreateProductState,
-    eventBase: EventBase<CreateProductEvent>,
+    state: CreateOrEditProductState.CreateOrEdit,
+    eventBase: EventBase<CreateOrEditProductEvent>,
 ) {
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let { uriIsNotNull ->
             eventBase.onEvent(
-                CreateProductEvent.SelectImage(uriIsNotNull.toString())
+                CreateOrEditProductEvent.SelectImage(uriIsNotNull.toString())
             )
         }
     }
@@ -84,7 +84,7 @@ internal fun MainFieldsView(
         EditText(
             value = state.name,
             onChange = {
-                eventBase.onEvent(CreateProductEvent.InputName(it))
+                eventBase.onEvent(CreateOrEditProductEvent.InputName(it))
             },
             hint = stringResource(R.string.product_name),
             isError = state.isErrorName
@@ -110,9 +110,9 @@ internal fun MainFieldsView(
                     value = state.textPrice,
                     onValueChange = {
                         if (it.startsWith("0")) {
-                            eventBase.onEvent(CreateProductEvent.InputPrice(""))
+                            eventBase.onEvent(CreateOrEditProductEvent.InputPrice(""))
                         } else {
-                            eventBase.onEvent(CreateProductEvent.InputPrice(it))
+                            eventBase.onEvent(CreateOrEditProductEvent.InputPrice(it))
                         }
 
                     },
@@ -165,7 +165,7 @@ internal fun MainFieldsView(
                         Currency.values().forEach { currency ->
                             DropdownMenuItem(onClick = {
                                 eventBase.onEvent(
-                                    CreateProductEvent.SelectCurrency(currency)
+                                    CreateOrEditProductEvent.SelectCurrency(currency)
                                 )
                                 expanded = false
                             }) {

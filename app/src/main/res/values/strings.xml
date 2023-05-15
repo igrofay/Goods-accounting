@@ -20,7 +20,7 @@
     <string name="profile">Профиль</string>
     <string name="home">Главная</string>
     <string name="your_profile">Ваш профиль</string>
-    <string name="your_status">Ваш статус:</string>
+    <string name="your_post">Ваша должность</string>
     <string name="under_consideration">На рассмотрении</string>
     <string name="seller">Продавец</string>
     <string name="manager">Менеджер</string>
@@ -74,6 +74,7 @@
     <string name="created">Создано</string>
     <string name="your_sales">Ваши продажи</string>
     <string name="edit">Редактировать</string>
+    <string name="change">Изменить</string>
     <string name="adding_sale">Добавление продажи</string>
     <string name="sale_name">Наименование продажи</string>
     <string name="price">Цена</string>
@@ -121,4 +122,5 @@
     <string name="enter_new_password">Введите новый пароль</string>
     <string name="password_replay">Повтор пароля</string>
     <string name="update">Обновить</string>
+    <string name="exit">Выйти</string>
 </resources>

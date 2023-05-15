@@ -22,15 +22,15 @@ import androidx.compose.ui.res.stringResource
 import com.example.goodsaccounting.R
 import com.example.goodsaccounting.common.view.button.CreateButton
 import com.example.goodsaccounting.common.view_model.EventBase
-import com.example.goodsaccounting.create_or_edit.model.product.CreateProductEvent
-import com.example.goodsaccounting.create_or_edit.model.product.CreateProductState
+import com.example.goodsaccounting.create_or_edit.model.product.CreateOrEditProductEvent
+import com.example.goodsaccounting.create_or_edit.model.product.CreateOrEditProductState
 import com.example.goodsaccounting.create_or_edit.view.common.ListAmountOfMaterialView
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun ProductInformationFields(
-    state: CreateProductState,
-    eventBase: EventBase<CreateProductEvent>,
+    state: CreateOrEditProductState.CreateOrEdit,
+    eventBase: EventBase<CreateOrEditProductEvent>,
     scaffoldState: ScaffoldState,
     choiceOfMaterials: ()-> Unit,
 ) {
@@ -72,7 +72,7 @@ internal fun ProductInformationFields(
                     materials = state.materials,
                     isErrorAmountOfMaterial = state.isErrorAmountOfMaterial,
                     onAmountChange = { id, amount ->
-                        eventBase.onEvent(CreateProductEvent.InputAmountMaterial(amount, id))
+                        eventBase.onEvent(CreateOrEditProductEvent.InputAmountMaterial(amount, id))
                     }
                 )
             }
@@ -80,7 +80,7 @@ internal fun ProductInformationFields(
         CreateButton(
             isCreating = state.isCreating
         ){
-            eventBase.onEvent(CreateProductEvent.Create)
+            eventBase.onEvent(CreateOrEditProductEvent.CreateOrEdit)
         }
     }
 }

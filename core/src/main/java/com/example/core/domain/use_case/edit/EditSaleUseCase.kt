@@ -1,6 +1,6 @@
 package com.example.core.domain.use_case.edit
 
-import com.example.core.domain.model.create.CreateOrEditSaleModel
+import com.example.core.domain.model.create_or_edit.CreateOrEditSaleModel
 import com.example.core.domain.repos.CreateRepos
 import com.example.core.domain.repos.EditRepos
 

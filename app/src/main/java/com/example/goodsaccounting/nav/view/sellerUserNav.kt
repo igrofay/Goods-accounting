@@ -54,7 +54,11 @@ internal fun NavGraphBuilder.sellerUserNav() {
                         AnalyticsSellerScreen()
                     }
                     composable(SellerUserRouting.ComponentsWitBottomBar.Profile.route){
-                        ProfileScreen()
+                        ProfileScreen(
+                            exit = {
+                                appNavController.navStart()
+                            }
+                        )
                     }
                 }
             }

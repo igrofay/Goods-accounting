@@ -10,4 +10,5 @@ internal sealed class ProfileEvent : UIEvent(){
     class InputPhone(val phone:String) : ProfileEvent()
 //    class InputEmail(val email: String) : ProfileEvent()
     object Save : ProfileEvent()
+    object Exit : ProfileEvent()
 }

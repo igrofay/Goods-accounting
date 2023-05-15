@@ -1,6 +1,6 @@
 package com.example.core.domain.use_case.create
 
-import com.example.core.domain.model.create.CreateReceiptOrWriteOffMaterialModel
+import com.example.core.domain.model.create_or_edit.CreateReceiptOrWriteOffMaterialModel
 import com.example.core.domain.repos.CreateRepos
 
 class CreateReceiptOrWriteOffMaterialUseCase(

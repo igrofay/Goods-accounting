@@ -1,5 +1,7 @@
 package com.example.goodsaccounting
 
+import com.example.goodsaccounting.create_or_edit.model.utils.floatToString
+import com.example.goodsaccounting.create_or_edit.model.utils.stringToFloat
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -14,6 +16,10 @@ import org.junit.Test
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        println(Instant.parse("2023-05-11T00:00:00.0000000Z"))
+        val t = stringToFloat("1010")
+        println(t)
+        val s = floatToString(t)
+        println(s)
+        println(stringToFloat(s))
     }
 }

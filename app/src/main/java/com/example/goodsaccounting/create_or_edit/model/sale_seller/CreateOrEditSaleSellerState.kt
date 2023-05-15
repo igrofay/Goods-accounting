@@ -2,6 +2,7 @@ package com.example.goodsaccounting.create_or_edit.model.sale_seller
 
 import com.example.core.domain.model.product.Currency
 import com.example.core.domain.model.product.ProductModel
+import com.example.core.domain.model.sale.SaleModel
 import com.example.goodsaccounting.common.model.mvi.UIState
 import com.example.goodsaccounting.create_or_edit.model.common.CreateOrEditState
 
@@ -18,5 +19,18 @@ internal sealed class CreateOrEditSaleSellerState : UIState(){
         val currency: Currency = Currency.Rub,
         val listProductForAdd: Map<String, ProductModel> = mapOf(), // id product to product
         val isCreatingOrEditing: Boolean = false,
-    ) : CreateOrEditSaleSellerState()
+    ) : CreateOrEditSaleSellerState(){
+        companion object{
+            fun SaleModel.fromModelToCreateOrEdit(listProductForAdd: Map<String, ProductModel>) = CreateOrEditSaleSellerState.CreateOrEdit(
+                createOrEditState = CreateOrEditState.Edit,
+                listProductForAdd = listProductForAdd,
+                listImageUri = imagesUrl,
+                name = name,
+                products = products.associate { it.product.id to it.product.price.toInt() },
+                checkPrice = checkPrice,
+                currency = currency,
+                isErrorAmountOfProduct = products.associate { it.product.id to false }
+            )
+        }
+    }
 }

@@ -16,7 +16,9 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-internal fun ProfileScreen() {
+internal fun ProfileScreen(
+    exit: ()-> Unit
+) {
     val scaffoldState = rememberScaffoldState()
     val profileVM by rememberDIAwareViewModel<ProfileVM>()
     val state by profileVM.collectAsState()
@@ -25,6 +27,8 @@ internal fun ProfileScreen() {
         when(side){
             is ProfileSideEffect.ShowMessage -> scaffoldState.snackbarHostState
                 .showSnackbar(res.getString(side.message))
+
+            ProfileSideEffect.ExitProfile -> exit()
         }
     }
     Scaffold(

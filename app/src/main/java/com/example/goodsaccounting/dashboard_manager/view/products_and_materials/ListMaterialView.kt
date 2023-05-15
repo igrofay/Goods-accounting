@@ -41,18 +41,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.product.MaterialModel
 import com.example.goodsaccounting.R
+import com.example.goodsaccounting.common.view.button.CustomTextButton
 import com.example.goodsaccounting.common.view.image.CustomImage
 import com.example.goodsaccounting.common.view.theme.padding
+import com.example.goodsaccounting.common.view.theme.textColor
 import com.example.goodsaccounting.common.view.utils.getDesignation
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 internal fun ListMaterialView(
-    listMaterial: List<MaterialModel>
+    listMaterial: List<MaterialModel>,
+    edit: (idMaterial: String) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -63,8 +67,10 @@ internal fun ListMaterialView(
             vertical = MaterialTheme.padding.small2,
         )
     ) {
-        items(listMaterial) { listMaterial ->
-            MaterialCard(listMaterial)
+        items(listMaterial) { material ->
+            MaterialCard(material){
+                edit(material.id)
+            }
         }
     }
 }
@@ -73,6 +79,7 @@ internal fun ListMaterialView(
 @Composable
 private fun MaterialCard(
     materialModel: MaterialModel,
+    edit: ()-> Unit,
 ) {
     Column {
         Row(
@@ -90,20 +97,29 @@ private fun MaterialCard(
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small1),
+                modifier = Modifier.weight(1f)
             ) {
                 Text(
                     text = materialModel.name,
                     maxLines = 1,
                     modifier = Modifier,
-                    style = MaterialTheme.typography.subtitle1
+                    style = MaterialTheme.typography.subtitle1,
+                    overflow = TextOverflow.Ellipsis,
                 )
                 Text(
                     text = "${stringResource(id = R.string.measurement_type)}: ${materialModel.measurement.getDesignation()}",
                     modifier = Modifier,
                     maxLines = 1,
-                    style = MaterialTheme.typography.body1
+                    style = MaterialTheme.typography.body1,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
+            CustomTextButton(
+                label = stringResource(R.string.change),
+                color = MaterialTheme.colors.primary,
+                textStyle = MaterialTheme.typography.body2,
+                onClick = edit
+            )
         }
         Divider(
             startIndent = 100.dp + MaterialTheme.padding.medium1,

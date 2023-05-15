@@ -1,6 +1,6 @@
 package com.example.core.domain.use_case.create
 
-import com.example.core.domain.model.create.CreateOrEditSaleModel
+import com.example.core.domain.model.create_or_edit.CreateOrEditSaleModel
 import com.example.core.domain.repos.CreateRepos
 
 class CreateSaleSellerUseCase(

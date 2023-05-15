@@ -1,7 +1,7 @@
-package com.example.core.data.model.create
+package com.example.core.data.model.create_or_edit
 
-import com.example.core.data.model.create.AmountOfIdBody.Companion.fromModelToAmountOfIdBody
-import com.example.core.domain.model.create.CreateOrEditSaleModel
+import com.example.core.data.model.create_or_edit.AmountOfIdBody.Companion.fromModelToAmountOfIdBody
+import com.example.core.domain.model.create_or_edit.CreateOrEditSaleModel
 import com.example.core.domain.model.product.Currency
 import kotlinx.serialization.Serializable
 

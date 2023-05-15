@@ -56,20 +56,21 @@ import com.example.goodsaccounting.common.view.theme.textColor
 import com.example.goodsaccounting.common.view.utils.getDesignation
 import com.example.goodsaccounting.common.view.visual_transformation.CurrencyAmountInputVisualTransformation
 import com.example.goodsaccounting.common.view_model.EventBase
-import com.example.goodsaccounting.create_or_edit.model.material.CreateMaterialEvent
-import com.example.goodsaccounting.create_or_edit.model.material.CreateMaterialState
+import com.example.goodsaccounting.create_or_edit.model.material.CreateOrEditMaterialEvent
+import com.example.goodsaccounting.create_or_edit.model.material.CreateOrEditMaterialState
+import com.example.goodsaccounting.create_or_edit.model.utils.stringToFloat
 
 @Composable
 internal fun MainSettingView(
-    state: CreateMaterialState,
-    eventBase: EventBase<CreateMaterialEvent>
+    state: CreateOrEditMaterialState.CreateOrEdit,
+    eventBase: EventBase<CreateOrEditMaterialEvent>
 ) {
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let { uriIsNotNull ->
             eventBase.onEvent(
-                CreateMaterialEvent.SelectImage(uriIsNotNull.toString())
+                CreateOrEditMaterialEvent.SelectImage(uriIsNotNull.toString())
             )
         }
     }
@@ -97,7 +98,7 @@ internal fun MainSettingView(
         EditText(
             value = state.name,
             onChange = {
-                eventBase.onEvent(CreateMaterialEvent.InputName(it))
+                eventBase.onEvent(CreateOrEditMaterialEvent.InputName(it))
             },
             hint = stringResource(R.string.material_name),
             isError = state.isErrorName
@@ -170,7 +171,7 @@ internal fun MainSettingView(
                         Measurements.values().forEach { measurements ->
                             DropdownMenuItem(onClick = {
                                 eventBase.onEvent(
-                                    CreateMaterialEvent.SelectMeasurements(
+                                    CreateOrEditMaterialEvent.SelectMeasurements(
                                         measurements
                                     )
                                 )
@@ -222,7 +223,7 @@ internal fun MainSettingView(
                 BasicTextField(
                     value = state.stringMinimumQuantity,
                     onValueChange = {
-                        eventBase.onEvent(CreateMaterialEvent.InputStringMinimumQuantity(it))
+                        eventBase.onEvent(CreateOrEditMaterialEvent.InputStringMinimumQuantity(it))
                     },
                     visualTransformation = CurrencyAmountInputVisualTransformation(
                         fixedCursorAtTheEnd = false,

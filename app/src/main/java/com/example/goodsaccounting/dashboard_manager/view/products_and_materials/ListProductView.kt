@@ -18,9 +18,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.core.domain.model.product.ProductModel
+import com.example.goodsaccounting.R
+import com.example.goodsaccounting.common.view.button.CustomTextButton
 import com.example.goodsaccounting.common.view.image.CustomImage
 import com.example.goodsaccounting.common.view.theme.padding
 import com.example.goodsaccounting.common.view.theme.textColor
@@ -29,7 +32,8 @@ import com.example.goodsaccounting.common.view.utils.getCost
 
 @Composable
 internal fun ListProductView(
-    listProduct: List<ProductModel>
+    listProduct: List<ProductModel>,
+    edit: (idProduct: String)-> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(280.dp),
@@ -46,7 +50,7 @@ internal fun ListProductView(
     ) {
         items(listProduct) { productModel ->
             ProductCard(productModel) {
-
+                edit(productModel.id)
             }
         }
     }
@@ -56,11 +60,9 @@ internal fun ListProductView(
 @Composable
 private fun ProductCard(
     productModel: ProductModel,
-    onClick: () -> Unit,
+    edit: ()-> Unit,
 ) {
-    Card(
-        onClick = onClick,
-    ) {
+    Card() {
         Column(
             modifier = Modifier.fillMaxWidth(),
         ) {
@@ -96,6 +98,12 @@ private fun ProductCard(
                         overflow = TextOverflow.Ellipsis,
                         color = MaterialTheme.colors.textColor.copy(0.6f)
                     )
+                }
+                CustomTextButton(
+                    label = stringResource(R.string.change),
+                    color = MaterialTheme.colors.primary,
+                ) {
+                    edit()
                 }
             }
         }

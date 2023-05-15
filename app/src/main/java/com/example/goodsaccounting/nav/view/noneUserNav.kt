@@ -47,7 +47,12 @@ internal fun NavGraphBuilder.noneUserNav() {
                     }
                 }
                 composable(NoneUserRouting.Profile.route) {
-                    ProfileScreen()
+                    val appNavController = LocalAppNavController.current
+                    ProfileScreen(
+                        exit = {
+                            appNavController.navStart()
+                        }
+                    )
                 }
             }
         }

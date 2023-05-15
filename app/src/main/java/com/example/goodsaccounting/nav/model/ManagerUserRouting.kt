@@ -22,9 +22,22 @@ internal sealed class ManagerUserRouting(route:String) : AppRouting(route) {
             val listBottomItemFeature = listOf<BottomItemFeature>(Dashboard,Analytics,Profile)
         }
     }
-    object CreateMaterial : ManagerUserRouting("${route}_create_material")
+    object CreateOrEditMaterial : ManagerUserRouting("${route}_create_or_edit_material"){
+        const val arg1 = "idMaterial"
+        fun getAllRoute() = "${route}?$arg1={$arg1}"
+        fun getAllRoute(idMaterial: String?) = idMaterial?.let {
+            "${route}?$arg1=$it"
+        } ?: route
+    }
 
-    object CrateProduct : ManagerUserRouting("${route}_create_product")
+    object CrateOrEditProduct : ManagerUserRouting("${route}_create_product"){
+        const val arg1 = "idProduct"
+        fun getAllRoute() = "$route?${arg1}={${arg1}}"
+
+        fun getAllRoute(idProduct: String?) = idProduct?.let {
+            "$route?${arg1}=$it"
+        } ?: route
+    }
 
     object CreateReceiptOrWriteOfMaterial : ManagerUserRouting("${route}_create_receipt_material"){
         const val arg1= "isReceipt"

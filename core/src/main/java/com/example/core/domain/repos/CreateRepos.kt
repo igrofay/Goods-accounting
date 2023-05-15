@@ -1,15 +1,15 @@
 package com.example.core.domain.repos
 
-import com.example.core.domain.model.create.CreateMaterialModel
-import com.example.core.domain.model.create.CreateProductModel
-import com.example.core.domain.model.create.CreateReceiptOrWriteOffMaterialModel
-import com.example.core.domain.model.create.CreateOrEditSaleModel
-import com.example.core.domain.model.create.IdModel
+import com.example.core.domain.model.create_or_edit.CreateOrEditMaterialModel
+import com.example.core.domain.model.create_or_edit.CreateOrEditProductModel
+import com.example.core.domain.model.create_or_edit.CreateReceiptOrWriteOffMaterialModel
+import com.example.core.domain.model.create_or_edit.CreateOrEditSaleModel
+import com.example.core.domain.model.create_or_edit.IdModel
 
 interface CreateRepos {
 
-    suspend fun createMaterial(createMaterialModel: CreateMaterialModel) : IdModel // id material
-    suspend fun createProduct(createProductModel: CreateProductModel) : IdModel // id product
+    suspend fun createMaterial(createOrEditMaterialModel: CreateOrEditMaterialModel) : IdModel // id material
+    suspend fun createProduct(createOrEditProductModel: CreateOrEditProductModel) : IdModel // id product
 
     suspend fun updateImageMaterial(imageUri: String, id: String)
     suspend fun updateImageProduct(imageUri: String, id: String)

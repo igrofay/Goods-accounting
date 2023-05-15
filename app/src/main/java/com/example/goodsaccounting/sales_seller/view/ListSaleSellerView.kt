@@ -170,7 +170,7 @@ private fun SaleCard(
                     )
                 ){
                     CustomTextButton(
-                        label = stringResource(R.string.edit),
+                        label = stringResource(R.string.change),
                         onClick = edit,
                         color = MaterialTheme.colors.primary,
                     )

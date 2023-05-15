@@ -6,16 +6,16 @@ import com.example.core.data.data_soure.api.MaterialAccountingApi
 import com.example.core.data.data_soure.api.MaterialApi
 import com.example.core.data.data_soure.api.ProductApi
 import com.example.core.data.data_soure.api.SaleApi
-import com.example.core.data.model.create.CreateMaterialBody.Companion.fromModelToCreateMaterialBody
-import com.example.core.data.model.create.CreateOrEditOrEditSaleBody.Companion.fromModelToCreateOrEditOrEditSaleBody
-import com.example.core.data.model.create.CreateProductBody.Companion.fromModelToCreateProductBody
-import com.example.core.data.model.create.CreateReceiptOrWriteOffMaterialBody.Companion.fromModelToCreateReceiptOrWriteOffMaterialBody
-import com.example.core.data.model.create.IdBody
-import com.example.core.domain.model.create.CreateMaterialModel
-import com.example.core.domain.model.create.CreateProductModel
-import com.example.core.domain.model.create.CreateReceiptOrWriteOffMaterialModel
-import com.example.core.domain.model.create.CreateOrEditSaleModel
-import com.example.core.domain.model.create.IdModel
+import com.example.core.data.model.create_or_edit.CreateOrEditMaterialBody.Companion.fromModelToCreateMaterialBody
+import com.example.core.data.model.create_or_edit.CreateOrEditOrEditSaleBody.Companion.fromModelToCreateOrEditOrEditSaleBody
+import com.example.core.data.model.create_or_edit.CreateOrEditProductBody.Companion.fromModelToCreateOrEditProductBody
+import com.example.core.data.model.create_or_edit.CreateReceiptOrWriteOffMaterialBody.Companion.fromModelToCreateReceiptOrWriteOffMaterialBody
+import com.example.core.data.model.create_or_edit.IdBody
+import com.example.core.domain.model.create_or_edit.CreateOrEditMaterialModel
+import com.example.core.domain.model.create_or_edit.CreateOrEditProductModel
+import com.example.core.domain.model.create_or_edit.CreateReceiptOrWriteOffMaterialModel
+import com.example.core.domain.model.create_or_edit.CreateOrEditSaleModel
+import com.example.core.domain.model.create_or_edit.IdModel
 import com.example.core.domain.model.error.SaleError
 import com.example.core.domain.repos.CreateRepos
 import io.ktor.client.call.body
@@ -32,28 +32,42 @@ internal class CreateReposImpl(
     private val saleApi: SaleApi,
     private val context: Context,
 ) : CreateRepos {
-    override suspend fun createMaterial(createMaterialModel: CreateMaterialModel): IdModel {
-        return materialApi.createMaterial(createMaterialModel.fromModelToCreateMaterialBody()).body<IdBody>()
+    override suspend fun createMaterial(createOrEditMaterialModel: CreateOrEditMaterialModel): IdModel {
+        return materialApi.createMaterial(createOrEditMaterialModel.fromModelToCreateMaterialBody()).body<IdBody>()
     }
 
 
-    override suspend fun createProduct(createProductModel: CreateProductModel): IdModel {
-        return productApi.createProduct(createProductModel.fromModelToCreateProductBody()).body<IdBody>()
+    override suspend fun createProduct(createOrEditProductModel: CreateOrEditProductModel): IdModel {
+        return productApi.createProduct(createOrEditProductModel.fromModelToCreateOrEditProductBody()).body<IdBody>()
     }
 
     override suspend fun updateImageMaterial(imageUri: String, id: String) {
         withContext(Dispatchers.IO){
-            val stream = context.contentResolver.openInputStream(Uri.parse(imageUri))!!
-            materialApi.updateImageMaterial(stream.readBytes(),id)
-            stream.close()
+            val byteArray =if (imageUri.contains("http")){
+                val filename = imageUri.split("/").last()
+                materialApi.getImageMaterial(filename).readBytes()
+            }else{
+                val stream = context.contentResolver.openInputStream(Uri.parse(imageUri))!!
+                stream.readBytes().apply {
+                    stream.close()
+                }
+            }
+            materialApi.updateImageMaterial(byteArray,id)
         }
     }
 
     override suspend fun updateImageProduct(imageUri: String, id: String) {
         withContext(Dispatchers.IO){
-            val stream = context.contentResolver.openInputStream(Uri.parse(imageUri))!!
-            productApi.updateImageProduct(stream.readBytes(),id)
-            stream.close()
+            val byteArray = if (imageUri.contains("http")){
+                val filename = imageUri.split("/").last()
+                productApi.getImageProduct(filename).readBytes()
+            }else{
+                val stream = context.contentResolver.openInputStream(Uri.parse(imageUri))!!
+                stream.readBytes().apply {
+                    stream.close()
+                }
+            }
+            productApi.updateImageProduct(byteArray,id)
         }
     }
 
@@ -109,7 +123,7 @@ internal class CreateReposImpl(
                 if (imageUri.contains("http")){
                     val filename = imageUri.split("/").last()
                     listByteArray.add(
-                        saleApi.getSaleImage(filename).readBytes()
+                        saleApi.getImageSale(filename).readBytes()
                     )
                 }else{
                     val stream = context.contentResolver.openInputStream(Uri.parse(imageUri))!!

@@ -3,8 +3,8 @@ package com.example.goodsaccounting.create_or_edit.view_model
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.example.core.domain.model.create.AmountOfIdModel
-import com.example.core.domain.model.create.CreateOrEditSaleModel
+import com.example.core.domain.model.create_or_edit.AmountOfIdModel
+import com.example.core.domain.model.create_or_edit.CreateOrEditSaleModel
 import com.example.core.domain.model.error.SaleError
 import com.example.core.domain.use_case.create.CreateSaleSellerUseCase
 import com.example.core.domain.use_case.edit.EditSaleUseCase
@@ -16,6 +16,7 @@ import com.example.goodsaccounting.create_or_edit.model.common.CreateOrEditState
 import com.example.goodsaccounting.create_or_edit.model.sale_seller.CreateOrEditSaleSellerEvent
 import com.example.goodsaccounting.create_or_edit.model.sale_seller.CreateOrEditSaleSellerSideEffect
 import com.example.goodsaccounting.create_or_edit.model.sale_seller.CreateOrEditSaleSellerState
+import com.example.goodsaccounting.create_or_edit.model.sale_seller.CreateOrEditSaleSellerState.CreateOrEdit.Companion.fromModelToCreateOrEdit
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.instance
@@ -29,7 +30,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 
 internal class CreateOrEditSaleSellerVM(
     override val di: DI,
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : AppVM<CreateOrEditSaleSellerState, CreateOrEditSaleSellerSideEffect, CreateOrEditSaleSellerEvent>(),
     DIAware {
     private val editSaleSellerUseCase: EditSaleUseCase by di.instance()
@@ -39,12 +40,7 @@ internal class CreateOrEditSaleSellerVM(
 
     private val idSale = savedStateHandle.get<String>("idSale")
     override val container: Container<CreateOrEditSaleSellerState, CreateOrEditSaleSellerSideEffect> =
-        viewModelScope.container(CreateOrEditSaleSellerState.Load) {
-            val createOrEditState =
-                if (idSale != null) CreateOrEditState.Edit
-                else CreateOrEditState.Create
-            initState(createOrEditState)
-        }
+        viewModelScope.container(CreateOrEditSaleSellerState.Load) { initState() }
 
     @OptIn(OrbitExperimental::class)
     override fun onEvent(event: CreateOrEditSaleSellerEvent) {
@@ -163,43 +159,30 @@ internal class CreateOrEditSaleSellerVM(
         Log.e("CreateSaleSellerVM", error.message.toString())
     }
 
-    private fun initState(
-        createOrEditState: CreateOrEditState,
-    ) = intent {
-        when (createOrEditState) {
-            CreateOrEditState.Create -> getMapIdToProductModelUseCase.execute()
+    private fun initState() = intent {
+        if (idSale == null){
+            getMapIdToProductModelUseCase.execute()
                 .onSuccess { map ->
                     reduce {
                         CreateOrEditSaleSellerState.CreateOrEdit(
-                            createOrEditState = createOrEditState,
+                            createOrEditState = CreateOrEditState.Create,
                             listProductForAdd = map,
                         )
                     }
                 }
                 .onFailure(::onError)
-
-            CreateOrEditState.Edit -> {
-                getSaleUseCase.execute(idSale!!)
-                    .onSuccess { sale->
-                        getMapIdToProductModelUseCase.execute()
-                            .onSuccess { map->
-                                reduce {
-                                    CreateOrEditSaleSellerState.CreateOrEdit(
-                                        createOrEditState = createOrEditState,
-                                        listProductForAdd = map,
-                                        listImageUri = sale.imagesUrl,
-                                        name = sale.name,
-                                        products = sale.products.associate { it.product.id to it.product.price.toInt() },
-                                        checkPrice = sale.checkPrice,
-                                        currency = sale.currency,
-                                        isErrorAmountOfProduct = sale.products.associate { it.product.id to false }
-                                    )
-                                }
+        }else{
+            getSaleUseCase.execute(idSale)
+                .onSuccess { sale->
+                    getMapIdToProductModelUseCase.execute()
+                        .onSuccess { map->
+                            reduce {
+                                sale.fromModelToCreateOrEdit(map)
                             }
-                            .onFailure(::onError)
-                    }
-                    .onFailure(::onError)
-            }
+                        }
+                        .onFailure(::onError)
+                }
+                .onFailure(::onError)
         }
     }
 

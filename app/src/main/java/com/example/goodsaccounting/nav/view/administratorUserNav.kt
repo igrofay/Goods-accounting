@@ -32,7 +32,12 @@ internal fun NavGraphBuilder.administratorUserNav(){
                     UserAdministrationScreen()
                 }
                 composable(AdministratorUserRouting.Profile.route){
-                    ProfileScreen()
+                    val appNavController = LocalAppNavController.current
+                    ProfileScreen(
+                        exit = {
+                            appNavController.navStart()
+                        }
+                    )
                 }
             }
         }

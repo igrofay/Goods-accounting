@@ -10,7 +10,10 @@ import com.example.core.domain.use_case.create.CreateMaterialUseCase
 import com.example.core.domain.use_case.create.CreateProductUseCase
 import com.example.core.domain.use_case.create.CreateReceiptOrWriteOffMaterialUseCase
 import com.example.core.domain.use_case.create.CreateSaleSellerUseCase
+import com.example.core.domain.use_case.edit.EditMaterialUseCase
+import com.example.core.domain.use_case.edit.EditProductUseCase
 import com.example.core.domain.use_case.edit.EditSaleUseCase
+import com.example.core.domain.use_case.user.ExitUseCase
 import com.example.core.domain.use_case.product.GetMapIdToMaterialModelUseCase
 import com.example.core.domain.use_case.product.GetMapIdToProductModelUseCase
 import com.example.core.domain.use_case.seller.GetSaleUseCase
@@ -31,6 +34,7 @@ internal val useCaseModule by DI.Module{
     // user
     bindProvider { new(::UpdateUserDataUseCase) }
     bindProvider { new(::GetUserFlowUseCase) }
+    bindProvider { new(::ExitUseCase) }
     // admin
     bindProvider { new(::GetUsersUseCase) }
     // manager
@@ -39,6 +43,8 @@ internal val useCaseModule by DI.Module{
     bindProvider { new(::CreateReceiptOrWriteOffMaterialUseCase) }
     bindProvider { new(::GetFilteredListUseCase) }
     bindProvider { new(::GetManagerIncomeUseCase) }
+    bindProvider { new(::EditMaterialUseCase) }
+    bindProvider { new(::EditProductUseCase) }
     // Product
     bindProvider { new(::GetMapIdToMaterialModelUseCase) }
     bindProvider { new(::GetMapIdToProductModelUseCase) }

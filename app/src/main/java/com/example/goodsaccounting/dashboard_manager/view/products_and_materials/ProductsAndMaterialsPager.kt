@@ -13,6 +13,8 @@ import com.example.goodsaccounting.dashboard_manager.model.products_and_material
 internal fun ProductsAndMaterialsPager(
     state: ProductsAndMaterialsState,
     pagerState: PagerState,
+    editProduct: (String) -> Unit,
+    editMaterial: (String)-> Unit,
 ) {
     HorizontalPager(
         pageCount = 2,
@@ -21,9 +23,15 @@ internal fun ProductsAndMaterialsPager(
     ) {page->
         when(page){
             // Products
-            0->ListProductView(state.listProductModel)
+            0->ListProductView(
+                state.listProductModel,
+                edit = editProduct,
+            )
             // Materials
-            1-> ListMaterialView(state.listMaterialModel)
+            1-> ListMaterialView(
+                state.listMaterialModel,
+                edit = editMaterial,
+            )
         }
     }
 }

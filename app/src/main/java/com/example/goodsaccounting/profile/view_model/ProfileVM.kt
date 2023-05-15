@@ -2,6 +2,7 @@ package com.example.goodsaccounting.profile.view_model
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.example.core.domain.use_case.user.ExitUseCase
 import com.example.core.domain.use_case.user.GetUserFlowUseCase
 import com.example.core.domain.use_case.user.UpdateUserDataUseCase
 import com.example.goodsaccounting.R
@@ -28,7 +29,7 @@ internal class ProfileVM(
     private val updateUserDataUseCase: UpdateUserDataUseCase by di.instance()
     override val container: Container<ProfileState, ProfileSideEffect> = viewModelScope
         .container(ProfileState.LoadProfileInfo) { loadProfile() }
-
+    private val exitUseCase: ExitUseCase by di.instance()
     @OptIn(OrbitExperimental::class)
     override fun onEvent(event: ProfileEvent) {
         when (event) {
@@ -127,6 +128,12 @@ internal class ProfileVM(
                         postSideEffect(ProfileSideEffect.ShowMessage(R.string.network_problems))
                         onError(it)
                     }
+                }
+            }
+
+            ProfileEvent.Exit -> intent {
+                exitUseCase.execute().onSuccess {
+                    postSideEffect(ProfileSideEffect.ExitProfile)
                 }
             }
         }

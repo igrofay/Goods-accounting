@@ -9,6 +9,18 @@ fun stringToFloat(text: String): Float {
             .takeLast(2)
         "$intPart.$fractionPart".toFloat()
     } else {
-        "0.$text".toFloat()
+        val fractionPart = String.format("%02d",  text.toInt())
+        "0.$fractionPart".toFloat()
     }
+}
+fun floatToString(float: Float) : String{
+    val list = float.toString().split(".")
+    val intPart = if (list.first() == "0") "" else  list.first()
+    val fractionPart =  if (list.last().length == 2){
+        if (intPart.isEmpty() && list.last().first() == '0')
+            list.last().last().toString()
+        else
+            list.last()
+    }else list.last() + "0"
+    return intPart + fractionPart
 }

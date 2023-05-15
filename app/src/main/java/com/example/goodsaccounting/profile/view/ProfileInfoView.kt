@@ -16,6 +16,7 @@ import com.example.goodsaccounting.common.view_model.EventBase
 import com.example.goodsaccounting.profile.model.ProfileEvent
 import com.example.goodsaccounting.profile.model.ProfileState
 import com.example.goodsaccounting.R
+import com.example.goodsaccounting.common.view.button.BorderButton
 
 @Composable
 internal fun <State> ProfileInfoView(
@@ -48,6 +49,13 @@ internal fun <State> ProfileInfoView(
             ) {
                 eventBase.onEvent(ProfileEvent.Save)
             }
+        }
+        Spacer(modifier = Modifier.height(MaterialTheme.padding.medium2))
+        BorderButton(
+            label = stringResource(R.string.exit),
+            colorBorder = MaterialTheme.colors.error
+        ) {
+            eventBase.onEvent(ProfileEvent.Exit)
         }
         Spacer(modifier = Modifier.height(MaterialTheme.padding.small2))
     }
